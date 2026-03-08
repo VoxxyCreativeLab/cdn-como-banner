@@ -110,8 +110,8 @@
        Priority: window.comoConfig > window.comoConfigUrl > CDN
        ═══════════════════════════════════════════════ */
 
-    var CONFIG_CDN_URL = 'https://cdn.jsdelivr.net/gh/VoxxyCreativeLab/cdn@v1/como-banner/como-global.json';
-    var LANG_CDN_BASE = 'https://cdn.jsdelivr.net/gh/VoxxyCreativeLab/cdn@v1/como-banner/lang/';
+    var CONFIG_CDN_URL = 'https://cdn.jsdelivr.net/gh/VoxxyCreativeLab/cdn-como-banner@v1/como-global.json';
+    var LANG_CDN_BASE = 'https://cdn.jsdelivr.net/gh/VoxxyCreativeLab/cdn-como-banner@v1/lang/';
     var GEO_ENDPOINT_URL = 'https://como-geo.voxxycreativelab.workers.dev';
     var GEO_COOKIE_NAME = 'vcl_geo';
     var GEO_COOKIE_EXPIRY = 1; // days
