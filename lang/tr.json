@@ -1,0 +1,52 @@
+{
+  "banner": {
+    "title": "Yaratıcılığı beslemek için çerezleri kullanıyoruz ⚡",
+    "description": "İçeriği ve reklamları kişiselleştirmek, sosyal medya özellikleri sunmak ve trafiğimizi analiz etmek için çerezleri kullanıyoruz. Sitemizi kullanımınıza ilişkin bilgileri; sosyal medya, reklamcılık ve analiz ortaklarımızla da paylaşıyoruz. Bu ortaklar, söz konusu bilgileri kendilerine sağladığınız veya hizmetlerini kullanımınız sırasında topladıkları diğer bilgilerle birleştirebilir."
+  },
+  "tabs": {
+    "consent": "Onay",
+    "details": "Ayrıntılar",
+    "about": "Hakkında"
+  },
+  "buttons": {
+    "allowAll": "Tümünü kabul et",
+    "denyAll": "Tümünü reddet",
+    "customize": "Özelleştir",
+    "allowSelection": "Seçimi kabul et"
+  },
+  "about": {
+    "title": "Çerezler Hakkında",
+    "description": "Çerezler, web sitelerinin kullanıcı deneyimini daha verimli hale getirmek için kullanabildiği küçük metin dosyalarıdır. Yasa, yalnızca bu sitenin çalışması için kesinlikle gerekli olan çerezleri cihazınızda saklamamıza izin vermektedir. Diğer tüm çerez türleri için izninize ihtiyacımız vardır.",
+    "privacyLink": "Daha fazla bilgi için {link} sayfamızı inceleyin.",
+    "privacyLinkText": "Gizlilik Politikası",
+    "controllerText": "Bu web sitesi {controller} tarafından yönetilmektedir. Veri sorumlusu olarak kişisel verilerinizin işlenmesinden biz sorumluyuz."
+  },
+  "categories": {
+    "necessary": {
+      "name": "Gerekli",
+      "description": "Gerekli çerezler, sayfa gezinme ve web sitesinin güvenli alanlarına erişim gibi temel işlevleri etkinleştirerek web sitesini kullanılabilir kılar. Web sitesi bu çerezler olmadan düzgün çalışamaz."
+    },
+    "preferences": {
+      "name": "Tercihler",
+      "description": "Tercih çerezleri, web sitesinin tercih ettiğiniz dil veya bulunduğunuz bölge gibi görünüm ve davranışını etkileyen bilgileri hatırlamasını sağlar."
+    },
+    "analytics": {
+      "name": "Analitik",
+      "description": "Analitik çerezleri, anonim olarak bilgi toplayıp raporlayarak web sitesi sahiplerinin ziyaretçilerin web siteleriyle nasıl etkileşime girdiğini anlamasına yardımcı olur."
+    },
+    "marketing": {
+      "name": "Pazarlama",
+      "description": "Pazarlama çerezleri, ziyaretçileri web siteleri arasında izlemek için kullanılır. Amaç, bireysel kullanıcı için alakalı ve ilgi çekici reklamlar görüntülemek ve böylece yayıncılar ile üçüncü taraf reklamverenler için daha değerli hale getirmektir."
+    }
+  },
+  "closeButton": {
+    "ariaLabel": "Kapat"
+  },
+  "widget": {
+    "ariaLabel": "Çerez tercihlerini yönet"
+  },
+  "aria": {
+    "toggleLabel": "{name} çerezleri",
+    "toggleLabelAlwaysOn": "{name} çerezleri (her zaman etkin)"
+  }
+}

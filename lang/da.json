@@ -1,0 +1,52 @@
+{
+  "banner": {
+    "title": "Vi bruger cookies til at fremme kreativitet ⚡",
+    "description": "Vi bruger cookies til at tilpasse indhold og annoncer, til at tilbyde funktioner på sociale medier og til at analysere vores trafik. Vi deler også oplysninger om din brug af vores website med vores partnere inden for sociale medier, annoncering og analyse, som kan kombinere dem med andre oplysninger, du har givet dem, eller som de har indsamlet fra din brug af deres tjenester."
+  },
+  "tabs": {
+    "consent": "Samtykke",
+    "details": "Detaljer",
+    "about": "Om"
+  },
+  "buttons": {
+    "allowAll": "Tillad alle",
+    "denyAll": "Afvis alle",
+    "customize": "Tilpas",
+    "allowSelection": "Tillad valgte"
+  },
+  "about": {
+    "title": "Om cookies",
+    "description": "Cookies er små tekstfiler, der kan bruges af websites til at gøre brugeroplevelsen mere effektiv. Loven siger, at vi kan gemme cookies på din enhed, hvis de er strengt nødvendige for driften af dette website. For alle andre typer cookies har vi brug for dit samtykke.",
+    "privacyLink": "Se vores {link} for mere information.",
+    "privacyLinkText": "Privatlivspolitik",
+    "controllerText": "Denne hjemmeside drives af {controller}. Som dataansvarlig er vi ansvarlige for behandlingen af dine personoplysninger."
+  },
+  "categories": {
+    "necessary": {
+      "name": "Nødvendige",
+      "description": "Nødvendige cookies hjælper med at gøre en hjemmeside brugbar ved at aktivere grundlæggende funktioner som sidenavigation og adgang til sikre områder. Hjemmesiden kan ikke fungere korrekt uden disse cookies."
+    },
+    "preferences": {
+      "name": "Præferencer",
+      "description": "Præferencecookies gør det muligt for en hjemmeside at huske oplysninger, der ændrer hjemmesidens adfærd eller udseende, som dit foretrukne sprog eller den region, du befinder dig i."
+    },
+    "analytics": {
+      "name": "Statistik",
+      "description": "Statistikcookies hjælper hjemmesideejere med at forstå, hvordan besøgende bruger hjemmesider, ved at indsamle og rapportere oplysninger anonymt."
+    },
+    "marketing": {
+      "name": "Marketing",
+      "description": "Marketingcookies bruges til at spore besøgende på tværs af hjemmesider. Hensigten er at vise annoncer, der er relevante og engagerende for den enkelte bruger og dermed mere værdifulde for udgivere og tredjepartsannoncører."
+    }
+  },
+  "closeButton": {
+    "ariaLabel": "Luk"
+  },
+  "widget": {
+    "ariaLabel": "Administrer cookiepræferencer"
+  },
+  "aria": {
+    "toggleLabel": "{name}-cookies",
+    "toggleLabelAlwaysOn": "{name}-cookies (altid aktive)"
+  }
+}

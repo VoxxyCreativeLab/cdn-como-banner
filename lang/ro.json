@@ -1,0 +1,52 @@
+{
+  "banner": {
+    "title": "Folosim cookie-uri pentru a alimenta creativitatea ⚡",
+    "description": "Folosim cookie-uri pentru personalizarea conținutului și a reclamelor, pentru a oferi funcții de social media și pentru a analiza traficul. De asemenea, partajăm informații despre utilizarea site-ului cu partenerii noștri de social media, publicitate și analiză, care le pot combina cu alte informații pe care le-ați furnizat sau pe care le-au colectat din utilizarea serviciilor lor."
+  },
+  "tabs": {
+    "consent": "Consimțământ",
+    "details": "Detalii",
+    "about": "Despre"
+  },
+  "buttons": {
+    "allowAll": "Permite toate",
+    "denyAll": "Respinge toate",
+    "customize": "Personalizare",
+    "allowSelection": "Permite selecția"
+  },
+  "about": {
+    "title": "Despre cookie-uri",
+    "description": "Cookie-urile sunt fișiere text mici pe care site-urile le pot folosi pentru a face experiența utilizatorului mai eficientă. Legea prevede că putem stoca cookie-uri pe dispozitivul dvs. dacă sunt strict necesare pentru funcționarea acestui site. Pentru toate celelalte tipuri de cookie-uri avem nevoie de consimțământul dvs.",
+    "privacyLink": "Pentru mai multe informații, consultați {link} noastră.",
+    "privacyLinkText": "Politica de confidențialitate",
+    "controllerText": "Acest site web este operat de {controller}. În calitate de operator de date, suntem responsabili pentru prelucrarea datelor dvs. personale."
+  },
+  "categories": {
+    "necessary": {
+      "name": "Necesare",
+      "description": "Cookie-urile necesare ajută la utilizarea site-ului prin activarea funcțiilor de bază, cum ar fi navigarea pe pagini și accesul la zonele securizate. Site-ul nu poate funcționa corect fără aceste cookie-uri."
+    },
+    "preferences": {
+      "name": "Preferințe",
+      "description": "Cookie-urile de preferințe permit site-ului să rețină informații care schimbă modul în care se comportă sau arată site-ul, cum ar fi limba preferată sau regiunea în care vă aflați."
+    },
+    "analytics": {
+      "name": "Statistice",
+      "description": "Cookie-urile statistice ajută proprietarii de site-uri să înțeleagă cum interacționează vizitatorii cu site-urile, colectând și raportând informații în mod anonim."
+    },
+    "marketing": {
+      "name": "Marketing",
+      "description": "Cookie-urile de marketing sunt utilizate pentru a urmări vizitatorii pe diferite site-uri. Scopul este de a afișa reclame relevante și atractive pentru utilizatorul individual, fiind astfel mai valoroase pentru editori și agenții de publicitate terți."
+    }
+  },
+  "closeButton": {
+    "ariaLabel": "Închide"
+  },
+  "widget": {
+    "ariaLabel": "Gestionare preferințe cookie-uri"
+  },
+  "aria": {
+    "toggleLabel": "Cookie-uri {name}",
+    "toggleLabelAlwaysOn": "Cookie-uri {name} (mereu active)"
+  }
+}

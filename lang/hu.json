@@ -1,0 +1,52 @@
+{
+  "banner": {
+    "title": "Sütiket használunk a kreativitás támogatásához ⚡",
+    "description": "Sütiket használunk a tartalom és hirdetések személyre szabásához, közösségi média funkciók biztosításához és forgalmunk elemzéséhez. Információkat osztunk meg weboldalunk használatáról közösségi média, hirdetési és elemzési partnereinkkel is, akik ezeket kombinálhatják más, Ön által megadott vagy az általuk gyűjtött információkkal."
+  },
+  "tabs": {
+    "consent": "Hozzájárulás",
+    "details": "Részletek",
+    "about": "Névjegy"
+  },
+  "buttons": {
+    "allowAll": "Összes engedélyezése",
+    "denyAll": "Összes elutasítása",
+    "customize": "Testreszabás",
+    "allowSelection": "Kiválasztottak engedélyezése"
+  },
+  "about": {
+    "title": "A sütikről",
+    "description": "A sütik kis szöveges fájlok, amelyeket a weboldalak a felhasználói élmény hatékonyabbá tételére használhatnak. A törvény szerint sütiket tárolhatunk az Ön eszközén, ha azok feltétlenül szükségesek az oldal működéséhez. Minden más típusú sütihez az Ön hozzájárulása szükséges.",
+    "privacyLink": "További információkért tekintse meg {link}.",
+    "privacyLinkText": "Adatvédelmi szabályzatunkat",
+    "controllerText": "Ezt a weboldalt a(z) {controller} üzemelteti. Adatkezelőként felelősek vagyunk az Ön személyes adatainak kezeléséért."
+  },
+  "categories": {
+    "necessary": {
+      "name": "Szükséges",
+      "description": "A szükséges sütik segítik a weboldal használhatóságát az alapvető funkciók, például az oldalnavigáció és a biztonságos területekhez való hozzáférés biztosításával. A weboldal nem működhet megfelelően ezen sütik nélkül."
+    },
+    "preferences": {
+      "name": "Beállítások",
+      "description": "A beállítási sütik lehetővé teszik a weboldal számára, hogy megjegyezzen olyan információkat, amelyek megváltoztatják a weboldal viselkedését vagy megjelenését, például az Ön által előnyben részesített nyelvet vagy régiót."
+    },
+    "analytics": {
+      "name": "Statisztikai",
+      "description": "A statisztikai sütik segítenek a weboldalak tulajdonosainak megérteni, hogyan lépnek kapcsolatba a látogatók a weboldalakkal, információkat gyűjtve és jelentve anonim módon."
+    },
+    "marketing": {
+      "name": "Marketing",
+      "description": "A marketing sütiket a látogatók weboldalak közötti nyomon követésére használják. A cél olyan hirdetések megjelenítése, amelyek relevánsak és érdekesek az adott felhasználó számára, és ezáltal értékesebbek a kiadók és harmadik féltől származó hirdetők számára."
+    }
+  },
+  "closeButton": {
+    "ariaLabel": "Bezárás"
+  },
+  "widget": {
+    "ariaLabel": "Süti-beállítások kezelése"
+  },
+  "aria": {
+    "toggleLabel": "{name} sütik",
+    "toggleLabelAlwaysOn": "{name} sütik (mindig aktív)"
+  }
+}

@@ -1,0 +1,52 @@
+{
+  "banner": {
+    "title": "Usamos cookies para alimentar a criatividade ⚡",
+    "description": "Utilizamos cookies para personalizar conteúdo e anúncios, para fornecer funcionalidades de redes sociais e para analisar o nosso tráfego. Também partilhamos informações sobre a utilização do nosso site com os nossos parceiros de redes sociais, publicidade e análise, que as podem combinar com outras informações que lhes forneceu ou que recolheram a partir da sua utilização dos seus serviços."
+  },
+  "tabs": {
+    "consent": "Consentimento",
+    "details": "Detalhes",
+    "about": "Sobre"
+  },
+  "buttons": {
+    "allowAll": "Aceitar todos",
+    "denyAll": "Rejeitar todos",
+    "customize": "Personalizar",
+    "allowSelection": "Aceitar seleção"
+  },
+  "about": {
+    "title": "Sobre os cookies",
+    "description": "Os cookies são pequenos ficheiros de texto que podem ser utilizados pelos sites para tornar a experiência do utilizador mais eficiente. A lei estabelece que podemos armazenar cookies no seu dispositivo se forem estritamente necessários para o funcionamento deste site. Para todos os outros tipos de cookies, precisamos da sua autorização.",
+    "privacyLink": "Para mais informações, consulte a nossa {link}.",
+    "privacyLinkText": "Política de Privacidade",
+    "controllerText": "Este site é operado por {controller}. Como responsável pelo tratamento, somos responsáveis pelo processamento dos seus dados pessoais."
+  },
+  "categories": {
+    "necessary": {
+      "name": "Necessários",
+      "description": "Os cookies necessários ajudam a tornar um site utilizável, permitindo funções básicas como a navegação na página e o acesso a áreas seguras do site. O site não pode funcionar corretamente sem estes cookies."
+    },
+    "preferences": {
+      "name": "Preferências",
+      "description": "Os cookies de preferência permitem que um site memorize informações que alteram o comportamento ou o aspeto do site, como o seu idioma preferido ou a região em que se encontra."
+    },
+    "analytics": {
+      "name": "Estatísticas",
+      "description": "Os cookies estatísticos ajudam os proprietários de sites a entender como os visitantes interagem com os sites, recolhendo e reportando informações de forma anónima."
+    },
+    "marketing": {
+      "name": "Marketing",
+      "description": "Os cookies de marketing são utilizados para rastrear visitantes em sites. A intenção é exibir anúncios relevantes e envolventes para o utilizador individual e, portanto, mais valiosos para editores e anunciantes terceiros."
+    }
+  },
+  "closeButton": {
+    "ariaLabel": "Fechar"
+  },
+  "widget": {
+    "ariaLabel": "Gerir preferências de cookies"
+  },
+  "aria": {
+    "toggleLabel": "Cookies {name}",
+    "toggleLabelAlwaysOn": "Cookies {name} (sempre ativos)"
+  }
+}

@@ -1,0 +1,52 @@
+{
+  "banner": {
+    "title": "Používame cookies na podporu kreativity ⚡",
+    "description": "Používame cookies na personalizáciu obsahu a reklám, na poskytovanie funkcií sociálnych médií a na analýzu návštevnosti. Informácie o vašom používaní našich stránok zdieľame s partnermi pre sociálne médiá, reklamu a analytiku, ktorí ich môžu kombinovať s ďalšími informáciami, ktoré ste im poskytli alebo ktoré získali z vášho používania ich služieb."
+  },
+  "tabs": {
+    "consent": "Súhlas",
+    "details": "Podrobnosti",
+    "about": "O cookies"
+  },
+  "buttons": {
+    "allowAll": "Povoliť všetky",
+    "denyAll": "Odmietnuť všetky",
+    "customize": "Prispôsobiť",
+    "allowSelection": "Povoliť vybrané"
+  },
+  "about": {
+    "title": "O cookies",
+    "description": "Cookies sú malé textové súbory, ktoré môžu webové stránky používať na zefektívnenie používateľského zážitku. Zákon stanovuje, že na vašom zariadení môžeme ukladať cookies, ak sú nevyhnutne potrebné na prevádzku tejto stránky. Pre všetky ostatné typy cookies potrebujeme váš súhlas.",
+    "privacyLink": "Ďalšie informácie nájdete v našich {link}.",
+    "privacyLinkText": "Zásadách ochrany osobných údajov",
+    "controllerText": "Túto webovú stránku prevádzkuje {controller}. Ako prevádzkovateľ údajov zodpovedáme za spracovanie vašich osobných údajov."
+  },
+  "categories": {
+    "necessary": {
+      "name": "Nevyhnutné",
+      "description": "Nevyhnutné cookies pomáhajú sprístupniť webovú stránku umožnením základných funkcií, ako je navigácia a prístup k zabezpečeným oblastiam. Webová stránka nemôže správne fungovať bez týchto cookies."
+    },
+    "preferences": {
+      "name": "Preferencie",
+      "description": "Cookies preferencií umožňujú webovej stránke zapamätať si informácie, ktoré menia správanie alebo vzhľad stránky, ako je váš preferovaný jazyk alebo oblasť."
+    },
+    "analytics": {
+      "name": "Štatistické",
+      "description": "Štatistické cookies pomáhajú vlastníkom webových stránok porozumieť, ako návštevníci používajú stránky, anonymným zberom a vyhodnocovaním informácií."
+    },
+    "marketing": {
+      "name": "Marketingové",
+      "description": "Marketingové cookies sa používajú na sledovanie návštevníkov na webových stránkach. Účelom je zobrazovanie reklám, ktoré sú pre jednotlivých používateľov relevantné a zaujímavé, a tým hodnotnejšie pre vydavateľov a inzerentov tretích strán."
+    }
+  },
+  "closeButton": {
+    "ariaLabel": "Zavrieť"
+  },
+  "widget": {
+    "ariaLabel": "Spravovať preferencie cookies"
+  },
+  "aria": {
+    "toggleLabel": "Cookies {name}",
+    "toggleLabelAlwaysOn": "Cookies {name} (vždy aktívne)"
+  }
+}

@@ -1,0 +1,52 @@
+{
+  "banner": {
+    "title": "我们使用 Cookie 激发创意 ⚡",
+    "description": "我们使用 Cookie 来提供个性化内容和广告、社交媒体功能以及流量分析。我们还会将您的网站使用信息与社交媒体、广告和分析合作伙伴共享，他们可能会将这些信息与您提供给他们的其他信息或他们通过您使用其服务收集的信息相结合。"
+  },
+  "tabs": {
+    "consent": "同意",
+    "details": "详情",
+    "about": "关于"
+  },
+  "buttons": {
+    "allowAll": "全部允许",
+    "denyAll": "全部拒绝",
+    "customize": "自定义",
+    "allowSelection": "允许所选"
+  },
+  "about": {
+    "title": "关于 Cookie",
+    "description": "Cookie 是网站用来提升用户体验的小型文本文件。根据法律规定，如果 Cookie 对本网站的正常运行不可或缺，我们可以将其存储在您的设备上。对于所有其他类型的 Cookie，我们需要征得您的同意。",
+    "privacyLink": "如需了解更多信息，请参阅我们的{link}。",
+    "privacyLinkText": "隐私政策",
+    "controllerText": "本网站由 {controller} 管理。作为数据控制者，我们负责处理您的个人数据。"
+  },
+  "categories": {
+    "necessary": {
+      "name": "必要",
+      "description": "必要 Cookie 通过启用页面导航和访问网站安全区域等基本功能，帮助网站正常运行。没有这些 Cookie，网站将无法正常工作。"
+    },
+    "preferences": {
+      "name": "偏好",
+      "description": "偏好 Cookie 使网站能够记住影响网站行为或外观的信息，例如您的首选语言或所在地区。"
+    },
+    "analytics": {
+      "name": "分析",
+      "description": "分析 Cookie 通过匿名收集和报告信息，帮助网站所有者了解访问者与网站的互动方式。"
+    },
+    "marketing": {
+      "name": "营销",
+      "description": "营销 Cookie 用于跨网站追踪访问者。其目的是展示与用户相关且有吸引力的广告，从而为发布商和第三方广告商带来更高的价值。"
+    }
+  },
+  "closeButton": {
+    "ariaLabel": "关闭"
+  },
+  "widget": {
+    "ariaLabel": "管理 Cookie 偏好设置"
+  },
+  "aria": {
+    "toggleLabel": "{name} Cookie",
+    "toggleLabelAlwaysOn": "{name} Cookie（始终启用）"
+  }
+}

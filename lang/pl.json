@@ -1,0 +1,52 @@
+{
+  "banner": {
+    "title": "Używamy plików cookie, by wspierać kreatywność ⚡",
+    "description": "Używamy plików cookie do personalizacji treści i reklam, udostępniania funkcji mediów społecznościowych oraz analizy ruchu na stronie. Udostępniamy również informacje o korzystaniu z naszej witryny naszym partnerom w zakresie mediów społecznościowych, reklamy i analiz, którzy mogą łączyć je z innymi informacjami dostarczonymi przez Ciebie lub zebranymi podczas korzystania z ich usług."
+  },
+  "tabs": {
+    "consent": "Zgoda",
+    "details": "Szczegóły",
+    "about": "Informacje"
+  },
+  "buttons": {
+    "allowAll": "Zezwól na wszystkie",
+    "denyAll": "Odrzuć wszystkie",
+    "customize": "Dostosuj",
+    "allowSelection": "Zezwól na wybrane"
+  },
+  "about": {
+    "title": "Informacje o plikach cookie",
+    "description": "Pliki cookie to małe pliki tekstowe, które mogą być wykorzystywane przez strony internetowe w celu zwiększenia efektywności korzystania z witryny. Prawo stanowi, że możemy przechowywać pliki cookie na Twoim urządzeniu, jeśli są one niezbędne do działania tej strony. W przypadku wszystkich innych rodzajów plików cookie potrzebujemy Twojej zgody.",
+    "privacyLink": "Więcej informacji znajdziesz w naszej {link}.",
+    "privacyLinkText": "Polityce prywatności",
+    "controllerText": "Ta strona internetowa jest prowadzona przez {controller}. Jako administrator danych jesteśmy odpowiedzialni za przetwarzanie Twoich danych osobowych."
+  },
+  "categories": {
+    "necessary": {
+      "name": "Niezbędne",
+      "description": "Niezbędne pliki cookie pomagają uczynić stronę użyteczną, umożliwiając podstawowe funkcje, takie jak nawigacja po stronach i dostęp do bezpiecznych obszarów. Strona nie może prawidłowo funkcjonować bez tych plików cookie."
+    },
+    "preferences": {
+      "name": "Preferencje",
+      "description": "Pliki cookie preferencji umożliwiają stronie zapamiętanie informacji, które zmieniają sposób zachowania lub wygląd strony, np. preferowany język lub region."
+    },
+    "analytics": {
+      "name": "Statystyczne",
+      "description": "Statystyczne pliki cookie pomagają właścicielom stron zrozumieć, w jaki sposób odwiedzający korzystają ze stron, zbierając i raportując informacje anonimowo."
+    },
+    "marketing": {
+      "name": "Marketingowe",
+      "description": "Marketingowe pliki cookie służą do śledzenia odwiedzających na stronach internetowych. Celem jest wyświetlanie reklam, które są istotne i angażujące dla poszczególnych użytkowników, a tym samym bardziej wartościowe dla wydawców i reklamodawców zewnętrznych."
+    }
+  },
+  "closeButton": {
+    "ariaLabel": "Zamknij"
+  },
+  "widget": {
+    "ariaLabel": "Zarządzaj preferencjami plików cookie"
+  },
+  "aria": {
+    "toggleLabel": "Pliki cookie {name}",
+    "toggleLabelAlwaysOn": "Pliki cookie {name} (zawsze aktywne)"
+  }
+}

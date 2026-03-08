@@ -1,0 +1,52 @@
+{
+  "banner": {
+    "title": "Käytämme evästeitä luovuuden ruokkimiseen ⚡",
+    "description": "Käytämme evästeitä sisällön ja mainosten mukauttamiseen, sosiaalisen median toimintojen tarjoamiseen sekä liikenteen analysointiin. Jaamme myös tietoa sivuston käytöstäsi sosiaalisen median, mainonnan ja analytiikan kumppaneidemme kanssa, jotka voivat yhdistää ne muihin tietoihin, joita olet antanut heille tai joita he ovat keränneet palveluidensa käytöstä."
+  },
+  "tabs": {
+    "consent": "Suostumus",
+    "details": "Tiedot",
+    "about": "Tietoa"
+  },
+  "buttons": {
+    "allowAll": "Salli kaikki",
+    "denyAll": "Hylkää kaikki",
+    "customize": "Mukauta",
+    "allowSelection": "Salli valitut"
+  },
+  "about": {
+    "title": "Tietoa evästeistä",
+    "description": "Evästeet ovat pieniä tekstitiedostoja, joiden avulla verkkosivustot voivat tehostaa käyttäjäkokemusta. Lain mukaan voimme tallentaa evästeitä laitteellesi, jos ne ovat välttämättömiä sivuston toiminnalle. Kaikkiin muihin evästetyyppeihin tarvitsemme suostumuksesi.",
+    "privacyLink": "Lisätietoja on {link}.",
+    "privacyLinkText": "Tietosuojakäytännössämme",
+    "controllerText": "Tätä verkkosivustoa ylläpitää {controller}. Rekisterinpitäjänä vastaamme henkilötietojesi käsittelystä."
+  },
+  "categories": {
+    "necessary": {
+      "name": "Välttämättömät",
+      "description": "Välttämättömät evästeet tekevät verkkosivustosta käyttökelpoisen mahdollistamalla perustoiminnot kuten sivunavigaation ja pääsyn suojatuille alueille. Verkkosivusto ei voi toimia kunnolla ilman näitä evästeitä."
+    },
+    "preferences": {
+      "name": "Asetukset",
+      "description": "Asetusevästeet mahdollistavat verkkosivuston muistavan tietoja, jotka vaikuttavat sivuston käyttäytymiseen tai ulkoasuun, kuten ensisijainen kielesi tai alueesi."
+    },
+    "analytics": {
+      "name": "Tilastolliset",
+      "description": "Tilastolliset evästeet auttavat verkkosivustojen omistajia ymmärtämään, miten kävijät käyttävät sivustoja, keräämällä ja raportoimalla tietoja anonyymisti."
+    },
+    "marketing": {
+      "name": "Markkinointi",
+      "description": "Markkinointievästeitä käytetään kävijöiden seuraamiseen verkkosivustoilla. Tarkoituksena on näyttää mainoksia, jotka ovat osuvia ja kiinnostavia yksittäiselle käyttäjälle ja siten arvokkaampia julkaisijoille ja kolmansien osapuolten mainostajille."
+    }
+  },
+  "closeButton": {
+    "ariaLabel": "Sulje"
+  },
+  "widget": {
+    "ariaLabel": "Hallitse evästeasetuksia"
+  },
+  "aria": {
+    "toggleLabel": "{name}-evästeet",
+    "toggleLabelAlwaysOn": "{name}-evästeet (aina aktiiviset)"
+  }
+}

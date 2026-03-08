@@ -1,0 +1,52 @@
+{
+  "banner": {
+    "title": "Chúng tôi sử dụng cookie để thúc đẩy sáng tạo ⚡",
+    "description": "Chúng tôi sử dụng cookie để cá nhân hóa nội dung và quảng cáo, cung cấp các tính năng mạng xã hội và phân tích lưu lượng truy cập. Chúng tôi cũng chia sẻ thông tin về việc bạn sử dụng trang web của chúng tôi với các đối tác mạng xã hội, quảng cáo và phân tích, những đối tác này có thể kết hợp thông tin đó với các thông tin khác mà bạn đã cung cấp cho họ hoặc mà họ đã thu thập từ việc bạn sử dụng dịch vụ của họ."
+  },
+  "tabs": {
+    "consent": "Đồng ý",
+    "details": "Chi tiết",
+    "about": "Giới thiệu"
+  },
+  "buttons": {
+    "allowAll": "Chấp nhận tất cả",
+    "denyAll": "Từ chối tất cả",
+    "customize": "Tùy chỉnh",
+    "allowSelection": "Chấp nhận lựa chọn"
+  },
+  "about": {
+    "title": "Về Cookie",
+    "description": "Cookie là các tệp văn bản nhỏ mà trang web có thể sử dụng để nâng cao trải nghiệm người dùng. Pháp luật quy định rằng chúng tôi chỉ được lưu trữ cookie trên thiết bị của bạn nếu chúng thực sự cần thiết cho hoạt động của trang web này. Đối với tất cả các loại cookie khác, chúng tôi cần có sự cho phép của bạn.",
+    "privacyLink": "Để biết thêm thông tin, vui lòng xem {link} của chúng tôi.",
+    "privacyLinkText": "Chính sách Bảo mật",
+    "controllerText": "Trang web này được quản lý bởi {controller}. Với tư cách là đơn vị kiểm soát dữ liệu, chúng tôi chịu trách nhiệm xử lý dữ liệu cá nhân của bạn."
+  },
+  "categories": {
+    "necessary": {
+      "name": "Cần thiết",
+      "description": "Cookie cần thiết giúp trang web hoạt động bằng cách kích hoạt các chức năng cơ bản như điều hướng trang và truy cập các khu vực bảo mật của trang web. Trang web không thể hoạt động bình thường nếu thiếu các cookie này."
+    },
+    "preferences": {
+      "name": "Tùy chọn",
+      "description": "Cookie tùy chọn cho phép trang web ghi nhớ các thông tin làm thay đổi giao diện hoặc hành vi của trang web, chẳng hạn như ngôn ngữ ưa thích hoặc khu vực bạn đang ở."
+    },
+    "analytics": {
+      "name": "Phân tích",
+      "description": "Cookie phân tích giúp chủ sở hữu trang web hiểu cách khách truy cập tương tác với trang web bằng cách thu thập và báo cáo thông tin ẩn danh."
+    },
+    "marketing": {
+      "name": "Tiếp thị",
+      "description": "Cookie tiếp thị được sử dụng để theo dõi khách truy cập trên các trang web khác nhau. Mục đích là hiển thị quảng cáo phù hợp và hấp dẫn cho từng người dùng, từ đó mang lại giá trị cao hơn cho nhà xuất bản và nhà quảng cáo bên thứ ba."
+    }
+  },
+  "closeButton": {
+    "ariaLabel": "Đóng"
+  },
+  "widget": {
+    "ariaLabel": "Quản lý tùy chọn cookie"
+  },
+  "aria": {
+    "toggleLabel": "Cookie {name}",
+    "toggleLabelAlwaysOn": "Cookie {name} (luôn hoạt động)"
+  }
+}

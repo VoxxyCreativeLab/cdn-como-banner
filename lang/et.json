@@ -1,0 +1,52 @@
+{
+  "banner": {
+    "title": "Kasutame küpsiseid loovuse toetamiseks ⚡",
+    "description": "Kasutame küpsiseid sisu ja reklaamide isikupärastamiseks, sotsiaalmeedia funktsioonide pakkumiseks ning liikluse analüüsimiseks. Jagame teavet teie saidi kasutamise kohta ka meie sotsiaalmeedia, reklaami- ja analüüsipartneritega, kes võivad seda kombineerida muu teabega, mille olete neile esitanud või mida nad on kogunud teie teenuste kasutamise käigus."
+  },
+  "tabs": {
+    "consent": "Nõusolek",
+    "details": "Üksikasjad",
+    "about": "Teave"
+  },
+  "buttons": {
+    "allowAll": "Luba kõik",
+    "denyAll": "Keeldu kõigist",
+    "customize": "Kohanda",
+    "allowSelection": "Luba valitud"
+  },
+  "about": {
+    "title": "Küpsiste teave",
+    "description": "Küpsised on väikesed tekstifailid, mida veebisaidid saavad kasutada kasutajakogemuse tõhusamaks muutmiseks. Seadus ütleb, et võime teie seadmesse salvestada küpsiseid, mis on selle saidi toimimiseks hädavajalikud. Kõigi teiste küpsisetüüpide jaoks vajame teie nõusolekut.",
+    "privacyLink": "Lisateabe saamiseks tutvuge meie {link}.",
+    "privacyLinkText": "Privaatsuspoliitikaga",
+    "controllerText": "Seda veebisaiti haldab {controller}. Vastutava töötlejana vastutame teie isikuandmete töötlemise eest."
+  },
+  "categories": {
+    "necessary": {
+      "name": "Vajalikud",
+      "description": "Vajalikud küpsised aitavad muuta veebisaiti kasutatavaks, võimaldades põhifunktsioone nagu lehekülgede navigeerimine ja juurdepääs turvalistele aladele. Veebisait ei saa ilma nende küpsisteta korralikult toimida."
+    },
+    "preferences": {
+      "name": "Eelistused",
+      "description": "Eelistuste küpsised võimaldavad veebisaidil meeles pidada teavet, mis muudab veebisaidi käitumist või välimust, näiteks teie eelistatud keelt või piirkonda."
+    },
+    "analytics": {
+      "name": "Statistika",
+      "description": "Statistikaküpsised aitavad veebisaidi omanikel mõista, kuidas külastajad veebisaitidega suhtlevad, kogudes ja edastades teavet anonüümselt."
+    },
+    "marketing": {
+      "name": "Turundus",
+      "description": "Turundusküpsiseid kasutatakse külastajate jälgimiseks veebisaitidel. Eesmärk on kuvada reklaame, mis on asjakohased ja kaasahaaravad üksikkasutaja jaoks ning seetõttu väärtuslikumad kirjastajatele ja kolmandate osapoolte reklaamijatele."
+    }
+  },
+  "closeButton": {
+    "ariaLabel": "Sulge"
+  },
+  "widget": {
+    "ariaLabel": "Halda küpsiste eelistusi"
+  },
+  "aria": {
+    "toggleLabel": "{name} küpsised",
+    "toggleLabelAlwaysOn": "{name} küpsised (alati aktiivsed)"
+  }
+}

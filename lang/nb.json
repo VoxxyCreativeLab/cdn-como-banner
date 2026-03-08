@@ -1,0 +1,52 @@
+{
+  "banner": {
+    "title": "Vi bruker informasjonskapsler for å fremme kreativitet ⚡",
+    "description": "Vi bruker informasjonskapsler for å tilpasse innhold og annonser, for å tilby funksjoner for sosiale medier og for å analysere trafikken vår. Vi deler også informasjon om din bruk av nettstedet med partnerne våre innen sosiale medier, annonsering og analyse, som kan kombinere den med annen informasjon du har gitt dem eller som de har samlet inn fra din bruk av tjenestene deres."
+  },
+  "tabs": {
+    "consent": "Samtykke",
+    "details": "Detaljer",
+    "about": "Om"
+  },
+  "buttons": {
+    "allowAll": "Tillat alle",
+    "denyAll": "Avvis alle",
+    "customize": "Tilpass",
+    "allowSelection": "Tillat valgte"
+  },
+  "about": {
+    "title": "Om informasjonskapsler",
+    "description": "Informasjonskapsler er små tekstfiler som nettsteder kan bruke for å gjøre brukeropplevelsen mer effektiv. Loven sier at vi kan lagre informasjonskapsler på enheten din dersom de er strengt nødvendige for driften av dette nettstedet. For alle andre typer informasjonskapsler trenger vi ditt samtykke.",
+    "privacyLink": "Se vår {link} for mer informasjon.",
+    "privacyLinkText": "Personvernerklæring",
+    "controllerText": "Dette nettstedet drives av {controller}. Som behandlingsansvarlig er vi ansvarlige for behandlingen av dine personopplysninger."
+  },
+  "categories": {
+    "necessary": {
+      "name": "Nødvendige",
+      "description": "Nødvendige informasjonskapsler bidrar til å gjøre et nettsted brukbart ved å aktivere grunnleggende funksjoner som sidenavigasjon og tilgang til sikre områder. Nettstedet kan ikke fungere ordentlig uten disse informasjonskapslene."
+    },
+    "preferences": {
+      "name": "Innstillinger",
+      "description": "Innstillingskapsler gjør det mulig for et nettsted å huske informasjon som endrer nettstedets oppførsel eller utseende, som foretrukket språk eller regionen du er i."
+    },
+    "analytics": {
+      "name": "Statistikk",
+      "description": "Statistikk-informasjonskapsler hjelper nettstedseiere med å forstå hvordan besøkende samhandler med nettsteder ved å samle inn og rapportere informasjon anonymt."
+    },
+    "marketing": {
+      "name": "Markedsføring",
+      "description": "Markedsføringskapsler brukes til å spore besøkende på tvers av nettsteder. Hensikten er å vise annonser som er relevante og engasjerende for den enkelte bruker, og dermed mer verdifulle for utgivere og tredjepartsannonsører."
+    }
+  },
+  "closeButton": {
+    "ariaLabel": "Lukk"
+  },
+  "widget": {
+    "ariaLabel": "Administrer innstillinger for informasjonskapsler"
+  },
+  "aria": {
+    "toggleLabel": "{name}-informasjonskapsler",
+    "toggleLabelAlwaysOn": "{name}-informasjonskapsler (alltid aktive)"
+  }
+}

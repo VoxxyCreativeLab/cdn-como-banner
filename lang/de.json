@@ -1,0 +1,52 @@
+{
+  "banner": {
+    "title": "Wir verwenden Cookies, um Kreativität zu fördern ⚡",
+    "description": "Wir verwenden Cookies, um Inhalte und Anzeigen zu personalisieren, Funktionen für soziale Medien anbieten zu können und die Zugriffe auf unsere Website zu analysieren. Außerdem geben wir Informationen zu Ihrer Verwendung unserer Website an unsere Partner für soziale Medien, Werbung und Analysen weiter. Unsere Partner führen diese Informationen möglicherweise mit weiteren Daten zusammen, die Sie ihnen bereitgestellt haben oder die sie im Rahmen Ihrer Nutzung der Dienste gesammelt haben."
+  },
+  "tabs": {
+    "consent": "Zustimmung",
+    "details": "Details",
+    "about": "Über"
+  },
+  "buttons": {
+    "allowAll": "Alle zulassen",
+    "denyAll": "Alle ablehnen",
+    "customize": "Anpassen",
+    "allowSelection": "Auswahl zulassen"
+  },
+  "about": {
+    "title": "Über Cookies",
+    "description": "Cookies sind kleine Textdateien, die von Websites verwendet werden können, um die Benutzererfahrung effizienter zu gestalten. Laut Gesetz dürfen wir Cookies auf Ihrem Gerät speichern, wenn diese für den Betrieb dieser Website unbedingt erforderlich sind. Für alle anderen Cookie-Typen benötigen wir Ihre Einwilligung.",
+    "privacyLink": "Weitere Informationen finden Sie in unserer {link}.",
+    "privacyLinkText": "Datenschutzerklärung",
+    "controllerText": "Diese Website wird betrieben von {controller}. Als Verantwortlicher sind wir für die Verarbeitung Ihrer personenbezogenen Daten zuständig."
+  },
+  "categories": {
+    "necessary": {
+      "name": "Notwendig",
+      "description": "Notwendige Cookies helfen dabei, eine Website nutzbar zu machen, indem sie Grundfunktionen wie Seitennavigation und Zugang zu geschützten Bereichen der Website ermöglichen. Die Website kann ohne diese Cookies nicht richtig funktionieren."
+    },
+    "preferences": {
+      "name": "Präferenzen",
+      "description": "Präferenz-Cookies ermöglichen einer Website, sich Informationen zu merken, die die Art und Weise beeinflussen, wie sich eine Website verhält oder aussieht, wie z. B. Ihre bevorzugte Sprache oder die Region, in der Sie sich befinden."
+    },
+    "analytics": {
+      "name": "Statistiken",
+      "description": "Statistik-Cookies helfen Website-Betreibern zu verstehen, wie Besucher mit Websites interagieren, indem sie anonymisiert Informationen sammeln und melden."
+    },
+    "marketing": {
+      "name": "Marketing",
+      "description": "Marketing-Cookies werden verwendet, um Besucher über Websites hinweg zu verfolgen. Die Absicht ist, Anzeigen zu zeigen, die für den einzelnen Benutzer relevant und ansprechend sind und somit für Herausgeber und Drittanbieter wertvoller sind."
+    }
+  },
+  "closeButton": {
+    "ariaLabel": "Schließen"
+  },
+  "widget": {
+    "ariaLabel": "Cookie-Einstellungen verwalten"
+  },
+  "aria": {
+    "toggleLabel": "{name}-Cookies",
+    "toggleLabelAlwaysOn": "{name}-Cookies (immer aktiv)"
+  }
+}

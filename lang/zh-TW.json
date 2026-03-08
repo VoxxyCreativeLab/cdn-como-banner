@@ -1,0 +1,52 @@
+{
+  "banner": {
+    "title": "我們使用 Cookie 激發創意 ⚡",
+    "description": "我們使用 Cookie 來提供個人化內容與廣告、社群媒體功能以及流量分析。我們也會將您的網站使用資訊與社群媒體、廣告和分析合作夥伴分享，他們可能會將這些資訊與您提供給他們的其他資訊或他們透過您使用其服務所收集的資訊加以整合。"
+  },
+  "tabs": {
+    "consent": "同意",
+    "details": "詳細資訊",
+    "about": "關於"
+  },
+  "buttons": {
+    "allowAll": "全部允許",
+    "denyAll": "全部拒絕",
+    "customize": "自訂",
+    "allowSelection": "允許所選"
+  },
+  "about": {
+    "title": "關於 Cookie",
+    "description": "Cookie 是網站用來提升使用者體驗的小型文字檔案。根據法律規定，若 Cookie 對本網站的正常運作不可或缺，我們可以將其儲存在您的裝置上。對於所有其他類型的 Cookie，我們需要取得您的同意。",
+    "privacyLink": "如需瞭解更多資訊，請參閱我們的{link}。",
+    "privacyLinkText": "隱私權政策",
+    "controllerText": "本網站由 {controller} 管理。身為資料控制者，我們負責處理您的個人資料。"
+  },
+  "categories": {
+    "necessary": {
+      "name": "必要",
+      "description": "必要 Cookie 透過啟用頁面導覽及存取網站安全區域等基本功能，協助網站正常運作。缺少這些 Cookie，網站將無法正常運行。"
+    },
+    "preferences": {
+      "name": "偏好",
+      "description": "偏好 Cookie 使網站能夠記住會影響網站行為或外觀的資訊，例如您偏好的語言或所在地區。"
+    },
+    "analytics": {
+      "name": "分析",
+      "description": "分析 Cookie 透過匿名收集與回報資訊，協助網站擁有者瞭解訪客與網站的互動方式。"
+    },
+    "marketing": {
+      "name": "行銷",
+      "description": "行銷 Cookie 用於跨網站追蹤訪客。其目的是向個別使用者顯示相關且具吸引力的廣告，從而為發佈商和第三方廣告商帶來更高的價值。"
+    }
+  },
+  "closeButton": {
+    "ariaLabel": "關閉"
+  },
+  "widget": {
+    "ariaLabel": "管理 Cookie 偏好設定"
+  },
+  "aria": {
+    "toggleLabel": "{name} Cookie",
+    "toggleLabelAlwaysOn": "{name} Cookie（始終啟用）"
+  }
+}

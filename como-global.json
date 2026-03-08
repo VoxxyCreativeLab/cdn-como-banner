@@ -1,0 +1,328 @@
+{
+  "configVersion": "2.0.0",
+  "lastUpdated": "2026-03-08",
+  "consentMode": {
+    "waitForUpdate": 500
+  },
+  "regions": {
+    "AT": "opt-in",
+    "BE": "opt-in",
+    "BG": "opt-in",
+    "HR": "opt-in",
+    "CY": "opt-in",
+    "CZ": "opt-in",
+    "DK": "opt-in",
+    "EE": "opt-in",
+    "FI": "opt-in",
+    "FR": "opt-in",
+    "DE": "opt-in",
+    "GR": "opt-in",
+    "HU": "opt-in",
+    "IE": "opt-in",
+    "IT": "opt-in",
+    "LV": "opt-in",
+    "LT": "opt-in",
+    "LU": "opt-in",
+    "MT": "opt-in",
+    "NL": "opt-in",
+    "PL": "opt-in",
+    "PT": "opt-in",
+    "RO": "opt-in",
+    "SK": "opt-in",
+    "SI": "opt-in",
+    "ES": "opt-in",
+    "SE": "opt-in",
+    "IS": "opt-in",
+    "LI": "opt-in",
+    "NO": "opt-in",
+    "GB": "opt-in",
+    "CH": "opt-in",
+    "RS": "opt-in",
+    "MK": "opt-in",
+    "AL": "opt-in",
+    "ME": "opt-in",
+    "BA": "opt-in",
+    "XK": "opt-in",
+    "CN": "opt-in",
+    "IN": "opt-in",
+    "ID": "opt-in",
+    "JP": "opt-in",
+    "KR": "opt-in",
+    "VN": "opt-in",
+    "TH": "opt-in",
+    "MY": "opt-in",
+    "BD": "opt-in",
+    "LK": "opt-in",
+    "MN": "opt-in",
+    "MO": "opt-in",
+    "RU": "opt-in",
+    "TR": "opt-in",
+    "IL": "opt-in",
+    "SA": "opt-in",
+    "AE": "opt-in",
+    "QA": "opt-in",
+    "BH": "opt-in",
+    "OM": "opt-in",
+    "JO": "opt-in",
+    "GE": "opt-in",
+    "ZA": "opt-in",
+    "NG": "opt-in",
+    "KE": "opt-in",
+    "EG": "opt-in",
+    "GH": "opt-in",
+    "MA": "opt-in",
+    "TN": "opt-in",
+    "SN": "opt-in",
+    "ZM": "opt-in",
+    "BR": "opt-in",
+    "CA-QC": "opt-in",
+    "CO": "opt-in",
+    "AR": "opt-in",
+    "CL": "opt-in",
+    "PE": "opt-in",
+    "DO": "opt-in",
+    "AU": "opt-out",
+    "NZ": "opt-out",
+    "US": "opt-out",
+    "CA": "opt-out",
+    "SG": "opt-out",
+    "TW": "opt-out",
+    "HK": "opt-out",
+    "PH": "opt-out",
+    "LA": "opt-out",
+    "NP": "opt-out",
+    "UZ": "opt-out",
+    "KW": "opt-out",
+    "LB": "opt-out",
+    "KZ": "opt-out",
+    "AZ": "opt-out",
+    "UA": "opt-out",
+    "MD": "opt-out",
+    "BY": "opt-out",
+    "MX": "opt-out",
+    "UY": "opt-out",
+    "EC": "opt-out",
+    "CR": "opt-out",
+    "PA": "opt-out",
+    "SV": "opt-out",
+    "JM": "opt-out",
+    "TT": "opt-out",
+    "DZ": "opt-out",
+    "ET": "opt-out",
+    "TZ": "opt-out",
+    "UG": "opt-out",
+    "RW": "opt-out",
+    "CI": "opt-out",
+    "CM": "opt-out",
+    "ZW": "opt-out",
+    "AO": "opt-out",
+    "BM": "opt-out",
+    "KY": "opt-out",
+    "BB": "opt-out",
+    "MU": "opt-out",
+    "US-CA": "opt-out-gpc",
+    "US-CO": "opt-out-gpc",
+    "US-CT": "opt-out-gpc",
+    "US-TX": "opt-out-gpc",
+    "US-OR": "opt-out-gpc",
+    "US-MT": "opt-out-gpc",
+    "US-DE": "opt-out-gpc",
+    "US-VA": "opt-out-gpc",
+    "PK": "none",
+    "MM": "none",
+    "KH": "none",
+    "FJ": "none",
+    "PG": "none",
+    "IQ": "none",
+    "IR": "none",
+    "VE": "none",
+    "BO": "none",
+    "PY": "none",
+    "GT": "none",
+    "HN": "none",
+    "MZ": "none",
+    "CD": "none",
+    "BS": "none",
+    "EU": "opt-in",
+    "EEA": "opt-in"
+  },
+  "models": {
+    "opt-in": {
+      "defaults": {
+        "necessary": true,
+        "preferences": false,
+        "analytics": false,
+        "marketing": false
+      },
+      "requireExplicit": true,
+      "honorGpc": false,
+      "showCloseButton": false,
+      "showBanner": true
+    },
+    "opt-out": {
+      "defaults": {
+        "necessary": true,
+        "preferences": true,
+        "analytics": true,
+        "marketing": true
+      },
+      "requireExplicit": false,
+      "honorGpc": false,
+      "showCloseButton": true,
+      "showBanner": true
+    },
+    "opt-out-gpc": {
+      "defaults": {
+        "necessary": true,
+        "preferences": true,
+        "analytics": true,
+        "marketing": true
+      },
+      "requireExplicit": false,
+      "honorGpc": true,
+      "showCloseButton": true,
+      "showBanner": true
+    },
+    "none": {
+      "defaults": {
+        "necessary": true,
+        "preferences": true,
+        "analytics": true,
+        "marketing": true
+      },
+      "requireExplicit": false,
+      "honorGpc": false,
+      "showCloseButton": false,
+      "showBanner": false
+    }
+  },
+  "fallbackModel": "opt-in",
+  "expiry": {
+    "default": 365,
+    "regions": {
+      "FR": 182
+    }
+  },
+  "categories": [
+    {
+      "key": "necessary",
+      "alwaysOn": true,
+      "consentTypes": [
+        "security_storage"
+      ]
+    },
+    {
+      "key": "preferences",
+      "alwaysOn": false,
+      "consentTypes": [
+        "functionality_storage",
+        "personalization_storage"
+      ]
+    },
+    {
+      "key": "analytics",
+      "alwaysOn": false,
+      "consentTypes": [
+        "analytics_storage"
+      ]
+    },
+    {
+      "key": "marketing",
+      "alwaysOn": false,
+      "consentTypes": [
+        "ad_storage",
+        "ad_user_data",
+        "ad_personalization"
+      ]
+    }
+  ],
+  "texts": {
+    "en": {
+      "banner": {
+        "title": "We use cookies to fuel creativity ⚡",
+        "description": "We use cookies to personalise content and ads, to provide social media features and to analyse our traffic. We also share information about your use of our site with our social media, advertising and analytics partners who may combine it with other information that you’ve provided to them or that they’ve collected from your use of their services."
+      },
+      "tabs": {
+        "consent": "Consent",
+        "details": "Details",
+        "about": "About"
+      },
+      "buttons": {
+        "allowAll": "Allow all",
+        "denyAll": "Deny all",
+        "customize": "Customize",
+        "allowSelection": "Allow selection"
+      },
+      "about": {
+        "title": "About Cookies",
+        "description": "Cookies are small text files that can be used by websites to make a user experience more efficient. The law states that we can store cookies on your device if they are strictly necessary for the operation of this site. For all other types of cookies we need your permission.",
+        "privacyLink": "For more information, see our {link}.",
+        "privacyLinkText": "Privacy Policy",
+        "controllerText": "This website is operated by {controller}. As the data controller, we are responsible for the processing of your personal data."
+      },
+      "categories": {
+        "necessary": {
+          "name": "Necessary",
+          "description": "Necessary cookies help make a website usable by enabling basic functions like page navigation and access to secure areas of the website. The website cannot function properly without these cookies."
+        },
+        "preferences": {
+          "name": "Preferences",
+          "description": "Preference cookies enable a website to remember information that changes the way the website behaves or looks, like your preferred language or the region that you are in."
+        },
+        "analytics": {
+          "name": "Statistics",
+          "description": "Statistic cookies help website owners to understand how visitors interact with websites by collecting and reporting information anonymously."
+        },
+        "marketing": {
+          "name": "Marketing",
+          "description": "Marketing cookies are used to track visitors across websites. The intention is to display ads that are relevant and engaging for the individual user and thereby more valuable for publishers and third party advertisers."
+        }
+      },
+      "closeButton": {
+        "ariaLabel": "Dismiss"
+      },
+      "widget": {
+        "ariaLabel": "Manage cookie preferences"
+      },
+      "aria": {
+        "toggleLabel": "{name} cookies",
+        "toggleLabelAlwaysOn": "{name} cookies (always active)"
+      }
+    }
+  },
+  "languages": [
+    "bg",
+    "cs",
+    "da",
+    "de",
+    "el",
+    "en",
+    "es",
+    "et",
+    "fi",
+    "fr",
+    "hi",
+    "hr",
+    "hu",
+    "it",
+    "ja",
+    "ko",
+    "lt",
+    "lv",
+    "nb",
+    "nl",
+    "pl",
+    "pt",
+    "ro",
+    "ru",
+    "sk",
+    "sl",
+    "sv",
+    "th",
+    "tr",
+    "uk",
+    "vi",
+    "zh",
+    "zh-TW"
+  ]
+}

@@ -1,0 +1,52 @@
+{
+  "banner": {
+    "title": "Utilizziamo i cookie per alimentare la creatività ⚡",
+    "description": "Utilizziamo i cookie per personalizzare contenuti e annunci, per fornire funzionalità dei social media e per analizzare il nostro traffico. Condividiamo inoltre informazioni sull’utilizzo del nostro sito con i nostri partner di social media, pubblicità e analisi, che possono combinarle con altre informazioni fornite dall’utente o raccolte durante l’utilizzo dei loro servizi."
+  },
+  "tabs": {
+    "consent": "Consenso",
+    "details": "Dettagli",
+    "about": "Informazioni"
+  },
+  "buttons": {
+    "allowAll": "Accetta tutti",
+    "denyAll": "Rifiuta tutti",
+    "customize": "Personalizza",
+    "allowSelection": "Accetta selezione"
+  },
+  "about": {
+    "title": "Informazioni sui cookie",
+    "description": "I cookie sono piccoli file di testo che possono essere utilizzati dai siti web per rendere più efficiente l’esperienza dell’utente. La legge stabilisce che possiamo memorizzare i cookie sul suo dispositivo se sono strettamente necessari per il funzionamento di questo sito. Per tutti gli altri tipi di cookie abbiamo bisogno del suo permesso.",
+    "privacyLink": "Per maggiori informazioni, consulti la nostra {link}.",
+    "privacyLinkText": "Informativa sulla Privacy",
+    "controllerText": "Questo sito web è gestito da {controller}. In qualità di titolare del trattamento, siamo responsabili del trattamento dei suoi dati personali."
+  },
+  "categories": {
+    "necessary": {
+      "name": "Necessari",
+      "description": "I cookie necessari contribuiscono a rendere un sito web utilizzabile abilitando funzioni di base come la navigazione della pagina e l’accesso alle aree protette del sito web. Il sito web non può funzionare correttamente senza questi cookie."
+    },
+    "preferences": {
+      "name": "Preferenze",
+      "description": "I cookie di preferenza consentono a un sito web di ricordare informazioni che modificano il comportamento o l’aspetto del sito, come la lingua preferita o la regione in cui ci si trova."
+    },
+    "analytics": {
+      "name": "Statistiche",
+      "description": "I cookie statistici aiutano i proprietari dei siti web a capire come i visitatori interagiscono con i siti raccogliendo e trasmettendo informazioni in forma anonima."
+    },
+    "marketing": {
+      "name": "Marketing",
+      "description": "I cookie di marketing vengono utilizzati per tracciare i visitatori sui siti web. L’intenzione è quella di visualizzare annunci pertinenti e coinvolgenti per il singolo utente e quindi di maggior valore per editori e inserzionisti di terze parti."
+    }
+  },
+  "closeButton": {
+    "ariaLabel": "Chiudi"
+  },
+  "widget": {
+    "ariaLabel": "Gestisci preferenze cookie"
+  },
+  "aria": {
+    "toggleLabel": "Cookie {name}",
+    "toggleLabelAlwaysOn": "Cookie {name} (sempre attivi)"
+  }
+}

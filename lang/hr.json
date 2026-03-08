@@ -1,0 +1,52 @@
+{
+  "banner": {
+    "title": "Koristimo kolačiće za poticanje kreativnosti ⚡",
+    "description": "Koristimo kolačiće za personalizaciju sadržaja i oglasa, za pružanje značajki društvenih mreža i za analizu prometa. Također dijelimo informacije o vašem korištenju naše stranice s našim partnerima za društvene mreže, oglašavanje i analitiku, koji ih mogu kombinirati s drugim informacijama koje ste im pružili ili koje su prikupili tijekom vašeg korištenja njihovih usluga."
+  },
+  "tabs": {
+    "consent": "Suglasnost",
+    "details": "Detalji",
+    "about": "O kolačićima"
+  },
+  "buttons": {
+    "allowAll": "Dopusti sve",
+    "denyAll": "Odbij sve",
+    "customize": "Prilagodi",
+    "allowSelection": "Dopusti odabrano"
+  },
+  "about": {
+    "title": "O kolačićima",
+    "description": "Kolačići su male tekstualne datoteke koje web-stranice mogu koristiti kako bi korisničko iskustvo učinile učinkovitijim. Zakon nalaže da kolačiće možemo pohraniti na vaš uređaj ako su nužno potrebni za rad ove stranice. Za sve ostale vrste kolačića potrebna nam je vaša dozvola.",
+    "privacyLink": "Za više informacija pogledajte našu {link}.",
+    "privacyLinkText": "Politiku privatnosti",
+    "controllerText": "Ovu web-stranicu vodi {controller}. Kao voditelj obrade podataka odgovorni smo za obradu vaših osobnih podataka."
+  },
+  "categories": {
+    "necessary": {
+      "name": "Nužni",
+      "description": "Nužni kolačići omogućuju osnovne funkcije web-stranice poput navigacije i pristupa zaštićenim dijelovima. Web-stranica ne može ispravno funkcionirati bez ovih kolačića."
+    },
+    "preferences": {
+      "name": "Postavke",
+      "description": "Kolačići postavki omogućuju web-stranici pamćenje informacija koje mijenjaju ponašanje ili izgled stranice, poput željenog jezika ili regije u kojoj se nalazite."
+    },
+    "analytics": {
+      "name": "Statistički",
+      "description": "Statistički kolačići pomažu vlasnicima web-stranica razumjeti kako posjetitelji koriste stranice prikupljanjem i izvještavanjem informacija anonimno."
+    },
+    "marketing": {
+      "name": "Marketinški",
+      "description": "Marketinški kolačići koriste se za praćenje posjetitelja na raznim web-stranicama. Namjera je prikazivanje oglasa koji su relevantni i zanimljivi za pojedinog korisnika te time vredniji za izdavače i oglašivače."
+    }
+  },
+  "closeButton": {
+    "ariaLabel": "Zatvori"
+  },
+  "widget": {
+    "ariaLabel": "Upravljanje postavkama kolačića"
+  },
+  "aria": {
+    "toggleLabel": "Kolačići {name}",
+    "toggleLabelAlwaysOn": "Kolačići {name} (uvijek aktivni)"
+  }
+}

@@ -1,0 +1,52 @@
+{
+  "banner": {
+    "title": "Mēs izmantojam sīkdatnes, lai veicinātu radošumu ⚡",
+    "description": "Mēs izmantojam sīkdatnes, lai personalizētu saturu un reklāmas, nodrošinātu sociālo tīklu funkcijas un analizētu datplūsmu. Mēs arī dalāmies ar informāciju par jūsu vietnes lietošanu ar mūsu sociālo tīklu, reklāmas un analītikas partneriem, kuri to var apvienot ar citu informāciju, ko esat tiem snieguši vai ko tie ir ievākuši no jūsu pakalpojumu izmantošanas."
+  },
+  "tabs": {
+    "consent": "Piekrišana",
+    "details": "Detaļas",
+    "about": "Par"
+  },
+  "buttons": {
+    "allowAll": "Atļaut visas",
+    "denyAll": "Noraidīt visas",
+    "customize": "Pielāgot",
+    "allowSelection": "Atļaut izvēlētās"
+  },
+  "about": {
+    "title": "Par sīkdatnēm",
+    "description": "Sīkdatnes ir nelieli teksta faili, ko vietnes var izmantot, lai padarītu lietotāja pieredzi efektīvāku. Likums nosaka, ka mēs varam saglabāt sīkdatnes jūsu ierīcē, ja tās ir noteikti nepieciešamas šīs vietnes darbībai. Visiem pārējiem sīkdatņu veidiem mums ir nepieciešama jūsu piekrišana.",
+    "privacyLink": "Plašāku informāciju skatiet mūsu {link}.",
+    "privacyLinkText": "Privātuma politikā",
+    "controllerText": "Šo vietni pārvalda {controller}. Kā datu pārzinis mēs esam atbildīgi par jūsu personas datu apstrādi."
+  },
+  "categories": {
+    "necessary": {
+      "name": "Nepieciešamās",
+      "description": "Nepieciešamās sīkdatnes palīdz padarīt vietni lietojamu, nodrošinot pamata funkcijas, piemēram, lapu navigāciju un piekļuvi drošām zonām. Vietne nevar pareizi darboties bez šīm sīkdatnēm."
+    },
+    "preferences": {
+      "name": "Preferenču",
+      "description": "Preferenču sīkdatnes ļauj vietnei atcerēties informāciju, kas maina vietnes uzvedību vai izskatu, piemēram, jūsu vēlamo valodu vai reģionu."
+    },
+    "analytics": {
+      "name": "Statistikas",
+      "description": "Statistikas sīkdatnes palīdz vietņu īpašniekiem saprast, kā apmeklētāji mijiedarbojas ar vietnēm, anonīmi vācot un ziņojot informāciju."
+    },
+    "marketing": {
+      "name": "Mārketinga",
+      "description": "Mārketinga sīkdatnes tiek izmantotas, lai izsekotu apmeklētājus dažādās vietnēs. Mērķis ir rādīt reklāmas, kas ir atbilstošas un saistošas atsevišķam lietotājam un tādējādi vērtīgākas izdevējiem un trešo pušu reklāmdevējiem."
+    }
+  },
+  "closeButton": {
+    "ariaLabel": "Aizvērt"
+  },
+  "widget": {
+    "ariaLabel": "Pārvaldīt sīkdatņu preferences"
+  },
+  "aria": {
+    "toggleLabel": "{name} sīkdatnes",
+    "toggleLabelAlwaysOn": "{name} sīkdatnes (vienmēr aktīvas)"
+  }
+}

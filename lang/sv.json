@@ -1,0 +1,52 @@
+{
+  "banner": {
+    "title": "Vi använder cookies för att driva kreativitet ⚡",
+    "description": "Vi använder cookies för att anpassa innehåll och annonser, för att erbjuda funktioner för sociala medier och för att analysera vår trafik. Vi delar även information om din användning av vår webbplats med våra partners inom sociala medier, annonsering och analys, som kan kombinera den med annan information som du har tillhandahållit dem eller som de har samlat in från din användning av deras tjänster."
+  },
+  "tabs": {
+    "consent": "Samtycke",
+    "details": "Detaljer",
+    "about": "Om"
+  },
+  "buttons": {
+    "allowAll": "Tillåt alla",
+    "denyAll": "Neka alla",
+    "customize": "Anpassa",
+    "allowSelection": "Tillåt valda"
+  },
+  "about": {
+    "title": "Om cookies",
+    "description": "Cookies är små textfiler som webbplatser kan använda för att göra användarupplevelsen mer effektiv. Lagen säger att vi får lagra cookies på din enhet om de är absolut nödvändiga för att driva denna webbplats. För alla andra typer av cookies behöver vi ditt samtycke.",
+    "privacyLink": "Se vår {link} för mer information.",
+    "privacyLinkText": "Integritetspolicy",
+    "controllerText": "Denna webbplats drivs av {controller}. Som personuppgiftsansvarig ansvarar vi för behandlingen av dina personuppgifter."
+  },
+  "categories": {
+    "necessary": {
+      "name": "Nödvändiga",
+      "description": "Nödvändiga cookies hjälper till att göra en webbplats användbar genom att aktivera grundläggande funktioner som sidnavigering och åtkomst till säkra områden. Webbplatsen kan inte fungera korrekt utan dessa cookies."
+    },
+    "preferences": {
+      "name": "Inställningar",
+      "description": "Inställningscookies gör det möjligt för en webbplats att komma ihåg information som ändrar hur webbplatsen beter sig eller ser ut, till exempel ditt föredragna språk eller den region du befinner dig i."
+    },
+    "analytics": {
+      "name": "Statistik",
+      "description": "Statistikcookies hjälper webbplatsägare att förstå hur besökare interagerar med webbplatser genom att samla in och rapportera information anonymt."
+    },
+    "marketing": {
+      "name": "Marknadsföring",
+      "description": "Marknadsföringscookies används för att spåra besökare på webbplatser. Avsikten är att visa annonser som är relevanta och engagerande för den enskilda användaren och därmed mer värdefulla för utgivare och tredjepartsannonsörer."
+    }
+  },
+  "closeButton": {
+    "ariaLabel": "Stäng"
+  },
+  "widget": {
+    "ariaLabel": "Hantera cookieinställningar"
+  },
+  "aria": {
+    "toggleLabel": "{name}-cookies",
+    "toggleLabelAlwaysOn": "{name}-cookies (alltid aktiva)"
+  }
+}

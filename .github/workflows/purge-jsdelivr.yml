@@ -1,0 +1,18 @@
+name: Purge jsDelivr cache
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'como-global.json'
+      - 'vcl-como-banner.js'
+      - 'lang/**'
+
+jobs:
+  purge:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Purge jsDelivr cache for CoMo Banner files
+        run: |
+          curl -s "https://purge.jsdelivr.net/gh/VoxxyCreativeLab/cdn-como-banner@v1/como-global.json" | jq .
+          curl -s "https://purge.jsdelivr.net/gh/VoxxyCreativeLab/cdn-como-banner@v1/vcl-como-banner.js" | jq .

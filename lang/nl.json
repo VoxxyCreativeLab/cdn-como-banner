@@ -1,0 +1,52 @@
+{
+  "banner": {
+    "title": "Wij gebruiken cookies om creativiteit te voeden ⚡",
+    "description": "Wij gebruiken cookies om content en advertenties te personaliseren, om functies voor sociale media te bieden en om ons verkeer te analyseren. Ook delen wij informatie over uw gebruik van onze site met onze partners voor sociale media, advertenties en analyse, die deze kunnen combineren met andere informatie die u aan hen heeft verstrekt of die zij hebben verzameld op basis van uw gebruik van hun diensten."
+  },
+  "tabs": {
+    "consent": "Toestemming",
+    "details": "Details",
+    "about": "Over"
+  },
+  "buttons": {
+    "allowAll": "Alles toestaan",
+    "denyAll": "Alles weigeren",
+    "customize": "Aanpassen",
+    "allowSelection": "Selectie toestaan"
+  },
+  "about": {
+    "title": "Over cookies",
+    "description": "Cookies zijn kleine tekstbestanden die door websites kunnen worden gebruikt om de gebruikerservaring efficiënter te maken. Volgens de wet mogen wij cookies op uw apparaat opslaan als ze strikt noodzakelijk zijn voor het gebruik van de site. Voor alle andere soorten cookies hebben wij uw toestemming nodig.",
+    "privacyLink": "Raadpleeg ons {link} voor meer informatie.",
+    "privacyLinkText": "Privacybeleid",
+    "controllerText": "Deze website wordt beheerd door {controller}. Als verwerkingsverantwoordelijke zijn wij verantwoordelijk voor de verwerking van uw persoonsgegevens."
+  },
+  "categories": {
+    "necessary": {
+      "name": "Noodzakelijk",
+      "description": "Noodzakelijke cookies helpen een website bruikbaar te maken door basisfuncties zoals paginanavigatie en toegang tot beveiligde delen van de website mogelijk te maken. De website kan niet goed functioneren zonder deze cookies."
+    },
+    "preferences": {
+      "name": "Voorkeuren",
+      "description": "Voorkeurscookies stellen een website in staat om informatie te onthouden die het gedrag of het uiterlijk van de website verandert, zoals uw voorkeurstaal of de regio waarin u zich bevindt."
+    },
+    "analytics": {
+      "name": "Statistieken",
+      "description": "Statistische cookies helpen website-eigenaren te begrijpen hoe bezoekers omgaan met websites door anoniem informatie te verzamelen en te rapporteren."
+    },
+    "marketing": {
+      "name": "Marketing",
+      "description": "Marketingcookies worden gebruikt om bezoekers te volgen op verschillende websites. Het doel is om advertenties weer te geven die relevant en aantrekkelijk zijn voor de individuele gebruiker en daardoor waardevoller voor uitgevers en externe adverteerders."
+    }
+  },
+  "closeButton": {
+    "ariaLabel": "Sluiten"
+  },
+  "widget": {
+    "ariaLabel": "Cookievoorkeuren beheren"
+  },
+  "aria": {
+    "toggleLabel": "{name}-cookies",
+    "toggleLabelAlwaysOn": "{name}-cookies (altijd actief)"
+  }
+}

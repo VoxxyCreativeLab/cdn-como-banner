@@ -1,0 +1,52 @@
+{
+  "banner": {
+    "title": "Piškotke uporabljamo za spodbujanje ustvarjalnosti ⚡",
+    "description": "Piškotke uporabljamo za prilagajanje vsebine in oglasov, za zagotavljanje funkcij družbenih omrežij in za analizo prometa. Podatke o uporabi naše spletne strani delimo tudi s partnerji za družbena omrežja, oglaševanje in analitiko, ki jih lahko združijo z drugimi podatki, ki ste jim jih posredovali ali ki so jih zbrali med vašo uporabo njihovih storitev."
+  },
+  "tabs": {
+    "consent": "Soglasje",
+    "details": "Podrobnosti",
+    "about": "O piškotkih"
+  },
+  "buttons": {
+    "allowAll": "Dovoli vse",
+    "denyAll": "Zavrni vse",
+    "customize": "Prilagodi",
+    "allowSelection": "Dovoli izbrane"
+  },
+  "about": {
+    "title": "O piškotkih",
+    "description": "Piškotki so majhne besedilne datoteke, ki jih spletne strani lahko uporabijo za učinkovitejšo uporabniško izkušnjo. Zakon določa, da lahko na vaši napravi shranjujemo piškotke, če so nujno potrebni za delovanje te spletne strani. Za vse druge vrste piškotkov potrebujemo vaše soglasje.",
+    "privacyLink": "Več informacij najdete v naši {link}.",
+    "privacyLinkText": "Politiki zasebnosti",
+    "controllerText": "To spletno stran upravlja {controller}. Kot upravljavec podatkov smo odgovorni za obdelavo vaših osebnih podatkov."
+  },
+  "categories": {
+    "necessary": {
+      "name": "Nujni",
+      "description": "Nujni piškotki pomagajo narediti spletno stran uporabno z omogočanjem osnovnih funkcij, kot sta navigacija po straneh in dostop do zaščitenih območij. Spletna stran brez teh piškotkov ne more pravilno delovati."
+    },
+    "preferences": {
+      "name": "Nastavitve",
+      "description": "Piškotki nastavitev omogočajo spletni strani, da si zapomni podatke, ki spreminjajo vedenje ali videz strani, kot sta vaš želeni jezik ali regija."
+    },
+    "analytics": {
+      "name": "Statistični",
+      "description": "Statistični piškotki lastnikom spletnih strani pomagajo razumeti, kako obiskovalci uporabljajo spletne strani, z anonimnim zbiranjem in poročanjem podatkov."
+    },
+    "marketing": {
+      "name": "Trženjski",
+      "description": "Trženjski piškotki se uporabljajo za sledenje obiskovalcev na spletnih straneh. Namen je prikazovanje oglasov, ki so relevantni in privlačni za posameznega uporabnika ter zato bolj dragoceni za založnike in oglaševalce tretjih oseb."
+    }
+  },
+  "closeButton": {
+    "ariaLabel": "Zapri"
+  },
+  "widget": {
+    "ariaLabel": "Upravljanje nastavitev piškotkov"
+  },
+  "aria": {
+    "toggleLabel": "Piškotki {name}",
+    "toggleLabelAlwaysOn": "Piškotki {name} (vedno aktivni)"
+  }
+}

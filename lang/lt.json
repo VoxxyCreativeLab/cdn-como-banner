@@ -1,0 +1,52 @@
+{
+  "banner": {
+    "title": "Naudojame slapukus kūrybiškumui skatinti ⚡",
+    "description": "Naudojame slapukus turiniui ir reklamai personalizuoti, socialinių tinklų funkcijoms teikti ir srautui analizuoti. Taip pat dalinamės informacija apie jūsų naudojimąsi mūsų svetaine su socialinių tinklų, reklamos ir analitikos partneriais, kurie gali ją sujungti su kita informacija, kurią jiems pateikėte arba kurią jie surinko naudojantis jų paslaugomis."
+  },
+  "tabs": {
+    "consent": "Sutikimas",
+    "details": "Išsamiau",
+    "about": "Apie"
+  },
+  "buttons": {
+    "allowAll": "Leisti visus",
+    "denyAll": "Atmesti visus",
+    "customize": "Tinkinti",
+    "allowSelection": "Leisti pasirinktus"
+  },
+  "about": {
+    "title": "Apie slapukus",
+    "description": "Slapukai yra maži tekstiniai failai, kuriuos svetainės gali naudoti naudotojo patirčiai efektyvinti. Įstatymai nurodo, kad galime saugoti slapukus jūsų įrenginyje, jei jie yra griežtai būtini šios svetainės veikimui. Visiems kitiems slapukų tipams mums reikia jūsų sutikimo.",
+    "privacyLink": "Daugiau informacijos rasite mūsų {link}.",
+    "privacyLinkText": "Privatumo politikoje",
+    "controllerText": "Šią svetainę valdo {controller}. Kaip duomenų valdytojas, esame atsakingi už jūsų asmens duomenų tvarkymą."
+  },
+  "categories": {
+    "necessary": {
+      "name": "Būtinieji",
+      "description": "Būtinieji slapukai padeda padaryti svetainę naudojamą, įgalindami pagrindines funkcijas, tokias kaip puslapių naršymas ir prieiga prie saugių zonų. Svetainė negali tinkamai veikti be šių slapukų."
+    },
+    "preferences": {
+      "name": "Nuostatų",
+      "description": "Nuostatų slapukai leidžia svetainei atsiminti informaciją, kuri keičia svetainės elgesį ar išvaizdą, pavyzdžiui, pageidaujamą kalbą ar regioną."
+    },
+    "analytics": {
+      "name": "Statistiniai",
+      "description": "Statistiniai slapukai padeda svetainių savininkams suprasti, kaip lankytojai sąveikauja su svetainėmis, anonimiškai renkant ir pateikiant informaciją."
+    },
+    "marketing": {
+      "name": "Rinkodaros",
+      "description": "Rinkodaros slapukai naudojami lankytojams sekti įvairiose svetainėse. Tikslas – rodyti reklamas, kurios yra aktualios ir patrauklios atskiram naudotojui ir todėl vertingesnės leidėjams bei trečiųjų šalių reklamuotojams."
+    }
+  },
+  "closeButton": {
+    "ariaLabel": "Uždaryti"
+  },
+  "widget": {
+    "ariaLabel": "Tvarkyti slapukų nuostatas"
+  },
+  "aria": {
+    "toggleLabel": "{name} slapukai",
+    "toggleLabelAlwaysOn": "{name} slapukai (visada aktyvūs)"
+  }
+}
