@@ -12,7 +12,8 @@
     "allowAll": "Αποδοχή όλων",
     "denyAll": "Απόρριψη όλων",
     "customize": "Προσαρμογή",
-    "allowSelection": "Αποδοχή επιλεγμένων"
+    "allowSelection": "Αποδοχή επιλεγμένων",
+    "managePreferences": "Διαχείριση προτιμήσεων"
   },
   "about": {
     "title": "Σχετικά με τα cookies",

@@ -12,7 +12,8 @@
     "allowAll": "Tillat alle",
     "denyAll": "Avvis alle",
     "customize": "Tilpass",
-    "allowSelection": "Tillat valgte"
+    "allowSelection": "Tillat valgte",
+    "managePreferences": "Administrer innstillinger"
   },
   "about": {
     "title": "Om informasjonskapsler",

@@ -12,7 +12,8 @@
     "allowAll": "Permite toate",
     "denyAll": "Respinge toate",
     "customize": "Personalizare",
-    "allowSelection": "Permite selecția"
+    "allowSelection": "Permite selecția",
+    "managePreferences": "Gestionare preferințe"
   },
   "about": {
     "title": "Despre cookie-uri",

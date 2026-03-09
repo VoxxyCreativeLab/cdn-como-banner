@@ -12,7 +12,8 @@
     "allowAll": "Luba kõik",
     "denyAll": "Keeldu kõigist",
     "customize": "Kohanda",
-    "allowSelection": "Luba valitud"
+    "allowSelection": "Luba valitud",
+    "managePreferences": "Halda eelistusi"
   },
   "about": {
     "title": "Küpsiste teave",

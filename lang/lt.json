@@ -12,7 +12,8 @@
     "allowAll": "Leisti visus",
     "denyAll": "Atmesti visus",
     "customize": "Tinkinti",
-    "allowSelection": "Leisti pasirinktus"
+    "allowSelection": "Leisti pasirinktus",
+    "managePreferences": "Tvarkyti nuostatas"
   },
   "about": {
     "title": "Apie slapukus",

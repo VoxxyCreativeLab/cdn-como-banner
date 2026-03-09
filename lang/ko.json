@@ -12,7 +12,8 @@
     "allowAll": "모두 허용",
     "denyAll": "모두 거부",
     "customize": "맞춤 설정",
-    "allowSelection": "선택 항목 허용"
+    "allowSelection": "선택 항목 허용",
+    "managePreferences": "환경설정 관리"
   },
   "about": {
     "title": "쿠키에 대하여",

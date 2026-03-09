@@ -12,7 +12,8 @@
     "allowAll": "Разреши всички",
     "denyAll": "Откажи всички",
     "customize": "Персонализиране",
-    "allowSelection": "Разреши избраните"
+    "allowSelection": "Разреши избраните",
+    "managePreferences": "Управление на предпочитанията"
   },
   "about": {
     "title": "Относно бисквитките",

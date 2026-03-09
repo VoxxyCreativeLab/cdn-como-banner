@@ -12,7 +12,8 @@
     "allowAll": "Tümünü kabul et",
     "denyAll": "Tümünü reddet",
     "customize": "Özelleştir",
-    "allowSelection": "Seçimi kabul et"
+    "allowSelection": "Seçimi kabul et",
+    "managePreferences": "Tercihleri yönet"
   },
   "about": {
     "title": "Çerezler Hakkında",

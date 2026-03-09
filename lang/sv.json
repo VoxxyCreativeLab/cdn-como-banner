@@ -12,7 +12,8 @@
     "allowAll": "Tillåt alla",
     "denyAll": "Neka alla",
     "customize": "Anpassa",
-    "allowSelection": "Tillåt valda"
+    "allowSelection": "Tillåt valda",
+    "managePreferences": "Hantera inställningar"
   },
   "about": {
     "title": "Om cookies",

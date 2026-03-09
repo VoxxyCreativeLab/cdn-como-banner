@@ -12,7 +12,8 @@
     "allowAll": "Прийняти всі",
     "denyAll": "Відхилити всі",
     "customize": "Налаштувати",
-    "allowSelection": "Прийняти вибране"
+    "allowSelection": "Прийняти вибране",
+    "managePreferences": "Керувати налаштуваннями"
   },
   "about": {
     "title": "Про файли cookie",

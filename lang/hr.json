@@ -12,7 +12,8 @@
     "allowAll": "Dopusti sve",
     "denyAll": "Odbij sve",
     "customize": "Prilagodi",
-    "allowSelection": "Dopusti odabrano"
+    "allowSelection": "Dopusti odabrano",
+    "managePreferences": "Upravljanje postavkama"
   },
   "about": {
     "title": "O kolačićima",

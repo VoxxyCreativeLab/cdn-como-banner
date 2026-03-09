@@ -12,7 +12,8 @@
     "allowAll": "Salli kaikki",
     "denyAll": "Hylkää kaikki",
     "customize": "Mukauta",
-    "allowSelection": "Salli valitut"
+    "allowSelection": "Salli valitut",
+    "managePreferences": "Hallitse asetuksia"
   },
   "about": {
     "title": "Tietoa evästeistä",

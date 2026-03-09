@@ -12,7 +12,8 @@
     "allowAll": "Dovoli vse",
     "denyAll": "Zavrni vse",
     "customize": "Prilagodi",
-    "allowSelection": "Dovoli izbrane"
+    "allowSelection": "Dovoli izbrane",
+    "managePreferences": "Upravljanje nastavitev"
   },
   "about": {
     "title": "O piškotkih",

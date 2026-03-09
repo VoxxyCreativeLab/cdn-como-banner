@@ -12,7 +12,8 @@
     "allowAll": "Chấp nhận tất cả",
     "denyAll": "Từ chối tất cả",
     "customize": "Tùy chỉnh",
-    "allowSelection": "Chấp nhận lựa chọn"
+    "allowSelection": "Chấp nhận lựa chọn",
+    "managePreferences": "Quản lý tùy chọn"
   },
   "about": {
     "title": "Về Cookie",

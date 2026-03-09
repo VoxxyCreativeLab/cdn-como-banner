@@ -55,14 +55,16 @@
                 requireExplicit: true,
                 honorGpc: false,
                 showCloseButton: false,
-                showBanner: true
+                showBanner: true,
+                buttonConfig: 'full'
             },
             'none': {
                 defaults: { necessary: true, preferences: true, analytics: true, marketing: true },
                 requireExplicit: false,
                 honorGpc: false,
                 showCloseButton: false,
-                showBanner: false
+                showBanner: false,
+                buttonConfig: 'none'
             }
         },
         fallbackModel: 'opt-in',
@@ -81,7 +83,7 @@
                     description: 'This website uses cookies. Please choose your cookie preferences.'
                 },
                 tabs: { consent: 'Consent', details: 'Details', about: 'About' },
-                buttons: { allowAll: 'Allow all', denyAll: 'Deny all', customize: 'Customize', allowSelection: 'Allow selection' },
+                buttons: { allowAll: 'Allow all', denyAll: 'Deny all', customize: 'Customize', allowSelection: 'Allow selection', managePreferences: 'Manage preferences' },
                 about: {
                     title: 'About Cookies',
                     description: 'Cookies are small text files stored on your device.',
@@ -323,6 +325,13 @@
     function getMode() {
         var name = getModelName();
         return globalConfig.models[name] || globalConfig.models[globalConfig.fallbackModel];
+    }
+
+    function getButtonConfig() {
+        var override = globalConfig.regionOverrides && globalConfig.regionOverrides[cfg.region];
+        if (override && override.buttonConfig) return override.buttonConfig;
+        var mode = getMode();
+        return mode.buttonConfig || 'full';
     }
 
     function getConsentExpiry() {
@@ -689,6 +698,23 @@
         var controllerText = cfg.dataController
             ? '<p class="como-text" style="margin-top:12px;">' + getText('about.controllerText').replace('{controller}', '<strong>' + cfg.dataController + '</strong>') + privacyLink + '</p>'
             : (privacyLink ? '<p class="como-text" style="margin-top:12px;">' + privacyLink.substring(1) + '</p>' : '');
+
+        /* Button config: determines which buttons appear on Consent and About panels */
+        var btnConfig = getButtonConfig();
+        var consentButtons = '';
+        if (btnConfig === 'full') {
+            consentButtons =
+                '<button class="como-btn como-deny-btn">' + getText('buttons.denyAll') + '</button>' +
+                '<button class="como-btn como-customize-btn">' + getText('buttons.customize') + '</button>' +
+                '<button class="como-btn como-accept-btn">' + getText('buttons.allowAll') + '</button>';
+        } else if (btnConfig === 'accept-manage') {
+            consentButtons =
+                '<button class="como-btn como-customize-btn">' + getText('buttons.managePreferences') + '</button>' +
+                '<button class="como-btn como-accept-btn">' + getText('buttons.allowAll') + '</button>';
+        } else if (btnConfig === 'notice') {
+            consentButtons =
+                '<button class="como-btn como-accept-btn">' + getText('buttons.allowAll') + '</button>';
+        }
 
         /* Font: self-host or use system stack.
            To use Plus Jakarta Sans, set window.comoFontUrl to your self-hosted CSS.
@@ -1117,9 +1143,7 @@
                     '</p>' +
                 '</div>' +
                 '<div class="como-actions">' +
-                    '<button class="como-btn como-deny-btn">' + getText('buttons.denyAll') + '</button>' +
-                    '<button class="como-btn como-customize-btn">' + getText('buttons.customize') + '</button>' +
-                    '<button class="como-btn como-accept-btn">' + getText('buttons.allowAll') + '</button>' +
+                    consentButtons +
                 '</div>' +
             '</div>' +
 
@@ -1144,9 +1168,7 @@
                     controllerText +
                 '</div>' +
                 '<div class="como-actions">' +
-                    '<button class="como-btn como-deny-btn">' + getText('buttons.denyAll') + '</button>' +
-                    '<button class="como-btn como-customize-btn">' + getText('buttons.customize') + '</button>' +
-                    '<button class="como-btn como-accept-btn">' + getText('buttons.allowAll') + '</button>' +
+                    consentButtons +
                 '</div>' +
             '</div>' +
 

@@ -12,7 +12,8 @@
     "allowAll": "Aceitar todos",
     "denyAll": "Rejeitar todos",
     "customize": "Personalizar",
-    "allowSelection": "Aceitar seleção"
+    "allowSelection": "Aceitar seleção",
+    "managePreferences": "Gerir preferências"
   },
   "about": {
     "title": "Sobre os cookies",

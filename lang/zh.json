@@ -12,7 +12,8 @@
     "allowAll": "全部允许",
     "denyAll": "全部拒绝",
     "customize": "自定义",
-    "allowSelection": "允许所选"
+    "allowSelection": "允许所选",
+    "managePreferences": "管理偏好设置"
   },
   "about": {
     "title": "关于 Cookie",

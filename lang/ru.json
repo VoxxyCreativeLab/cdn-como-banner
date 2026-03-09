@@ -12,7 +12,8 @@
     "allowAll": "Разрешить все",
     "denyAll": "Отклонить все",
     "customize": "Настроить",
-    "allowSelection": "Разрешить выбранное"
+    "allowSelection": "Разрешить выбранное",
+    "managePreferences": "Управление настройками"
   },
   "about": {
     "title": "О файлах cookie",

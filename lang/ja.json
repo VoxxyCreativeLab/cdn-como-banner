@@ -12,7 +12,8 @@
     "allowAll": "すべて許可",
     "denyAll": "すべて拒否",
     "customize": "カスタマイズ",
-    "allowSelection": "選択を許可"
+    "allowSelection": "選択を許可",
+    "managePreferences": "設定を管理"
   },
   "about": {
     "title": "Cookieについて",

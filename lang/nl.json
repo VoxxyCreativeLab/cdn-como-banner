@@ -12,7 +12,8 @@
     "allowAll": "Alles toestaan",
     "denyAll": "Alles weigeren",
     "customize": "Aanpassen",
-    "allowSelection": "Selectie toestaan"
+    "allowSelection": "Selectie toestaan",
+    "managePreferences": "Voorkeuren beheren"
   },
   "about": {
     "title": "Over cookies",

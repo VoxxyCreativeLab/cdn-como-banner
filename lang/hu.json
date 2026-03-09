@@ -12,7 +12,8 @@
     "allowAll": "Összes engedélyezése",
     "denyAll": "Összes elutasítása",
     "customize": "Testreszabás",
-    "allowSelection": "Kiválasztottak engedélyezése"
+    "allowSelection": "Kiválasztottak engedélyezése",
+    "managePreferences": "Beállítások kezelése"
   },
   "about": {
     "title": "A sütikről",

@@ -12,7 +12,8 @@
     "allowAll": "Povoliť všetky",
     "denyAll": "Odmietnuť všetky",
     "customize": "Prispôsobiť",
-    "allowSelection": "Povoliť vybrané"
+    "allowSelection": "Povoliť vybrané",
+    "managePreferences": "Spravovať predvoľby"
   },
   "about": {
     "title": "O cookies",

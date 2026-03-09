@@ -157,7 +157,8 @@
       "requireExplicit": true,
       "honorGpc": false,
       "showCloseButton": false,
-      "showBanner": true
+      "showBanner": true,
+      "buttonConfig": "full"
     },
     "opt-out": {
       "defaults": {
@@ -169,7 +170,8 @@
       "requireExplicit": false,
       "honorGpc": false,
       "showCloseButton": true,
-      "showBanner": true
+      "showBanner": true,
+      "buttonConfig": "accept-manage"
     },
     "opt-out-gpc": {
       "defaults": {
@@ -181,7 +183,8 @@
       "requireExplicit": false,
       "honorGpc": true,
       "showCloseButton": true,
-      "showBanner": true
+      "showBanner": true,
+      "buttonConfig": "accept-manage"
     },
     "none": {
       "defaults": {
@@ -193,10 +196,12 @@
       "requireExplicit": false,
       "honorGpc": false,
       "showCloseButton": false,
-      "showBanner": false
+      "showBanner": false,
+      "buttonConfig": "none"
     }
   },
   "fallbackModel": "opt-in",
+  "regionOverrides": {},
   "expiry": {
     "default": 365,
     "regions": {
@@ -251,7 +256,8 @@
         "allowAll": "Allow all",
         "denyAll": "Deny all",
         "customize": "Customize",
-        "allowSelection": "Allow selection"
+        "allowSelection": "Allow selection",
+        "managePreferences": "Manage preferences"
       },
       "about": {
         "title": "About Cookies",

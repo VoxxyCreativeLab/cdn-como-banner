@@ -12,7 +12,8 @@
     "allowAll": "Zezwól na wszystkie",
     "denyAll": "Odrzuć wszystkie",
     "customize": "Dostosuj",
-    "allowSelection": "Zezwól na wybrane"
+    "allowSelection": "Zezwól na wybrane",
+    "managePreferences": "Zarządzaj preferencjami"
   },
   "about": {
     "title": "Informacje o plikach cookie",

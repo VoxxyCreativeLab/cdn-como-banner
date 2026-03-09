@@ -12,7 +12,8 @@
     "allowAll": "Atļaut visas",
     "denyAll": "Noraidīt visas",
     "customize": "Pielāgot",
-    "allowSelection": "Atļaut izvēlētās"
+    "allowSelection": "Atļaut izvēlētās",
+    "managePreferences": "Pārvaldīt iestatījumus"
   },
   "about": {
     "title": "Par sīkdatnēm",

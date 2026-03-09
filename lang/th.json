@@ -12,7 +12,8 @@
     "allowAll": "ยอมรับทั้งหมด",
     "denyAll": "ปฏิเสธทั้งหมด",
     "customize": "ปรับแต่ง",
-    "allowSelection": "ยอมรับที่เลือก"
+    "allowSelection": "ยอมรับที่เลือก",
+    "managePreferences": "จัดการการตั้งค่า"
   },
   "about": {
     "title": "เกี่ยวกับคุกกี้",

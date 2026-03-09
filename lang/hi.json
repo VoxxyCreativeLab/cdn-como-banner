@@ -12,7 +12,8 @@
     "allowAll": "सभी स्वीकार करें",
     "denyAll": "सभी अस्वीकार करें",
     "customize": "अनुकूलित करें",
-    "allowSelection": "चयन स्वीकार करें"
+    "allowSelection": "चयन स्वीकार करें",
+    "managePreferences": "प्राथमिकताएँ प्रबंधित करें"
   },
   "about": {
     "title": "कुकीज़ के बारे में",

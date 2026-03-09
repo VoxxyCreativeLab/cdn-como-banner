@@ -12,7 +12,8 @@
     "allowAll": "Alle zulassen",
     "denyAll": "Alle ablehnen",
     "customize": "Anpassen",
-    "allowSelection": "Auswahl zulassen"
+    "allowSelection": "Auswahl zulassen",
+    "managePreferences": "Einstellungen verwalten"
   },
   "about": {
     "title": "Über Cookies",

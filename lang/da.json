@@ -12,7 +12,8 @@
     "allowAll": "Tillad alle",
     "denyAll": "Afvis alle",
     "customize": "Tilpas",
-    "allowSelection": "Tillad valgte"
+    "allowSelection": "Tillad valgte",
+    "managePreferences": "Administrer præferencer"
   },
   "about": {
     "title": "Om cookies",
