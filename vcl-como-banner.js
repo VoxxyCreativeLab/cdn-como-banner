@@ -114,7 +114,7 @@
     var LANG_CDN_BASE = 'https://cdn.jsdelivr.net/gh/VoxxyCreativeLab/cdn-como-banner@v1/lang/';
     var GEO_ENDPOINT_URL = 'https://como-geo.voxxycreativelab.workers.dev';
     var GEO_COOKIE_NAME = 'vcl_geo';
-    var GEO_COOKIE_EXPIRY = 1; // days
+    var GEO_COOKIE_EXPIRY = 30; // days (before consent; synced to consent expiry after)
 
     function loadConfig(callback) {
         if (window.comoConfig && typeof window.comoConfig === 'object') {
@@ -496,6 +496,7 @@
         consentState.permissions = permissions;
         consentState.explicitConsent = true;
 
+        var consentExpiry = getConsentExpiry();
         setCookie(cfg.cookieName, JSON.stringify({
             version: consentState.version,
             permissions: permissions,
@@ -503,7 +504,8 @@
             timestamp: new Date().toISOString(),
             region: cfg.region,
             gpcApplied: isGpcEnabled()
-        }), getConsentExpiry());
+        }), consentExpiry);
+        setCookie(GEO_COOKIE_NAME, cfg.region, consentExpiry);
 
         closeBanner();
         showWidget();
@@ -522,7 +524,7 @@
         var banner = document.getElementById(cfg.bannerId);
         var overlay = document.getElementById(cfg.overlayId);
         if (banner && overlay) {
-            banner.style.display = 'block';
+            banner.style.display = '';
             if (cfg.showOverlay) overlay.style.display = 'block';
             hideWidget();
 
@@ -737,6 +739,8 @@
                 'font-family: var(--como-font);' +
                 'z-index: 2147483647;' +
                 'overflow: hidden;' +
+                'display: flex;' +
+                'flex-direction: column;' +
                 'animation: comoPop 0.5s cubic-bezier(0.16, 1, 0.3, 1);' +
                 'box-shadow: 0 0 0 1px ' + pRgba(0.06) + ', 0 40px 80px ' + pRgba(0.18) + ', 0 0 80px rgba(239,35,60,0.06);' +
             '}' +
@@ -750,6 +754,7 @@
                 'padding: 24px 28px 0 28px;' +
                 'display: flex;' +
                 'align-items: center;' +
+                'flex-shrink: 0;' +
             '}' +
             '.como-logo-img {' +
                 'height: 36px;' +
@@ -785,6 +790,7 @@
 
             '.como-tabs {' +
                 'display: flex;' +
+                'flex-shrink: 0;' +
                 'margin: 20px 28px 0;' +
                 'background: var(--como-surface);' +
                 'border-radius: 12px;' +
@@ -815,9 +821,10 @@
 
             '.como-content {' +
                 'padding: 24px 28px;' +
-                'min-height: 100px;' +
+                'min-height: 0;' +
                 'max-height: 380px;' +
                 'overflow-y: auto;' +
+                'flex: 1;' +
             '}' +
             '.como-content::-webkit-scrollbar { width: 4px; }' +
             '.como-content::-webkit-scrollbar-track { background: transparent; }' +
@@ -943,6 +950,7 @@
                 'padding: 20px 28px 28px;' +
                 'display: flex;' +
                 'gap: 10px;' +
+                'flex-shrink: 0;' +
             '}' +
             '.como-btn {' +
                 'flex: 1;' +
@@ -965,7 +973,13 @@
             '}' +
 
             '.como-panel { display: none; }' +
-            '.como-panel.active { display: block; }' +
+            '.como-panel.active {' +
+                'display: flex;' +
+                'flex-direction: column;' +
+                'flex: 1;' +
+                'min-height: 0;' +
+                'overflow: hidden;' +
+            '}' +
 
             /* Re-open consent widget */
             '#' + cfg.widgetId + ' {' +
@@ -998,7 +1012,7 @@
                     'max-height: calc(100vh - 16px);' +
                     'border-radius: 16px;' +
                 '}' +
-                '.como-content { max-height: calc(70vh - 200px); }' +
+                '.como-content { max-height: none; }' +
                 '.como-header, .como-content, .como-actions {' +
                     'padding-left: 20px;' +
                     'padding-right: 20px;' +
@@ -1014,6 +1028,17 @@
                 '.como-logo-img { height: 30px; }' +
                 '#' + cfg.widgetId + ' { bottom: 16px; left: 16px; width: 44px; height: 44px; }' +
                 '#' + cfg.widgetId + ' svg { width: 20px; height: 20px; }' +
+            '}' +
+
+            '@media (max-height: 500px) {' +
+                '.como-content { max-height: none; }' +
+                '.como-actions { gap: 6px; padding-top: 12px; padding-bottom: 16px; }' +
+                '.como-btn { padding: 10px 18px; font-size: 13px; }' +
+                '.como-title { font-size: 18px; }' +
+                '.como-logo-img { height: 26px; }' +
+                '.como-header { padding-top: 14px; padding-bottom: 10px; }' +
+                '.como-tabs { margin-top: 10px; margin-bottom: 6px; }' +
+                '.como-tab { padding: 7px 10px; font-size: 12px; }' +
             '}' +
 
             '@media (prefers-reduced-motion: reduce) {' +
@@ -1191,6 +1216,7 @@
                 consentState.permissions = allGranted;
                 consentState.explicitConsent = false;
                 window.comoConsent = consentState;
+                var autoGrantExpiry = getConsentExpiry();
                 setCookie(cfg.cookieName, JSON.stringify({
                     version: consentState.version,
                     permissions: allGranted,
@@ -1198,7 +1224,8 @@
                     timestamp: new Date().toISOString(),
                     region: cfg.region,
                     gpcApplied: false
-                }), getConsentExpiry());
+                }), autoGrantExpiry);
+                setCookie(GEO_COOKIE_NAME, cfg.region, autoGrantExpiry);
                 sendConsentEvents('auto-grant', allGranted);
                 return;
             }
@@ -1340,6 +1367,7 @@
                 permissions.necessary = true;
                 consentState.permissions = Object.assign({}, consentState.permissions, permissions);
                 window.comoConsent = consentState;
+                var apiExpiry = getConsentExpiry();
                 setCookie(cfg.cookieName, JSON.stringify({
                     version: consentState.version,
                     permissions: consentState.permissions,
@@ -1347,7 +1375,8 @@
                     timestamp: new Date().toISOString(),
                     region: cfg.region,
                     gpcApplied: isGpcEnabled()
-                }), getConsentExpiry());
+                }), apiExpiry);
+                setCookie(GEO_COOKIE_NAME, cfg.region, apiExpiry);
                 sendConsentEvents('api_update', consentState.permissions);
                 logConsent('api_update', consentState.permissions);
             }
