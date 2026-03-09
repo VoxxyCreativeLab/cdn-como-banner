@@ -529,11 +529,35 @@
        No cookie wall: page remains scrollable
        ═══════════════════════════════════════════════ */
 
+    /* Fallback for browsers without dvh support: use window.innerHeight */
+    function fixBannerHeight() {
+        var banner = document.getElementById(cfg.bannerId);
+        if (!banner || banner.style.display === 'none') return;
+        var gap = window.innerWidth <= 600 ? 16 : 32;
+        banner.style.maxHeight = (window.innerHeight - gap) + 'px';
+    }
+
+    var dvhSupported = (function () {
+        try {
+            var el = document.createElement('div');
+            el.style.maxHeight = '100dvh';
+            return el.style.maxHeight === '100dvh';
+        } catch (e) { return false; }
+    })();
+
+    if (!dvhSupported) {
+        window.addEventListener('resize', fixBannerHeight);
+        window.addEventListener('orientationchange', function () {
+            setTimeout(fixBannerHeight, 150);
+        });
+    }
+
     function showBanner() {
         var banner = document.getElementById(cfg.bannerId);
         var overlay = document.getElementById(cfg.overlayId);
         if (banner && overlay) {
             banner.style.display = '';
+            if (!dvhSupported) fixBannerHeight();
             if (cfg.showOverlay) overlay.style.display = 'block';
             hideWidget();
 
@@ -758,7 +782,7 @@
                 'transform: translate(-50%, -50%);' +
                 'width: 900px;' +
                 'max-width: calc(100vw - 32px);' +
-                'max-height: calc(100vh - 32px);' +
+                'max-height: calc(100dvh - 32px);' +
                 'background: var(--como-bg);' +
                 'border-radius: var(--como-radius);' +
                 'border: 1px solid var(--como-border);' +
@@ -1035,7 +1059,7 @@
             '@media (max-width: 600px) {' +
                 '.como-banner {' +
                     'width: calc(100vw - 16px);' +
-                    'max-height: calc(100vh - 16px);' +
+                    'max-height: calc(100dvh - 16px);' +
                     'border-radius: 16px;' +
                 '}' +
                 '.como-content { max-height: none; }' +
