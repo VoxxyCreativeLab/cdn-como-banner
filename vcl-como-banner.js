@@ -37,6 +37,8 @@
         textColor: window.comoTextColor || '#0b4650',
         showOverlay: !window.comoDisableOverlay,
         buttonStyle: window.comoButtonStyle || 'filled',
+        buttonTextColor: window.comoButtonTextColor || 'auto',
+        borderWidth: window.comoBorderWidth || '2px',
         cornerStyle: window.comoCornerStyle || 'rounded',
         surfaceIntensity: window.comoSurfaceIntensity || 'auto'
     };
@@ -711,8 +713,15 @@
         var bRgb = hexToRgb(cfg.bgColor);
         function pRgba(o) { return 'rgba(' + pRgb[0] + ',' + pRgb[1] + ',' + pRgb[2] + ',' + o + ')'; }
         function tRgba(o) { return 'rgba(' + tRgb[0] + ',' + tRgb[1] + ',' + tRgb[2] + ',' + o + ')'; }
-        /* Auto-compute button text: white on dark primary, text color on light primary */
-        var btnText = getLuma(pRgb) < 0.5 ? '#ffffff' : cfg.textColor;
+        /* Auto-compute button text: white on dark primary, black on light primary.
+           Override with cfg.buttonTextColor if set (not 'auto'). */
+        var btnText = cfg.buttonTextColor !== 'auto'
+            ? cfg.buttonTextColor
+            : (getLuma(pRgb) < 0.5 ? '#ffffff' : '#000000');
+        /* Outline color: custom buttonTextColor for outline buttons, or primary when auto */
+        var btnOutline = cfg.buttonTextColor !== 'auto' ? cfg.buttonTextColor : cfg.primaryColor;
+        var oRgb = hexToRgb(btnOutline);
+        function oRgba(o) { return 'rgba(' + oRgb[0] + ',' + oRgb[1] + ',' + oRgb[2] + ',' + o + ')'; }
         var primaryDark = 'rgb(' +
             Math.max(0, Math.round(pRgb[0] * 0.82)) + ',' +
             Math.max(0, Math.round(pRgb[1] * 0.82)) + ',' +
@@ -795,6 +804,8 @@
             ':root {' +
                 '--como-bg: ' + cfg.bgColor + ';' +
                 '--como-btn-text: ' + btnText + ';' +
+                '--como-btn-outline: ' + btnOutline + ';' +
+                '--como-border-width: ' + cfg.borderWidth + ';' +
                 '--como-primary: ' + cfg.primaryColor + ';' +
                 '--como-text: ' + cfg.textColor + ';' +
                 '--como-surface: ' + surface + ';' +
@@ -916,9 +927,13 @@
             (cfg.buttonStyle === 'outline'
                 ? '.como-tab.active {' +
                       'background: transparent;' +
-                      'color: var(--como-primary);' +
-                      'border: 2px solid var(--como-primary);' +
+                      'color: var(--como-btn-outline);' +
+                      'border: var(--como-border-width) solid var(--como-btn-outline);' +
                       'box-shadow: none;' +
+                  '}'
+                : cfg.buttonStyle === 'filled-outline'
+                ? '.como-tab.active {' +
+                      'border: var(--como-border-width) solid var(--como-btn-text);' +
                   '}'
                 : ''
             ) +
@@ -1067,20 +1082,33 @@
                 'cursor: pointer;' +
                 'transition: all 0.25s ease;' +
                 'letter-spacing: 0.3px;' +
-                'border: 2px solid transparent;' +
+                'border: var(--como-border-width) solid transparent;' +
             '}' +
 
             /* Button style variants */
             (cfg.buttonStyle === 'outline'
-                /* Outline: primary-colored border + text, transparent bg */
+                /* Outline: outline-colored border + text, transparent bg */
                 ? '.como-btn {' +
                       'background: transparent;' +
-                      'color: var(--como-primary);' +
-                      'border-color: var(--como-primary);' +
+                      'color: var(--como-btn-outline);' +
+                      'border-color: var(--como-btn-outline);' +
                       'box-shadow: none;' +
                   '}' +
                   '.como-btn:hover {' +
-                      'background: ' + pRgba(0.15) + ';' +
+                      'background: ' + oRgba(0.15) + ';' +
+                  '}'
+                : cfg.buttonStyle === 'filled-outline'
+                /* Filled-outline: solid primary bg + visible btn-text border */
+                ? '.como-btn {' +
+                      'background: var(--como-primary);' +
+                      'color: var(--como-btn-text);' +
+                      'border-color: var(--como-btn-text);' +
+                      'box-shadow: 0 2px 8px ' + pRgba(0.25) + ';' +
+                  '}' +
+                  '.como-btn:hover {' +
+                      'background: var(--como-primary-dark);' +
+                      'border-color: var(--como-btn-text);' +
+                      'box-shadow: 0 4px 12px ' + pRgba(0.35) + ';' +
                   '}'
                 /* Filled (default): solid primary bg, auto-contrast text */
                 : '.como-btn {' +
