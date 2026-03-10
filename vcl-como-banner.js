@@ -14,7 +14,7 @@
        window.comoFontUrl         = 'https://example.com/fonts/plus-jakarta-sans.css';
        window.comoLogEndpoint     = 'https://api.example.com/consent-log';
        window.comoPrimaryColor    = '#0b4650';   // buttons, tabs, active states
-       window.comoAccentColor     = '#e6ff2b';   // button text, highlights
+       // button text auto-computed from primary luminance
        window.comoBgColor         = '#f9f7f2';   // banner background
        window.comoTextColor       = '#0b4650';   // body text in banner
        ═══════════════════════════════════════════════ */
@@ -32,7 +32,7 @@
         fontUrl: window.comoFontUrl || '',
         logEndpoint: window.comoLogEndpoint || '',
         primaryColor: window.comoPrimaryColor || '#0b4650',
-        accentColor: window.comoAccentColor || '#e6ff2b',
+        // accentColor removed — button text is auto-computed from primary luminance
         bgColor: window.comoBgColor || '#f9f7f2',
         textColor: window.comoTextColor || '#0b4650',
         showOverlay: !window.comoDisableOverlay,
@@ -708,44 +708,48 @@
         /* Color computation for dynamic theming */
         var pRgb = hexToRgb(cfg.primaryColor);
         var tRgb = hexToRgb(cfg.textColor);
-        var aRgb = hexToRgb(cfg.accentColor);
         var bRgb = hexToRgb(cfg.bgColor);
         function pRgba(o) { return 'rgba(' + pRgb[0] + ',' + pRgb[1] + ',' + pRgb[2] + ',' + o + ')'; }
         function tRgba(o) { return 'rgba(' + tRgb[0] + ',' + tRgb[1] + ',' + tRgb[2] + ',' + o + ')'; }
-        function aRgba(o) { return 'rgba(' + aRgb[0] + ',' + aRgb[1] + ',' + aRgb[2] + ',' + o + ')'; }
+        /* Auto-compute button text: white on dark primary, text color on light primary */
+        var btnText = getLuma(pRgb) < 0.5 ? '#ffffff' : cfg.textColor;
         var primaryDark = 'rgb(' +
             Math.max(0, Math.round(pRgb[0] * 0.82)) + ',' +
             Math.max(0, Math.round(pRgb[1] * 0.82)) + ',' +
             Math.max(0, Math.round(pRgb[2] * 0.82)) + ')';
         /* Surface intensity: how much the bg shifts for tabs/category headers.
-           'auto' uses luminance to pick a sensible factor. Manual presets override. */
-        var surfaceFactor;
+           Direction is always luminance-aware: light bg → darken, dark bg → lighten.
+           Presets control magnitude only. Auto picks both magnitude and direction. */
         var si = cfg.surfaceIntensity;
-        if (si === 'subtle') { surfaceFactor = 0.10; }
-        else if (si === 'light') { surfaceFactor = 0.25; }
-        else if (si === 'medium') { surfaceFactor = 0.40; }
-        else if (si === 'strong') { surfaceFactor = 0.55; }
-        else {
-            /* auto — luminance-aware */
-            var bgLuma = getLuma(bRgb);
-            if (bgLuma > 0.85) { surfaceFactor = -0.15; }      /* very light bg: darken visibly */
-            else if (bgLuma > 0.6) { surfaceFactor = 0.20; }   /* light bg */
-            else if (bgLuma > 0.3) { surfaceFactor = 0.15; }   /* mid bg */
-            else { surfaceFactor = 0.20; }                      /* dark bg: lighten moderately */
+        var bgLuma = getLuma(bRgb);
+        var darkBg = bgLuma < 0.5;
+
+        var magnitudeMap = { subtle: 0.06, light: 0.12, medium: 0.20, strong: 0.30 };
+        var magnitude;
+
+        if (si === 'auto' || !magnitudeMap[si]) {
+            /* auto — luminance-aware magnitude */
+            if (bgLuma > 0.85) { magnitude = 0.10; }
+            else if (bgLuma > 0.6) { magnitude = 0.12; }
+            else if (bgLuma > 0.3) { magnitude = 0.15; }
+            else { magnitude = 0.20; }
+        } else {
+            magnitude = magnitudeMap[si];
         }
 
         var surface;
-        if (surfaceFactor >= 0) {
+        if (darkBg) {
+            /* Lighten: blend toward white */
             surface = 'rgb(' +
-                Math.min(255, Math.round(bRgb[0] + (255 - bRgb[0]) * surfaceFactor)) + ',' +
-                Math.min(255, Math.round(bRgb[1] + (255 - bRgb[1]) * surfaceFactor)) + ',' +
-                Math.min(255, Math.round(bRgb[2] + (255 - bRgb[2]) * surfaceFactor)) + ')';
+                Math.min(255, Math.round(bRgb[0] + (255 - bRgb[0]) * magnitude)) + ',' +
+                Math.min(255, Math.round(bRgb[1] + (255 - bRgb[1]) * magnitude)) + ',' +
+                Math.min(255, Math.round(bRgb[2] + (255 - bRgb[2]) * magnitude)) + ')';
         } else {
-            var df = -surfaceFactor;
+            /* Darken: blend toward black */
             surface = 'rgb(' +
-                Math.max(0, Math.round(bRgb[0] * (1 - df))) + ',' +
-                Math.max(0, Math.round(bRgb[1] * (1 - df))) + ',' +
-                Math.max(0, Math.round(bRgb[2] * (1 - df))) + ')';
+                Math.max(0, Math.round(bRgb[0] * (1 - magnitude))) + ',' +
+                Math.max(0, Math.round(bRgb[1] * (1 - magnitude))) + ',' +
+                Math.max(0, Math.round(bRgb[2] * (1 - magnitude))) + ')';
         }
 
         var privacyLink = cfg.privacyPolicyUrl
@@ -790,7 +794,7 @@
 
             ':root {' +
                 '--como-bg: ' + cfg.bgColor + ';' +
-                '--como-accent: ' + cfg.accentColor + ';' +
+                '--como-btn-text: ' + btnText + ';' +
                 '--como-primary: ' + cfg.primaryColor + ';' +
                 '--como-text: ' + cfg.textColor + ';' +
                 '--como-surface: ' + surface + ';' +
@@ -904,7 +908,7 @@
             '.como-tab:hover { color: var(--como-text); }' +
             '.como-tab.active {' +
                 'background: var(--como-primary);' +
-                'color: var(--como-accent);' +
+                'color: var(--como-btn-text);' +
                 'box-shadow: 0 2px 8px ' + pRgba(0.25) + ';' +
             '}' +
 
@@ -912,8 +916,8 @@
             (cfg.buttonStyle === 'outline'
                 ? '.como-tab.active {' +
                       'background: transparent;' +
-                      'color: var(--como-text);' +
-                      'border: 2px solid var(--como-text);' +
+                      'color: var(--como-primary);' +
+                      'border: 2px solid var(--como-primary);' +
                       'box-shadow: none;' +
                   '}'
                 : ''
@@ -967,7 +971,7 @@
                 'font-family: var(--como-font);' +
                 'transition: background 0.2s ease;' +
             '}' +
-            '.como-category-header:hover { background: ' + aRgba(0.12) + '; }' +
+            '.como-category-header:hover { background: ' + pRgba(0.12) + '; }' +
             '.como-category-info {' +
                 'display: flex;' +
                 'align-items: center;' +
@@ -999,7 +1003,7 @@
             '}' +
             '.como-toggle.active {' +
                 'background: var(--como-primary);' +
-                'border-color: ' + aRgba(0.3) + ';' +
+                'border-color: ' + pRgba(0.3) + ';' +
                 'box-shadow: 0 0 14px ' + pRgba(0.2) + ';' +
             '}' +
             '.como-toggle::after {' +
@@ -1014,7 +1018,7 @@
             '}' +
             '.como-toggle.active::after {' +
                 'transform: translateX(20px);' +
-                'background: var(--como-accent);' +
+                'background: var(--como-btn-text);' +
             '}' +
             '.como-toggle.disabled {' +
                 'opacity: 0.4;' +
@@ -1068,20 +1072,20 @@
 
             /* Button style variants */
             (cfg.buttonStyle === 'outline'
-                /* Outline: text-colored border + text, transparent bg */
+                /* Outline: primary-colored border + text, transparent bg */
                 ? '.como-btn {' +
                       'background: transparent;' +
-                      'color: var(--como-text);' +
-                      'border-color: var(--como-text);' +
+                      'color: var(--como-primary);' +
+                      'border-color: var(--como-primary);' +
                       'box-shadow: none;' +
                   '}' +
                   '.como-btn:hover {' +
-                      'background: ' + tRgba(0.08) + ';' +
+                      'background: ' + pRgba(0.15) + ';' +
                   '}'
-                /* Filled (default): solid primary bg, accent text */
+                /* Filled (default): solid primary bg, auto-contrast text */
                 : '.como-btn {' +
                       'background: var(--como-primary);' +
-                      'color: var(--como-accent);' +
+                      'color: var(--como-btn-text);' +
                       'border-color: var(--como-primary);' +
                       'box-shadow: 0 2px 8px ' + pRgba(0.25) + ';' +
                   '}' +
@@ -1107,7 +1111,7 @@
                 'bottom: 20px; left: 20px;' +
                 'width: 48px; height: 48px;' +
                 'background: var(--como-primary);' +
-                'border: 2px solid ' + aRgba(0.3) + ';' +
+                'border: 2px solid ' + pRgba(0.3) + ';' +
                 'border-radius: 50%;' +
                 'cursor: pointer;' +
                 'z-index: 2147483645;' +
@@ -1123,7 +1127,7 @@
             '}' +
             '#' + cfg.widgetId + ' svg {' +
                 'width: 22px; height: 22px;' +
-                'fill: var(--como-accent);' +
+                'fill: var(--como-btn-text);' +
             '}' +
 
             '@media (max-width: 600px) {' +
