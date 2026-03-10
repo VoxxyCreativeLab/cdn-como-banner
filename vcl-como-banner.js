@@ -1453,7 +1453,16 @@
             for (var h = 0; h < headers.length; h++) {
                 headers[h].addEventListener('click', function (e) {
                     if (e.target.classList.contains('como-toggle')) return;
-                    toggleCategory(this);
+                    var nameSpan = this.querySelector('.como-category-name');
+                    var nameRect = nameSpan.getBoundingClientRect();
+                    if (e.clientX <= nameRect.right) {
+                        toggleCategory(this);
+                    } else {
+                        var toggle = this.querySelector('.como-toggle');
+                        if (toggle && !toggle.classList.contains('disabled')) {
+                            toggleSwitch(toggle);
+                        }
+                    }
                 });
             }
 
