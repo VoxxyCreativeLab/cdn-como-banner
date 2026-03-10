@@ -48,7 +48,7 @@
         textColor: window.comoTextColor || '#0b4650',
         showOverlay: !window.comoDisableOverlay,
         buttonStyle: window.comoButtonStyle || 'filled',
-        buttonTextColor: window.comoButtonTextColor || 'auto',
+        buttonTextColor: window.comoButtonTextColor || '#e6ff2b',
         borderWidth: window.comoBorderWidth || '2px',
         cornerStyle: window.comoCornerStyle || 'rounded',
         surfaceIntensity: window.comoSurfaceIntensity || 'auto',
