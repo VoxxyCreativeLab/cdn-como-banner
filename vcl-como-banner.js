@@ -36,6 +36,7 @@
         bannerId: 'comoBanner',
         overlayId: 'comoOverlay',
         widgetId: 'comoWidget',
+        containerId: 'comoContainer',
         region: 'unknown',
         privacyPolicyUrl: window.comoPrivacyUrl || '',
         dataController: window.comoDataController || '',
@@ -580,7 +581,10 @@
         if (banner && overlay) {
             banner.style.display = '';
             if (!dvhSupported) fixBannerHeight();
-            if (cfg.showOverlay) overlay.style.display = 'block';
+            if (cfg.showOverlay) {
+                overlay.style.display = 'block';
+                document.documentElement.classList.add('como-blur');
+            }
             hideWidget();
 
             /* Sync toggle states to stored consent (if any) */
@@ -607,7 +611,10 @@
         var overlay = document.getElementById(cfg.overlayId);
         if (banner && overlay) {
             banner.style.display = 'none';
-            if (cfg.showOverlay) overlay.style.display = 'none';
+            if (cfg.showOverlay) {
+                overlay.style.display = 'none';
+                document.documentElement.classList.remove('como-blur');
+            }
         }
     }
 
@@ -835,13 +842,16 @@
                 '--como-font: ' + fontFamily + ';' +
             '}' +
 
+            'html.como-blur > body > *:not(#' + cfg.containerId + ') {' +
+                'filter: blur(4px);' +
+                'transition: filter 0.2s ease;' +
+            '}' +
+
             '#' + cfg.overlayId + ' {' +
                 'position: fixed;' +
                 'top: 0; left: 0;' +
                 'width: 100%; height: 100%;' +
                 'background: ' + pRgba(0.4) + ';' +
-                'backdrop-filter: blur(8px);' +
-                '-webkit-backdrop-filter: blur(8px);' +
                 'z-index: 2147483646;' +
                 'display: none;' +
             '}' +
@@ -1397,6 +1407,7 @@
             }
 
             var container = document.createElement('div');
+            container.id = cfg.containerId;
             container.innerHTML = createBannerHTML();
             body.appendChild(container);
 
