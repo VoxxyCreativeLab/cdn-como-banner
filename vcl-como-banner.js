@@ -35,7 +35,10 @@
         accentColor: window.comoAccentColor || '#e6ff2b',
         bgColor: window.comoBgColor || '#f9f7f2',
         textColor: window.comoTextColor || '#0b4650',
-        showOverlay: !window.comoDisableOverlay
+        showOverlay: !window.comoDisableOverlay,
+        buttonStyle: window.comoButtonStyle || 'filled',
+        cornerStyle: window.comoCornerStyle || 'rounded',
+        surfaceIntensity: window.comoSurfaceIntensity || 'auto'
     };
 
     /* ═══════════════════════════════════════════════
@@ -426,6 +429,10 @@
         return [(num >> 16) & 255, (num >> 8) & 255, num & 255];
     }
 
+    function getLuma(rgb) {
+        return (rgb[0] * 0.2126 + rgb[1] * 0.7152 + rgb[2] * 0.0722) / 255;
+    }
+
     /* ═══════════════════════════════════════════════
        CONSENT MODE UPDATE & EVENTS
        ═══════════════════════════════════════════════ */
@@ -710,10 +717,36 @@
             Math.max(0, Math.round(pRgb[0] * 0.82)) + ',' +
             Math.max(0, Math.round(pRgb[1] * 0.82)) + ',' +
             Math.max(0, Math.round(pRgb[2] * 0.82)) + ')';
-        var surface = 'rgb(' +
-            Math.min(255, Math.round(bRgb[0] + (255 - bRgb[0]) * 0.5)) + ',' +
-            Math.min(255, Math.round(bRgb[1] + (255 - bRgb[1]) * 0.5)) + ',' +
-            Math.min(255, Math.round(bRgb[2] + (255 - bRgb[2]) * 0.5)) + ')';
+        /* Surface intensity: how much the bg shifts for tabs/category headers.
+           'auto' uses luminance to pick a sensible factor. Manual presets override. */
+        var surfaceFactor;
+        var si = cfg.surfaceIntensity;
+        if (si === 'subtle') { surfaceFactor = 0.10; }
+        else if (si === 'light') { surfaceFactor = 0.25; }
+        else if (si === 'medium') { surfaceFactor = 0.40; }
+        else if (si === 'strong') { surfaceFactor = 0.55; }
+        else {
+            /* auto — luminance-aware */
+            var bgLuma = getLuma(bRgb);
+            if (bgLuma > 0.85) { surfaceFactor = -0.15; }      /* very light bg: darken visibly */
+            else if (bgLuma > 0.6) { surfaceFactor = 0.20; }   /* light bg */
+            else if (bgLuma > 0.3) { surfaceFactor = 0.15; }   /* mid bg */
+            else { surfaceFactor = 0.20; }                      /* dark bg: lighten moderately */
+        }
+
+        var surface;
+        if (surfaceFactor >= 0) {
+            surface = 'rgb(' +
+                Math.min(255, Math.round(bRgb[0] + (255 - bRgb[0]) * surfaceFactor)) + ',' +
+                Math.min(255, Math.round(bRgb[1] + (255 - bRgb[1]) * surfaceFactor)) + ',' +
+                Math.min(255, Math.round(bRgb[2] + (255 - bRgb[2]) * surfaceFactor)) + ')';
+        } else {
+            var df = -surfaceFactor;
+            surface = 'rgb(' +
+                Math.max(0, Math.round(bRgb[0] * (1 - df))) + ',' +
+                Math.max(0, Math.round(bRgb[1] * (1 - df))) + ',' +
+                Math.max(0, Math.round(bRgb[2] * (1 - df))) + ')';
+        }
 
         var privacyLink = cfg.privacyPolicyUrl
             ? ' ' + getText('about.privacyLink').replace('{link}', '<a href="' + cfg.privacyPolicyUrl + '" target="_blank" rel="noopener" style="color:var(--como-text);text-decoration:underline;">' + getText('about.privacyLinkText') + '</a>')
@@ -748,6 +781,10 @@
             ? '"Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif'
             : '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif';
 
+        /* Corner radius presets: [banner, buttons/tabs, tab pills] */
+        var radiusMap = { pill: ['40px', '24px', '20px'], rounded: ['20px', '12px', '9px'], soft: ['8px', '6px', '4px'], sharp: ['2px', '2px', '1px'] };
+        var radii = radiusMap[cfg.cornerStyle] || radiusMap.rounded;
+
         var html = '<style>' +
             fontCSS +
 
@@ -761,7 +798,9 @@
                 '--como-text-dim: ' + tRgba(0.7) + ';' +
                 '--como-border: ' + tRgba(0.12) + ';' +
                 '--como-border-hover: ' + tRgba(0.22) + ';' +
-                '--como-radius: 20px;' +
+                '--como-radius: ' + radii[0] + ';' +
+                '--como-radius-inner: ' + radii[1] + ';' +
+                '--como-radius-sm: ' + radii[2] + ';' +
                 '--como-font: ' + fontFamily + ';' +
             '}' +
 
@@ -843,7 +882,7 @@
                 'flex-shrink: 0;' +
                 'margin: 20px 28px 0;' +
                 'background: var(--como-surface);' +
-                'border-radius: 12px;' +
+                'border-radius: var(--como-radius-inner);' +
                 'padding: 4px;' +
                 'gap: 4px;' +
                 'border: 1px solid var(--como-border);' +
@@ -858,7 +897,7 @@
                 'font-weight: 500;' +
                 'color: var(--como-text-dim);' +
                 'cursor: pointer;' +
-                'border-radius: 9px;' +
+                'border-radius: var(--como-radius-sm);' +
                 'transition: all 0.25s ease;' +
                 'letter-spacing: 0.3px;' +
             '}' +
@@ -868,6 +907,17 @@
                 'color: var(--como-accent);' +
                 'box-shadow: 0 2px 8px ' + pRgba(0.25) + ';' +
             '}' +
+
+            /* Outline mode: active tab also outlined */
+            (cfg.buttonStyle === 'outline'
+                ? '.como-tab.active {' +
+                      'background: transparent;' +
+                      'color: var(--como-text);' +
+                      'border: 2px solid var(--como-text);' +
+                      'box-shadow: none;' +
+                  '}'
+                : ''
+            ) +
 
             '.como-content {' +
                 'padding: 24px 28px;' +
@@ -899,7 +949,7 @@
             '.como-category {' +
                 'margin-bottom: 10px;' +
                 'border: 1px solid var(--como-border);' +
-                'border-radius: 14px;' +
+                'border-radius: var(--como-radius-inner);' +
                 'overflow: hidden;' +
                 'transition: border-color 0.2s ease;' +
             '}' +
@@ -1002,25 +1052,45 @@
                 'gap: 10px;' +
                 'flex-shrink: 0;' +
             '}' +
+            /* Button base — shared by all styles */
             '.como-btn {' +
                 'flex: 1;' +
                 'padding: 14px 22px;' +
-                'border-radius: 12px;' +
+                'border-radius: var(--como-radius-inner);' +
                 'font-family: var(--como-font);' +
                 'font-weight: 600;' +
                 'font-size: 14px;' +
                 'cursor: pointer;' +
                 'transition: all 0.25s ease;' +
                 'letter-spacing: 0.3px;' +
-                'background: var(--como-primary);' +
-                'color: var(--como-accent);' +
-                'border: none;' +
-                'box-shadow: 0 2px 8px ' + pRgba(0.25) + ';' +
+                'border: 2px solid transparent;' +
             '}' +
-            '.como-btn:hover {' +
-                'background: var(--como-primary-dark);' +
-                'box-shadow: 0 4px 12px ' + pRgba(0.35) + ';' +
-            '}' +
+
+            /* Button style variants */
+            (cfg.buttonStyle === 'outline'
+                /* Outline: text-colored border + text, transparent bg */
+                ? '.como-btn {' +
+                      'background: transparent;' +
+                      'color: var(--como-text);' +
+                      'border-color: var(--como-text);' +
+                      'box-shadow: none;' +
+                  '}' +
+                  '.como-btn:hover {' +
+                      'background: ' + tRgba(0.08) + ';' +
+                  '}'
+                /* Filled (default): solid primary bg, accent text */
+                : '.como-btn {' +
+                      'background: var(--como-primary);' +
+                      'color: var(--como-accent);' +
+                      'border-color: var(--como-primary);' +
+                      'box-shadow: 0 2px 8px ' + pRgba(0.25) + ';' +
+                  '}' +
+                  '.como-btn:hover {' +
+                      'background: var(--como-primary-dark);' +
+                      'border-color: var(--como-primary-dark);' +
+                      'box-shadow: 0 4px 12px ' + pRgba(0.35) + ';' +
+                  '}'
+            ) +
 
             '.como-panel { display: none; }' +
             '.como-panel.active {' +
@@ -1060,7 +1130,7 @@
                 '.como-banner {' +
                     'width: calc(100vw - 16px);' +
                     'max-height: calc(100dvh - 16px);' +
-                    'border-radius: 16px;' +
+                    'border-radius: var(--como-radius);' +
                 '}' +
                 '.como-content { max-height: none; }' +
                 '.como-header, .como-content, .como-actions {' +
