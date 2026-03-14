@@ -19,6 +19,8 @@
        window.comoTextColor       = '#0b4650';   // body text in banner
        window.comoWidgetPosition  = 'left';      // widget position: 'left' or 'right'
        window.comoWidgetLogoUrl   = '';           // override widget logo (URL to image)
+       window.comoWidgetBgColor   = '#0b4650';   // widget background color
+       window.comoWidgetContentColor = '#e6ff2b'; // widget icon & border color
        ═══════════════════════════════════════════════ */
 
     /* Voxxy Creative Lab — brand palette (used by tiered branding) */
@@ -54,7 +56,9 @@
         cornerStyle: window.comoCornerStyle || 'rounded',
         surfaceIntensity: window.comoSurfaceIntensity || 'auto',
         widgetPosition: window.comoWidgetPosition || 'left',
-        widgetLogoUrl: window.comoWidgetLogoUrl || ''
+        widgetLogoUrl: window.comoWidgetLogoUrl || '',
+        widgetBgColor: window.comoWidgetBgColor || '#0b4650',
+        widgetContentColor: window.comoWidgetContentColor || '#e6ff2b'
     };
 
     /* ═══════════════════════════════════════════════
@@ -687,12 +691,10 @@
             if (!toggles[i].classList.contains('active')) { allActive = false; }
             if (toggles[i].classList.contains('active')) { noneActive = false; }
         }
-        var partial = !allActive && !noneActive;
-
         if (getModelName() === 'opt-in') {
-            /* 3-button layout: show/hide middle "Allow selection" when partial */
+            /* 3-button layout: enable "Allow selection" when any non-necessary toggle is on */
             var selBtn = document.getElementById('comoAllowSelBtn');
-            if (selBtn) selBtn.disabled = !partial;
+            if (selBtn) selBtn.disabled = noneActive;
         } else {
             /* opt-out / opt-out-gpc: dynamic left button */
             var denySelBtn = document.getElementById('comoDenySelBtn');
@@ -763,9 +765,8 @@
         var si = cfg.surfaceIntensity;
         var bgLuma = getLuma(bRgb);
         var darkBg = bgLuma < 0.5;
-        /* Widget glow: btn-text on dark bg (bright glow), primary on light bg (dark shadow) */
-        var glowRgb = darkBg ? hexToRgb(btnText) : pRgb;
-        function glowRgba(o) { return 'rgba(' + glowRgb[0] + ',' + glowRgb[1] + ',' + glowRgb[2] + ',' + o + ')'; }
+        /* Widget glow: content color on dark widget bg (bright glow), widget bg on light (dark shadow) */
+
 
         var magnitudeMap = { subtle: 0.06, light: 0.12, medium: 0.20, strong: 0.30 };
         var magnitude;
@@ -808,13 +809,13 @@
         var consentButtons = '';
         if (btnConfig === 'full') {
             consentButtons =
-                '<button class="como-btn como-deny-btn">' + getText('buttons.denyAll') + '</button>' +
+                '<button class="como-btn como-accept-btn">' + getText('buttons.allowAll') + '</button>' +
                 '<button class="como-btn como-customize-btn">' + getText('buttons.customize') + '</button>' +
-                '<button class="como-btn como-accept-btn">' + getText('buttons.allowAll') + '</button>';
+                '<button class="como-btn como-deny-btn">' + getText('buttons.denyAll') + '</button>';
         } else if (btnConfig === 'accept-manage') {
             consentButtons =
-                '<button class="como-btn como-customize-btn">' + getText('buttons.managePreferences') + '</button>' +
-                '<button class="como-btn como-accept-btn">' + getText('buttons.allowAll') + '</button>';
+                '<button class="como-btn como-accept-btn">' + getText('buttons.allowAll') + '</button>' +
+                '<button class="como-btn como-btn-secondary como-customize-btn">' + getText('buttons.managePreferences') + '</button>';
         } else if (btnConfig === 'notice') {
             consentButtons =
                 '<button class="como-btn como-accept-btn">' + getText('buttons.allowAll') + '</button>';
@@ -851,6 +852,8 @@
                 '--como-radius-inner: ' + radii[1] + ';' +
                 '--como-radius-sm: ' + radii[2] + ';' +
                 '--como-font: ' + fontFamily + ';' +
+                '--como-widget-bg: ' + cfg.widgetBgColor + ';' +
+                '--como-widget-content: ' + cfg.widgetContentColor + ';' +
             '}' +
 
             'html.como-blur > body > *:not(#' + cfg.containerId + ') {' +
@@ -1109,6 +1112,7 @@
             '.como-actions {' +
                 'padding: 20px 28px 28px;' +
                 'display: flex;' +
+                'flex-direction: row-reverse;' +
                 'gap: 10px;' +
                 'flex-shrink: 0;' +
             '}' +
@@ -1170,6 +1174,25 @@
                   '}'
             ) +
 
+            /* Secondary button: outline style for non-primary actions in opt-out regions.
+               Filled style: use primary color (ghost of the filled button).
+               Outline/filled-outline: use btn-outline color (consistent with overall style). */
+            (btnConfig !== 'full'
+                ? (function () {
+                      var secColor = cfg.buttonStyle === 'filled' ? 'var(--como-primary)' : 'var(--como-btn-outline)';
+                      var secHover = cfg.buttonStyle === 'filled' ? pRgba(0.1) : oRgba(0.1);
+                      return '.como-btn-secondary {' +
+                          'background: transparent !important;' +
+                          'color: ' + secColor + ' !important;' +
+                          'border-color: ' + secColor + ' !important;' +
+                          'box-shadow: none !important;' +
+                      '}' +
+                      '.como-btn-secondary:hover {' +
+                          'background: ' + secHover + ' !important;' +
+                      '}';
+                  })()
+                : '') +
+
             '.como-panel { display: none; }' +
             '.como-panel.active {' +
                 'display: flex;' +
@@ -1182,29 +1205,27 @@
             /* Re-open consent widget */
             '#' + cfg.widgetId + ' {' +
                 'position: fixed;' +
-                'bottom: 20px; ' + cfg.widgetPosition + ': 20px;' +
-                'width: 52px; height: 52px;' +
-                'background: var(--como-primary);' +
-                'border: 1px solid var(--como-btn-text);' +
+                'bottom: 12px; ' + cfg.widgetPosition + ': 12px;' +
+                'width: 40px; height: 40px;' +
+                'background: var(--como-widget-bg);' +
+                'border: 1px solid var(--como-widget-content);' +
                 'border-radius: 50%;' +
                 'cursor: pointer;' +
                 'z-index: 2147483645;' +
                 'display: none;' +
                 'align-items: center;' +
                 'justify-content: center;' +
-                'box-shadow: 0 0 12px ' + glowRgba(0.45) + ';' +
                 'overflow: visible;' +
                 'transform: translateZ(0);' +
-                'transition: transform 0.2s ease, box-shadow 0.2s ease;' +
+                'transition: transform 0.2s ease;' +
             '}' +
             '#' + cfg.widgetId + ':hover {' +
                 'transform: scale(1.08) translateZ(0);' +
-                'box-shadow: 0 0 18px ' + glowRgba(0.55) + ';' +
             '}' +
             '#' + cfg.widgetId + ' svg {' +
-                'width: 70%; height: 70%;' +
+                'width: 60%; height: 60%;' +
                 'display: block;' +
-                'fill: var(--como-btn-text);' +
+                'fill: var(--como-widget-content);' +
             '}' +
 
             '@media (max-width: 600px) {' +
@@ -1227,7 +1248,7 @@
                 '.como-tab { font-size: 12px; padding: 9px 10px; }' +
                 '.como-title { font-size: 20px; }' +
                 '.como-logo-img { height: 30px; }' +
-                '#' + cfg.widgetId + ' { bottom: 16px; ' + cfg.widgetPosition + ': 16px; width: 48px; height: 48px; }' +
+                '#' + cfg.widgetId + ' { bottom: 12px; ' + cfg.widgetPosition + ': 12px; width: 36px; height: 36px; }' +
             '}' +
 
             '@media (max-height: 500px) {' +
@@ -1331,11 +1352,11 @@
                 '</div>' +
                 '<div class="como-actions">' +
                     (getModelName() === 'opt-in'
-                        ? '<button class="como-btn como-deny-btn">' + getText('buttons.denyAll') + '</button>' +
+                        ? '<button class="como-btn como-accept-btn">' + getText('buttons.allowAll') + '</button>' +
                           '<button id="comoAllowSelBtn" class="como-btn" disabled>' + getText('buttons.allowSelection') + '</button>' +
-                          '<button class="como-btn como-accept-btn">' + getText('buttons.allowAll') + '</button>'
-                        : '<button id="comoDenySelBtn" class="como-btn">' + getText('buttons.denyAll') + '</button>' +
-                          '<button class="como-btn como-accept-btn">' + getText('buttons.allowAll') + '</button>'
+                          '<button class="como-btn como-deny-btn">' + getText('buttons.denyAll') + '</button>'
+                        : '<button class="como-btn como-accept-btn">' + getText('buttons.allowAll') + '</button>' +
+                          '<button id="comoDenySelBtn" class="como-btn como-btn-secondary">' + getText('buttons.denyAll') + '</button>'
                     ) +
                 '</div>' +
             '</div>' +
