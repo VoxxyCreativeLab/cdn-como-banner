@@ -1,3 +1,14 @@
+/*!
+ * CoMo Banner v1.x — Cookie Consent Management
+ * Copyright (c) 2025–2026 Voxxy Creative Lab Limited. All rights reserved.
+ *
+ * This software is proprietary and confidential. Unauthorized copying,
+ * modification, distribution, or use of this file, via any medium, is
+ * strictly prohibited without the express written permission of
+ * Voxxy Creative Lab Limited.
+ *
+ * For licensing inquiries: hello@voxxycreativelab.com
+ */
 (function () {
     if (window.comoConsentInitialized) return;
     window.comoConsentInitialized = true;
