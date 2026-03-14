@@ -601,7 +601,7 @@
                         toggles[i].setAttribute('aria-checked', 'false');
                     }
                 }
-                updateAllowBtn();
+                updateDetailsBtns();
             }
         }
     }
@@ -676,19 +676,30 @@
         if (toggle.classList.contains('disabled')) return;
         toggle.classList.toggle('active');
         toggle.setAttribute('aria-checked', toggle.classList.contains('active') ? 'true' : 'false');
-        updateAllowBtn();
+        updateDetailsBtns();
     }
 
-    function updateAllowBtn() {
-        var btn = document.getElementById('comoAllowBtn');
-        if (!btn) return;
+    function updateDetailsBtns() {
         var toggles = document.querySelectorAll('.como-toggle:not(.disabled)');
         var allActive = true;
+        var noneActive = true;
         for (var i = 0; i < toggles.length; i++) {
-            if (!toggles[i].classList.contains('active')) { allActive = false; break; }
+            if (!toggles[i].classList.contains('active')) { allActive = false; }
+            if (toggles[i].classList.contains('active')) { noneActive = false; }
         }
-        btn.textContent = allActive ? getText('buttons.allowAll') : getText('buttons.allowSelection');
-        btn._consentType = allActive ? 'accept-all' : 'selected';
+        var partial = !allActive && !noneActive;
+
+        if (getModelName() === 'opt-in') {
+            /* 3-button layout: show/hide middle "Allow selection" when partial */
+            var selBtn = document.getElementById('comoAllowSelBtn');
+            if (selBtn) selBtn.disabled = !partial;
+        } else {
+            /* opt-out / opt-out-gpc: dynamic left button */
+            var denySelBtn = document.getElementById('comoDenySelBtn');
+            if (!denySelBtn) return;
+            denySelBtn.textContent = allActive ? getText('buttons.denyAll') : getText('buttons.allowSelection');
+            denySelBtn._consentType = allActive ? 'deny-all' : 'selected';
+        }
     }
 
     /* ═══════════════════════════════════════════════
@@ -1040,7 +1051,7 @@
                 'transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);' +
                 'cursor: pointer;' +
                 'flex-shrink: 0;' +
-                'border: 1px solid transparent;' +
+                'border: 1px solid var(--como-border);' +
             '}' +
             '.como-toggle.active {' +
                 'background: var(--como-primary);' +
@@ -1061,6 +1072,10 @@
                 'transform: translateX(20px);' +
                 'background: var(--como-btn-text);' +
             '}' +
+            (cfg.buttonStyle === 'outline'
+                ? '.como-toggle.active::after { background: var(--como-bg); }'
+                : ''
+            ) +
             '.como-toggle.disabled {' +
                 'opacity: 0.4;' +
                 'cursor: not-allowed;' +
@@ -1109,6 +1124,11 @@
                 'transition: all 0.25s ease;' +
                 'letter-spacing: 0.3px;' +
                 'border: var(--como-border-width) solid transparent;' +
+            '}' +
+            '.como-btn:disabled {' +
+                'opacity: 0.35;' +
+                'cursor: default;' +
+                'pointer-events: none;' +
             '}' +
 
             /* Button style variants */
@@ -1163,7 +1183,7 @@
             '#' + cfg.widgetId + ' {' +
                 'position: fixed;' +
                 'bottom: 20px; ' + cfg.widgetPosition + ': 20px;' +
-                'width: 48px; height: 48px;' +
+                'width: 52px; height: 52px;' +
                 'background: var(--como-primary);' +
                 'border: 1px solid var(--como-btn-text);' +
                 'border-radius: 50%;' +
@@ -1173,14 +1193,17 @@
                 'align-items: center;' +
                 'justify-content: center;' +
                 'box-shadow: 0 0 12px ' + glowRgba(0.45) + ';' +
+                'overflow: visible;' +
+                'transform: translateZ(0);' +
                 'transition: transform 0.2s ease, box-shadow 0.2s ease;' +
             '}' +
             '#' + cfg.widgetId + ':hover {' +
-                'transform: scale(1.08);' +
+                'transform: scale(1.08) translateZ(0);' +
                 'box-shadow: 0 0 18px ' + glowRgba(0.55) + ';' +
             '}' +
             '#' + cfg.widgetId + ' svg {' +
                 'width: 70%; height: 70%;' +
+                'display: block;' +
                 'fill: var(--como-btn-text);' +
             '}' +
 
@@ -1204,18 +1227,18 @@
                 '.como-tab { font-size: 12px; padding: 9px 10px; }' +
                 '.como-title { font-size: 20px; }' +
                 '.como-logo-img { height: 30px; }' +
-                '#' + cfg.widgetId + ' { bottom: 16px; ' + cfg.widgetPosition + ': 16px; width: 44px; height: 44px; }' +
+                '#' + cfg.widgetId + ' { bottom: 16px; ' + cfg.widgetPosition + ': 16px; width: 48px; height: 48px; }' +
             '}' +
 
             '@media (max-height: 500px) {' +
-                '.como-content { max-height: none; }' +
-                '.como-actions { gap: 6px; padding-top: 12px; padding-bottom: 16px; }' +
-                '.como-btn { padding: 10px 18px; font-size: 13px; }' +
-                '.como-title { font-size: 18px; }' +
-                '.como-logo-img { height: 26px; }' +
-                '.como-header { padding-top: 14px; padding-bottom: 10px; }' +
-                '.como-tabs { margin-top: 10px; margin-bottom: 6px; }' +
-                '.como-tab { padding: 7px 10px; font-size: 12px; }' +
+                '.como-content { max-height: none; padding-top: 16px; padding-bottom: 16px; }' +
+                '.como-actions { gap: 6px; padding-top: 8px; padding-bottom: 12px; }' +
+                '.como-btn { padding: 8px 16px; font-size: 13px; }' +
+                '.como-title { font-size: 16px; margin-bottom: 8px; }' +
+                '.como-logo-img { height: 22px; }' +
+                '.como-header { padding-top: 10px; padding-bottom: 6px; }' +
+                '.como-tabs { margin-top: 6px; margin-bottom: 4px; }' +
+                '.como-tab { padding: 5px 8px; font-size: 12px; }' +
             '}' +
 
             '@media (prefers-reduced-motion: reduce) {' +
@@ -1263,7 +1286,7 @@
         /* Re-open consent widget (floating Voxxy logo) */
         var widgetIcon = cfg.widgetLogoUrl
             ? '<img style="pointer-events:none;width:70%;height:70%;" src="' + cfg.widgetLogoUrl + '" alt="Manage cookies" />'
-            : '<svg style="pointer-events:none" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M10.9,8.8H9.2L8.5,10H7.1l-1.1,1.9l0.3,0.6l-0.9,1.6l0.7,1.1l-0.7,1.1l1,1.6l-0.4,0.6l1.1,1.8h1.4l0.7,1.2h1.7l0.8-1.4v-9.7L10.9,8.8z M9.4,9.3h1.2l0.6,1.1v1.7l-2.3-1.9l0,0L9.4,9.3z M11.2,17.5l-3.7,0.1l3.7-2.1V17.5z M11.2,14.8l-3.7-2.1l3.7,0.1V14.8z M7.4,10.5h1.1l2.3,1.8l-4-0.1l0,0l-0.2-0.3L7.4,10.5z M6.1,14.1l0.7-1.2l0,0l3.8,2.1h-4L6.1,14.1z M6.1,16.3l0.5-0.9h4l-3.8,2.1L6.1,16.3z M6.6,18.4L6.8,18l0,0l4-0.1l-2.3,1.8H7.4L6.6,18.4z M10.6,21H9.4l-0.5-0.9l0,0l2.3-1.9v1.7L10.6,21z"/><path d="M19.1,9.5c-1.1-1.5-2.7-2.6-4.5-3.2V1.7h0.9V0H8.4v1.7h0.9v4.7C7.5,6.9,6,8,4.9,9.5C3.7,11.1,3.1,13,3.1,15c0,5,4.1,9,9,9s9-4.1,9-9C21,13,20.3,11.1,19.1,9.5 M12,23.5c-4.7,0-8.5-3.9-8.5-8.5c0-3.8,2.5-7.1,6.1-8.1h0.2V1.3H8.9V0.5h6.2v0.8h-0.9v5.5h0.2c3.6,1.1,6,4.5,6,8.1C20.5,19.6,16.7,23.5,12,23.5"/><rect x="8.8" y="1.3" width="6.3" height="0.4"/><path d="M17.8,15.2l0.7-1.1l-0.9-1.6l0.3-0.6l-1.1-1.8h-1.4l-0.7-1.2H13l-0.8,1.4V20l0.8,1.4h1.7l0.7-1.2h1.4l1.1-1.8l-0.3-0.6l0.9-1.6L17.8,15.2z M13.6,9.3h0.9v0.9h-0.9V9.3z M13.2,12.1h0.7v0.7h-0.7V12.1z M14.7,15h-1.4v-1.4h1.4V15z M15.3,11.7h-0.9v-0.8h0.9V11.7z M16.1,10.5h0.7v0.7h-0.7V10.5z M16.4,13.4h-0.9v-0.9h0.9V13.4z M17.4,14.2h-0.6v-0.6h0.6V14.2z"/><rect x="15.7" y="8.4" width="1.2" height="1.2"/><rect x="16.7" y="5.9" width="0.9" height="0.9"/><rect x="14.3" y="7.5" width="0.9" height="0.9"/></svg>';
+            : '<svg style="pointer-events:none" width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M10.9,8.8H9.2L8.5,10H7.1l-1.1,1.9l0.3,0.6l-0.9,1.6l0.7,1.1l-0.7,1.1l1,1.6l-0.4,0.6l1.1,1.8h1.4l0.7,1.2h1.7l0.8-1.4v-9.7L10.9,8.8z M9.4,9.3h1.2l0.6,1.1v1.7l-2.3-1.9l0,0L9.4,9.3z M11.2,17.5l-3.7,0.1l3.7-2.1V17.5z M11.2,14.8l-3.7-2.1l3.7,0.1V14.8z M7.4,10.5h1.1l2.3,1.8l-4-0.1l0,0l-0.2-0.3L7.4,10.5z M6.1,14.1l0.7-1.2l0,0l3.8,2.1h-4L6.1,14.1z M6.1,16.3l0.5-0.9h4l-3.8,2.1L6.1,16.3z M6.6,18.4L6.8,18l0,0l4-0.1l-2.3,1.8H7.4L6.6,18.4z M10.6,21H9.4l-0.5-0.9l0,0l2.3-1.9v1.7L10.6,21z"/><path d="M19.1,9.5c-1.1-1.5-2.7-2.6-4.5-3.2V1.7h0.9V0H8.4v1.7h0.9v4.7C7.5,6.9,6,8,4.9,9.5C3.7,11.1,3.1,13,3.1,15c0,5,4.1,9,9,9s9-4.1,9-9C21,13,20.3,11.1,19.1,9.5 M12,23.5c-4.7,0-8.5-3.9-8.5-8.5c0-3.8,2.5-7.1,6.1-8.1h0.2V1.3H8.9V0.5h6.2v0.8h-0.9v5.5h0.2c3.6,1.1,6,4.5,6,8.1C20.5,19.6,16.7,23.5,12,23.5"/><rect x="8.8" y="1.3" width="6.3" height="0.4"/><path d="M17.8,15.2l0.7-1.1l-0.9-1.6l0.3-0.6l-1.1-1.8h-1.4l-0.7-1.2H13l-0.8,1.4V20l0.8,1.4h1.7l0.7-1.2h1.4l1.1-1.8l-0.3-0.6l0.9-1.6L17.8,15.2z M13.6,9.3h0.9v0.9h-0.9V9.3z M13.2,12.1h0.7v0.7h-0.7V12.1z M14.7,15h-1.4v-1.4h1.4V15z M15.3,11.7h-0.9v-0.8h0.9V11.7z M16.1,10.5h0.7v0.7h-0.7V10.5z M16.4,13.4h-0.9v-0.9h0.9V13.4z M17.4,14.2h-0.6v-0.6h0.6V14.2z"/><rect x="15.7" y="8.4" width="1.2" height="1.2"/><rect x="16.7" y="5.9" width="0.9" height="0.9"/><rect x="14.3" y="7.5" width="0.9" height="0.9"/></svg>';
         html += '<div id="' + cfg.widgetId + '" role="button" tabindex="0" aria-label="' + getText('widget.ariaLabel') + '">' +
             widgetIcon +
         '</div>';
@@ -1307,8 +1330,13 @@
                     categoriesHTML +
                 '</div>' +
                 '<div class="como-actions">' +
-                    '<button class="como-btn como-deny-btn">' + getText('buttons.denyAll') + '</button>' +
-                    '<button id="comoAllowBtn" class="como-btn">' + getText('buttons.allowSelection') + '</button>' +
+                    (getModelName() === 'opt-in'
+                        ? '<button class="como-btn como-deny-btn">' + getText('buttons.denyAll') + '</button>' +
+                          '<button id="comoAllowSelBtn" class="como-btn" disabled>' + getText('buttons.allowSelection') + '</button>' +
+                          '<button class="como-btn como-accept-btn">' + getText('buttons.allowAll') + '</button>'
+                        : '<button id="comoDenySelBtn" class="como-btn">' + getText('buttons.denyAll') + '</button>' +
+                          '<button class="como-btn como-accept-btn">' + getText('buttons.allowAll') + '</button>'
+                    ) +
                 '</div>' +
             '</div>' +
 
@@ -1480,12 +1508,16 @@
                 });
             }
 
-            /* ── Allow selection / Allow all button (details panel) ── */
-            var allowBtn = document.getElementById('comoAllowBtn');
-            if (allowBtn) {
-                allowBtn._consentType = 'selected';
-                allowBtn.addEventListener('click', function () {
-                    handleConsent(this._consentType || 'selected');
+            /* ── Details panel dynamic buttons ── */
+            var allowSelBtn = document.getElementById('comoAllowSelBtn');
+            if (allowSelBtn) {
+                allowSelBtn.addEventListener('click', function () { handleConsent('selected'); });
+            }
+            var denySelBtn = document.getElementById('comoDenySelBtn');
+            if (denySelBtn) {
+                denySelBtn._consentType = 'deny-all';
+                denySelBtn.addEventListener('click', function () {
+                    handleConsent(this._consentType || 'deny-all');
                 });
             }
 
@@ -1506,7 +1538,7 @@
             }
 
             /* Initialize toggle button text based on default states */
-            updateAllowBtn();
+            updateDetailsBtns();
 
             /* Check for existing consent or show banner */
             checkExistingConsent();
