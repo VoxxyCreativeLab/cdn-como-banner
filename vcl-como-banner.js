@@ -710,8 +710,8 @@
             /* opt-out / opt-out-gpc: dynamic left button */
             var denySelBtn = document.getElementById('comoDenySelBtn');
             if (!denySelBtn) return;
-            denySelBtn.textContent = allActive ? getText('buttons.denyAll') : getText('buttons.allowSelection');
-            denySelBtn._consentType = allActive ? 'deny-all' : 'selected';
+            denySelBtn.textContent = noneActive ? getText('buttons.denyAll') : getText('buttons.allowSelection');
+            denySelBtn._consentType = noneActive ? 'deny-all' : 'selected';
         }
     }
 
