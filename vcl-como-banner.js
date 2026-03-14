@@ -1409,7 +1409,7 @@
             var defaults = getEffectiveDefaults();
             if (!window.comoGtmManaged) {
                 var defaultState = buildConsentModeState(defaults);
-                defaultState.wait_for_update = 500;
+                defaultState.wait_for_update = window.comoWaitForUpdate || (globalConfig.consentMode && globalConfig.consentMode.waitForUpdate) || 500;
                 gtag('consent', 'default', defaultState);
             } else {
                 var existingCookie = readCookie(cfg.cookieName);
