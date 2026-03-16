@@ -1,0 +1,12 @@
+# OS
+Thumbs.db
+desktop.ini
+.DS_Store
+
+# Editor
+.vscode/
+.idea/
+
+# Internal docs (local only — not for public CDN consumers)
+CLAUDE.md
+CONTEXT.md
