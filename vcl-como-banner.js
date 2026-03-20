@@ -474,10 +474,21 @@
 
     function sendConsentEvents(type, permissions) {
         updateConsentMode(permissions);
+        var allDenied = !permissions.analytics && !permissions.marketing && !permissions.preferences;
+        var allGranted = permissions.analytics && permissions.marketing && permissions.preferences;
+        var consentOutcome;
+        if (type === 'existing') { consentOutcome = 'existing'; }
+        else if (type === 'auto-grant') { consentOutcome = 'auto_grant'; }
+        else if (type === 'accept-all') { consentOutcome = 'granted_all'; }
+        else if (type === 'deny-all') { consentOutcome = 'denied_all'; }
+        else if (allDenied) { consentOutcome = 'denied_all'; }
+        else if (allGranted) { consentOutcome = 'granted_all'; }
+        else { consentOutcome = 'partial'; }
         setTimeout(function () {
             dataLayer.push({
                 'event': 'cookie_consent_update',
                 'consentType': type,
+                'consent_outcome': consentOutcome,
                 'permissions': permissions,
                 'gpcEnabled': isGpcEnabled(),
                 'region': cfg.region
