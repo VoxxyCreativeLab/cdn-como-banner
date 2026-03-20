@@ -14,7 +14,8 @@
     "denyAll": "ปฏิเสธทั้งหมด",
     "customize": "ปรับแต่ง",
     "allowSelection": "ยอมรับที่เลือก",
-    "managePreferences": "จัดการการตั้งค่า"
+    "managePreferences": "จัดการการตั้งค่า",
+    "doNotSell": "Do Not Sell or Share My Personal Information"
   },
   "about": {
     "title": "เกี่ยวกับคุกกี้",

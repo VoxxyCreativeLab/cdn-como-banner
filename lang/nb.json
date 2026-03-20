@@ -14,7 +14,8 @@
     "denyAll": "Avvis alle",
     "customize": "Tilpass",
     "allowSelection": "Tillat valgte",
-    "managePreferences": "Administrer innstillinger"
+    "managePreferences": "Administrer innstillinger",
+    "doNotSell": "Do Not Sell or Share My Personal Information"
   },
   "about": {
     "title": "Om informasjonskapsler",

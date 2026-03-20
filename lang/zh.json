@@ -14,7 +14,8 @@
     "denyAll": "全部拒绝",
     "customize": "自定义",
     "allowSelection": "允许所选",
-    "managePreferences": "管理偏好设置"
+    "managePreferences": "管理偏好设置",
+    "doNotSell": "Do Not Sell or Share My Personal Information"
   },
   "about": {
     "title": "关于 Cookie",

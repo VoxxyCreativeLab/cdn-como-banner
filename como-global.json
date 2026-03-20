@@ -127,7 +127,7 @@
     "US-TX": "opt-out-gpc",
     "US-OR": "opt-out-gpc",
     "US-MT": "opt-out-gpc",
-    "US-DE": "opt-out-gpc",
+    "US-IA": "opt-out-gpc",
     "US-VA": "opt-out-gpc",
     "PK": "none",
     "MM": "none",
@@ -258,7 +258,8 @@
         "denyAll": "Deny all",
         "customize": "Customize",
         "allowSelection": "Allow selection",
-        "managePreferences": "Manage preferences"
+        "managePreferences": "Manage preferences",
+        "doNotSell": "Do Not Sell or Share My Personal Information"
       },
       "about": {
         "title": "About Cookies",

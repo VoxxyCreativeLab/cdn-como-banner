@@ -14,7 +14,8 @@
     "denyAll": "Hylkää kaikki",
     "customize": "Mukauta",
     "allowSelection": "Salli valitut",
-    "managePreferences": "Hallitse asetuksia"
+    "managePreferences": "Hallitse asetuksia",
+    "doNotSell": "Do Not Sell or Share My Personal Information"
   },
   "about": {
     "title": "Tietoa evästeistä",

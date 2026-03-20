@@ -14,7 +14,8 @@
     "denyAll": "すべて拒否",
     "customize": "カスタマイズ",
     "allowSelection": "選択を許可",
-    "managePreferences": "設定を管理"
+    "managePreferences": "設定を管理",
+    "doNotSell": "Do Not Sell or Share My Personal Information"
   },
   "about": {
     "title": "Cookieについて",

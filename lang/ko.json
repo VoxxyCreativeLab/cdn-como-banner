@@ -14,7 +14,8 @@
     "denyAll": "모두 거부",
     "customize": "맞춤 설정",
     "allowSelection": "선택 항목 허용",
-    "managePreferences": "환경설정 관리"
+    "managePreferences": "환경설정 관리",
+    "doNotSell": "Do Not Sell or Share My Personal Information"
   },
   "about": {
     "title": "쿠키에 대하여",

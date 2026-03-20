@@ -481,6 +481,7 @@
         else if (type === 'auto-grant') { consentOutcome = 'auto_grant'; }
         else if (type === 'accept-all') { consentOutcome = 'granted_all'; }
         else if (type === 'deny-all') { consentOutcome = 'denied_all'; }
+        else if (type === 'dnsmpi') { consentOutcome = 'do_not_sell'; }
         else if (allDenied) { consentOutcome = 'denied_all'; }
         else if (allGranted) { consentOutcome = 'granted_all'; }
         else { consentOutcome = 'partial'; }
@@ -550,6 +551,10 @@
             }
         }
         permissions.necessary = true;
+        if (type === 'dnsmpi') {
+            permissions.analytics = false;
+            permissions.marketing = false;
+        }
 
         consentState.permissions = permissions;
         consentState.explicitConsent = true;
@@ -757,6 +762,13 @@
        Language resolved via resolveLanguage() with
        per-key English fallback.
        ═══════════════════════════════════════════════ */
+
+    function getDnsmpiLinkHtml() {
+        if (getModelName() !== 'opt-out-gpc') return '';
+        return '<div class="como-dnsmpi">' +
+            '<button class="como-dnsmpi-btn">' + getText('buttons.doNotSell') + '</button>' +
+            '</div>';
+    }
 
     function createBannerHTML() {
         var defaults = getEffectiveDefaults();
@@ -1257,7 +1269,7 @@
                     'border-radius: var(--como-radius);' +
                 '}' +
                 '.como-content { max-height: none; }' +
-                '.como-header, .como-content, .como-actions {' +
+                '.como-header, .como-content, .como-actions, .como-dnsmpi {' +
                     'padding-left: 20px;' +
                     'padding-right: 20px;' +
                 '}' +
@@ -1290,6 +1302,25 @@
                     'transition: none;' +
                 '}' +
             '}' +
+
+            '.como-dnsmpi {' +
+                'text-align: center;' +
+                'padding: 8px 28px 4px;' +
+                'flex-shrink: 0;' +
+            '}' +
+            '.como-dnsmpi-btn {' +
+                'background: none;' +
+                'border: none;' +
+                'padding: 0;' +
+                'font-size: 11px;' +
+                'text-decoration: underline;' +
+                'color: var(--como-text);' +
+                'opacity: 0.55;' +
+                'cursor: pointer;' +
+                'font-family: var(--como-font);' +
+                'line-height: 1.4;' +
+            '}' +
+            '.como-dnsmpi-btn:hover { opacity: 1; }' +
         '</style>';
 
         /* Build dynamic category HTML for Details panel */
@@ -1365,6 +1396,7 @@
                 '<div class="como-actions">' +
                     consentButtons +
                 '</div>' +
+                getDnsmpiLinkHtml() +
             '</div>' +
 
             /* ── Details Panel (dynamic categories) ── */
@@ -1381,6 +1413,7 @@
                           '<button id="comoDenySelBtn" class="como-btn como-btn-secondary">' + getText('buttons.denyAll') + '</button>'
                     ) +
                 '</div>' +
+                getDnsmpiLinkHtml() +
             '</div>' +
 
             /* ── About Panel ── */
@@ -1395,6 +1428,7 @@
                 '<div class="como-actions">' +
                     consentButtons +
                 '</div>' +
+                getDnsmpiLinkHtml() +
             '</div>' +
 
         '</div>';
@@ -1562,6 +1596,12 @@
                 denySelBtn.addEventListener('click', function () {
                     handleConsent(this._consentType || 'deny-all');
                 });
+            }
+
+            /* ── DNSMPI buttons ── */
+            var dnsmptBtns = container.querySelectorAll('.como-dnsmpi-btn');
+            for (var ns = 0; ns < dnsmptBtns.length; ns++) {
+                dnsmptBtns[ns].addEventListener('click', function () { handleConsent('dnsmpi'); });
             }
 
             /* ── Re-open widget ── */
