@@ -418,6 +418,9 @@
         permissions: { necessary: true, preferences: false, analytics: false, marketing: false }
     };
 
+    /* Focus management: track element focused before banner opened (WCAG 2.4.3) */
+    var lastFocusedElement = null;
+
     /* ═══════════════════════════════════════════════
        COOKIE HELPERS
        ═══════════════════════════════════════════════ */
@@ -610,6 +613,9 @@
         var banner = document.getElementById(cfg.bannerId);
         var overlay = document.getElementById(cfg.overlayId);
         if (banner && overlay) {
+            /* WCAG 2.4.3: save current focus so we can restore it on close */
+            lastFocusedElement = document.activeElement;
+
             banner.style.display = '';
             if (!dvhSupported) fixBannerHeight();
             if (cfg.showOverlay) {
@@ -617,6 +623,27 @@
                 document.documentElement.classList.add('como-blur');
             }
             hideWidget();
+
+            /* WCAG 1.3.1: mark background inert so screen readers stay inside the dialog */
+            var bodyChildren = document.body.children;
+            for (var bi = 0; bi < bodyChildren.length; bi++) {
+                if (bodyChildren[bi].id !== cfg.containerId) {
+                    bodyChildren[bi].setAttribute('inert', '');
+                }
+            }
+
+            /* WCAG 2.4.3: move keyboard focus into the first button in the banner */
+            setTimeout(function () {
+                var focusable = banner.querySelectorAll('button:not([disabled])');
+                if (focusable.length) focusable[0].focus();
+            }, 50);
+
+            /* WCAG 4.1.3: announce banner title to screen readers */
+            var liveRegion = document.getElementById('comoLiveRegion');
+            if (liveRegion) {
+                var bannerTitle = document.getElementById('comoTitle');
+                liveRegion.textContent = bannerTitle ? bannerTitle.textContent : '';
+            }
 
             /* Sync toggle states to stored consent (if any) */
             if (consentState.permissions) {
@@ -646,6 +673,25 @@
                 overlay.style.display = 'none';
                 document.documentElement.classList.remove('como-blur');
             }
+
+            /* WCAG 1.3.1: remove inert from page background */
+            var bodyChildren = document.body.children;
+            for (var bi = 0; bi < bodyChildren.length; bi++) {
+                bodyChildren[bi].removeAttribute('inert');
+            }
+
+            /* WCAG 4.1.3: clear live region */
+            var liveRegion = document.getElementById('comoLiveRegion');
+            if (liveRegion) liveRegion.textContent = '';
+
+            /* WCAG 2.4.3: restore focus to element that was active before banner opened */
+            if (lastFocusedElement && lastFocusedElement.focus) {
+                lastFocusedElement.focus();
+            } else {
+                var widget = document.getElementById(cfg.widgetId);
+                if (widget) widget.focus();
+            }
+            lastFocusedElement = null;
         }
     }
 
@@ -1321,6 +1367,24 @@
                 'line-height: 1.4;' +
             '}' +
             '.como-dnsmpi-btn:hover { opacity: 1; }' +
+
+            /* WCAG 2.4.7: Visible focus ring for keyboard navigation (never shows on mouse click) */
+            '#' + cfg.bannerId + ' button:focus-visible,' +
+            '#' + cfg.bannerId + ' .como-toggle:focus-visible,' +
+            '#' + cfg.widgetId + ':focus-visible {' +
+                'outline: 3px solid var(--como-primary);' +
+                'outline-offset: 2px;' +
+            '}' +
+
+            /* Visually-hidden helper for aria-live region (WCAG 4.1.3) */
+            '.como-sr-only {' +
+                'position: absolute;' +
+                'width: 1px; height: 1px;' +
+                'padding: 0; overflow: hidden;' +
+                'clip: rect(0,0,0,0);' +
+                'white-space: nowrap; border: 0;' +
+            '}' +
+
         '</style>';
 
         /* Build dynamic category HTML for Details panel */
@@ -1356,6 +1420,9 @@
 
         /* Close button aria-label */
         var closeAriaLabel = getText('closeButton.ariaLabel');
+
+        /* WCAG 4.1.3: Screen reader announcement region — visually hidden, updated on showBanner() */
+        html += '<div id="comoLiveRegion" aria-live="polite" aria-atomic="true" class="como-sr-only"></div>';
 
         /* Re-open consent widget (floating Voxxy logo) */
         var widgetIcon = cfg.widgetLogoUrl
@@ -1619,6 +1686,60 @@
                     }
                 });
             }
+
+            /* ── Keyboard accessibility (WCAG 2.1.1, 2.1.2, 2.4.3) ── */
+            document.addEventListener('keydown', function (e) {
+                var banner = document.getElementById(cfg.bannerId);
+                if (!banner || banner.style.display === 'none') return;
+
+                /* Arrow keys: navigate between tabs (ARIA tablist pattern) */
+                if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
+                    var focused = document.activeElement;
+                    if (focused && focused.getAttribute('role') === 'tab') {
+                        var tabBtnsAK = container.querySelectorAll('.como-tab');
+                        var currentIdx = -1;
+                        for (var ti = 0; ti < tabBtnsAK.length; ti++) {
+                            if (tabBtnsAK[ti] === focused) { currentIdx = ti; break; }
+                        }
+                        if (currentIdx !== -1) {
+                            var nextIdx = e.key === 'ArrowRight'
+                                ? (currentIdx + 1) % tabBtnsAK.length
+                                : (currentIdx - 1 + tabBtnsAK.length) % tabBtnsAK.length;
+                            e.preventDefault();
+                            tabBtnsAK[nextIdx].focus();
+                            tabBtnsAK[nextIdx].click();
+                        }
+                    }
+                    return;
+                }
+
+                /* Escape: close banner (only when model permits closing without a choice) */
+                if (e.key === 'Escape') {
+                    if (getMode().showCloseButton) {
+                        e.preventDefault();
+                        handleConsent('accept-all');
+                    }
+                    return;
+                }
+
+                /* Tab / Shift+Tab: focus trap — cycle only within banner */
+                if (e.key !== 'Tab') return;
+                var focusable = banner.querySelectorAll('button:not([disabled]), [tabindex="0"]');
+                if (!focusable.length) return;
+                var first = focusable[0];
+                var last = focusable[focusable.length - 1];
+                if (e.shiftKey) {
+                    if (document.activeElement === first) {
+                        e.preventDefault();
+                        last.focus();
+                    }
+                } else {
+                    if (document.activeElement === last) {
+                        e.preventDefault();
+                        first.focus();
+                    }
+                }
+            });
 
             /* Initialize toggle button text based on default states */
             updateDetailsBtns();
