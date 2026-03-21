@@ -51,5 +51,11 @@
   "aria": {
     "toggleLabel": "{name} sütik",
     "toggleLabelAlwaysOn": "{name} sütik (mindig aktív)"
+  },
+  "cookieTable": {
+    "name": "Név",
+    "purpose": "Cél",
+    "duration": "Időtartam",
+    "provider": "Szolgáltató"
   }
 }

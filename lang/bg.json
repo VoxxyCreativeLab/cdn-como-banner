@@ -51,5 +51,11 @@
   "aria": {
     "toggleLabel": "Бисквитки {name}",
     "toggleLabelAlwaysOn": "Бисквитки {name} (винаги активни)"
+  },
+  "cookieTable": {
+    "name": "Име",
+    "purpose": "Предназначение",
+    "duration": "Продължителност",
+    "provider": "Доставчик"
   }
 }

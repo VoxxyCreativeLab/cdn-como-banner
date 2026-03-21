@@ -51,5 +51,11 @@
   "aria": {
     "toggleLabel": "Pliki cookie {name}",
     "toggleLabelAlwaysOn": "Pliki cookie {name} (zawsze aktywne)"
+  },
+  "cookieTable": {
+    "name": "Nazwa",
+    "purpose": "Cel",
+    "duration": "Czas trwania",
+    "provider": "Dostawca"
   }
 }

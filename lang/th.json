@@ -51,5 +51,11 @@
   "aria": {
     "toggleLabel": "คุกกี้{name}",
     "toggleLabelAlwaysOn": "คุกกี้{name} (เปิดใช้งานตลอด)"
+  },
+  "cookieTable": {
+    "name": "ชื่อ",
+    "purpose": "วัตถุประสงค์",
+    "duration": "ระยะเวลา",
+    "provider": "ผู้ให้บริการ"
   }
 }

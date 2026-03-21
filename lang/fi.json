@@ -51,5 +51,11 @@
   "aria": {
     "toggleLabel": "{name}-evästeet",
     "toggleLabelAlwaysOn": "{name}-evästeet (aina aktiiviset)"
+  },
+  "cookieTable": {
+    "name": "Nimi",
+    "purpose": "Tarkoitus",
+    "duration": "Kesto",
+    "provider": "Tarjoaja"
   }
 }

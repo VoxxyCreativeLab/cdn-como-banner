@@ -51,5 +51,11 @@
   "aria": {
     "toggleLabel": "Cookie {name}",
     "toggleLabelAlwaysOn": "Cookie {name} (luôn hoạt động)"
+  },
+  "cookieTable": {
+    "name": "Tên",
+    "purpose": "Mục đích",
+    "duration": "Thời hạn",
+    "provider": "Nhà cung cấp"
   }
 }

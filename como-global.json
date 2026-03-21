@@ -295,6 +295,12 @@
       "aria": {
         "toggleLabel": "{name} cookies",
         "toggleLabelAlwaysOn": "{name} cookies (always active)"
+      },
+      "cookieTable": {
+        "name": "Name",
+        "purpose": "Purpose",
+        "duration": "Duration",
+        "provider": "Provider"
       }
     }
   },
@@ -332,5 +338,154 @@
     "vi",
     "zh",
     "zh-TW"
+  ],
+  "knownCookies": [
+    {
+      "service": "Google Analytics 4 / Google Ads",
+      "scriptGlobal": "gtag",
+      "scriptSrc": "googletagmanager.com/gtag/js",
+      "cookies": [
+        { "name": "_ga", "category": "analytics", "provider": "Google", "duration": "2 years", "purpose": "Distinguishes unique website users" },
+        { "name": "_gid", "category": "analytics", "provider": "Google", "duration": "24 hours", "purpose": "Distinguishes unique users for the session" },
+        { "name": "_gat", "category": "analytics", "provider": "Google", "duration": "1 minute", "purpose": "Throttles request rate" },
+        { "name": "_ga_*", "category": "analytics", "provider": "Google", "duration": "2 years", "purpose": "Stores session state for Google Analytics" },
+        { "name": "_gcl_au", "category": "marketing", "provider": "Google", "duration": "90 days", "purpose": "Stores conversion data for Google Ads" },
+        { "name": "_gcl_aw", "category": "marketing", "provider": "Google", "duration": "90 days", "purpose": "Stores click information for Google Ads" }
+      ]
+    },
+    {
+      "service": "Facebook / Meta",
+      "scriptGlobal": "fbq",
+      "scriptSrc": "connect.facebook.net",
+      "cookies": [
+        { "name": "_fbp", "category": "marketing", "provider": "Meta", "duration": "90 days", "purpose": "Tracks visits across websites for ad targeting" },
+        { "name": "_fbc", "category": "marketing", "provider": "Meta", "duration": "90 days", "purpose": "Stores click identifiers from Facebook ads" }
+      ]
+    },
+    {
+      "service": "LinkedIn",
+      "scriptGlobal": "lintrk",
+      "scriptSrc": "snap.licdn.com",
+      "cookies": [
+        { "name": "li_fat_id", "category": "marketing", "provider": "LinkedIn", "duration": "30 days", "purpose": "Identifies members for ad targeting" },
+        { "name": "UserMatchHistory", "category": "marketing", "provider": "LinkedIn", "duration": "30 days", "purpose": "Tracks ad conversions" },
+        { "name": "AnalyticsSyncHistory", "category": "marketing", "provider": "LinkedIn", "duration": "30 days", "purpose": "Stores information for analytics syncing" },
+        { "name": "bscookie", "category": "marketing", "provider": "LinkedIn", "duration": "2 years", "purpose": "Identifies browser for security" },
+        { "name": "li_gc", "category": "marketing", "provider": "LinkedIn", "duration": "6 months", "purpose": "Stores consent of guests for cookies" }
+      ]
+    },
+    {
+      "service": "HotJar",
+      "scriptGlobal": "hj",
+      "scriptSrc": "static.hotjar.com",
+      "cookies": [
+        { "name": "_hjSessionUser_*", "category": "analytics", "provider": "Hotjar", "duration": "1 year", "purpose": "Identifies returning users" },
+        { "name": "_hjSession_*", "category": "analytics", "provider": "Hotjar", "duration": "30 minutes", "purpose": "Stores current session data" },
+        { "name": "_hjFirstSeen", "category": "analytics", "provider": "Hotjar", "duration": "30 minutes", "purpose": "Identifies first pageview of a session" }
+      ]
+    },
+    {
+      "service": "Microsoft Clarity",
+      "scriptGlobal": "clarity",
+      "scriptSrc": "clarity.ms",
+      "cookies": [
+        { "name": "_clsk", "category": "analytics", "provider": "Microsoft", "duration": "1 day", "purpose": "Stores and combines pageviews for analytics" },
+        { "name": "_clck", "category": "analytics", "provider": "Microsoft", "duration": "1 year", "purpose": "Stores a unique user ID for analytics" },
+        { "name": "MUID", "category": "analytics", "provider": "Microsoft", "duration": "1 year", "purpose": "Identifies unique web browsers for analytics" }
+      ]
+    },
+    {
+      "service": "TikTok",
+      "scriptGlobal": "ttq",
+      "scriptSrc": "analytics.tiktok.com",
+      "cookies": [
+        { "name": "_ttp", "category": "marketing", "provider": "TikTok", "duration": "13 months", "purpose": "Tracks visitor activity for ad targeting" },
+        { "name": "_tt_enable_cookie", "category": "marketing", "provider": "TikTok", "duration": "13 months", "purpose": "Checks if cookies can be placed" }
+      ]
+    },
+    {
+      "service": "HubSpot",
+      "scriptGlobal": "_hsq",
+      "scriptSrc": "js.hs-scripts.com",
+      "cookies": [
+        { "name": "hubspotutk", "category": "analytics", "provider": "HubSpot", "duration": "6 months", "purpose": "Tracks visitor identity" },
+        { "name": "__hstc", "category": "analytics", "provider": "HubSpot", "duration": "6 months", "purpose": "Tracks visitor sessions" },
+        { "name": "__hssc", "category": "analytics", "provider": "HubSpot", "duration": "30 minutes", "purpose": "Tracks session page views" },
+        { "name": "__hssrc", "category": "analytics", "provider": "HubSpot", "duration": "Session", "purpose": "Determines if the visitor has restarted their browser" }
+      ]
+    },
+    {
+      "service": "Stripe",
+      "scriptGlobal": "Stripe",
+      "scriptSrc": "js.stripe.com",
+      "cookies": [
+        { "name": "__stripe_mid", "category": "necessary", "provider": "Stripe", "duration": "1 year", "purpose": "Fraud prevention and payment processing" },
+        { "name": "__stripe_sid", "category": "necessary", "provider": "Stripe", "duration": "30 minutes", "purpose": "Fraud prevention for payment sessions" }
+      ]
+    },
+    {
+      "service": "Intercom",
+      "scriptGlobal": "Intercom",
+      "scriptSrc": "widget.intercom.io",
+      "cookies": [
+        { "name": "intercom-id-*", "category": "necessary", "provider": "Intercom", "duration": "9 months", "purpose": "Identifies visitor for support chat" },
+        { "name": "intercom-session-*", "category": "necessary", "provider": "Intercom", "duration": "1 week", "purpose": "Tracks active support chat session" }
+      ]
+    },
+    {
+      "service": "YouTube embed",
+      "scriptGlobal": "YT",
+      "scriptSrc": "youtube.com/iframe_api",
+      "cookies": [
+        { "name": "VISITOR_INFO1_LIVE", "category": "marketing", "provider": "Google", "duration": "6 months", "purpose": "Tracks YouTube video views" },
+        { "name": "YSC", "category": "marketing", "provider": "Google", "duration": "Session", "purpose": "Verifies YouTube requests from the user" },
+        { "name": "yt-player-*", "category": "marketing", "provider": "Google", "duration": "Session", "purpose": "Stores video player preferences" }
+      ]
+    },
+    {
+      "service": "Twitter / X",
+      "scriptGlobal": "twq",
+      "scriptSrc": "static.ads-twitter.com",
+      "cookies": [
+        { "name": "personalization_id", "category": "marketing", "provider": "X/Twitter", "duration": "2 years", "purpose": "Tracks visitor activity for ad targeting" },
+        { "name": "guest_id", "category": "marketing", "provider": "X/Twitter", "duration": "2 years", "purpose": "Identifies non-logged-in users" }
+      ]
+    },
+    {
+      "service": "Zendesk",
+      "scriptGlobal": "zE",
+      "scriptSrc": "static.zdassets.com",
+      "cookies": [
+        { "name": "__zlcmid", "category": "preferences", "provider": "Zendesk", "duration": "1 year", "purpose": "Stores live chat session ID" },
+        { "name": "ZD-buid", "category": "preferences", "provider": "Zendesk", "duration": "1 year", "purpose": "Identifies the browser for support" }
+      ]
+    },
+    {
+      "service": "Vimeo embed",
+      "scriptGlobal": "Vimeo",
+      "scriptSrc": "player.vimeo.com",
+      "cookies": [
+        { "name": "player", "category": "preferences", "provider": "Vimeo", "duration": "1 year", "purpose": "Stores video player preferences" },
+        { "name": "vuid", "category": "preferences", "provider": "Vimeo", "duration": "2 years", "purpose": "Identifies the user for analytics" }
+      ]
+    },
+    {
+      "service": "Crisp chat",
+      "scriptGlobal": "$crisp",
+      "scriptSrc": "client.crisp.chat",
+      "cookies": [
+        { "name": "crisp-client/*", "category": "necessary", "provider": "Crisp", "duration": "6 months", "purpose": "Stores chat session information" },
+        { "name": "__cfruid", "category": "necessary", "provider": "Cloudflare", "duration": "Session", "purpose": "Rate limiting for Crisp CDN" }
+      ]
+    },
+    {
+      "service": "Calendly embed",
+      "scriptGlobal": "Calendly",
+      "scriptSrc": "assets.calendly.com",
+      "cookies": [
+        { "name": "__cf_bm", "category": "necessary", "provider": "Cloudflare", "duration": "30 minutes", "purpose": "Bot management for Calendly" },
+        { "name": "calendly.*", "category": "necessary", "provider": "Calendly", "duration": "Session", "purpose": "Stores scheduling session state" }
+      ]
+    }
   ]
 }

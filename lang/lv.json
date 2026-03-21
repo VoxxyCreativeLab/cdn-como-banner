@@ -51,5 +51,11 @@
   "aria": {
     "toggleLabel": "{name} sīkdatnes",
     "toggleLabelAlwaysOn": "{name} sīkdatnes (vienmēr aktīvas)"
+  },
+  "cookieTable": {
+    "name": "Nosaukums",
+    "purpose": "Mērķis",
+    "duration": "Ilgums",
+    "provider": "Pakalpojumu sniedzējs"
   }
 }

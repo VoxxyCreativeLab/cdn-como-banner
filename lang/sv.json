@@ -51,5 +51,11 @@
   "aria": {
     "toggleLabel": "{name}-cookies",
     "toggleLabelAlwaysOn": "{name}-cookies (alltid aktiva)"
+  },
+  "cookieTable": {
+    "name": "Namn",
+    "purpose": "Syfte",
+    "duration": "Varaktighet",
+    "provider": "Leverantör"
   }
 }

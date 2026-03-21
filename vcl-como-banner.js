@@ -72,6 +72,14 @@
         widgetContentColor: window.comoWidgetContentColor || '#e6ff2b'
     };
 
+    /* Auto-included in Necessary: banner's own cookies */
+    var AUTO_NECESSARY_COOKIES = [
+        { name: 'vcl_consent', category: 'necessary', provider: 'CoMo Banner', duration: '1 year', purpose: 'Stores your cookie consent preferences' },
+        { name: 'vcl_geo', category: 'necessary', provider: 'CoMo Banner', duration: '30 days', purpose: 'Caches your detected geographic region' }
+    ];
+    var customCookies = window.comoCustomCookies || [];
+    var detectedCookies = [];
+
     /* ═══════════════════════════════════════════════
        FALLBACK CONFIG
        Used only when remote config fails to load AND
@@ -133,7 +141,8 @@
                 },
                 closeButton: { ariaLabel: 'Dismiss' },
                 widget: { ariaLabel: 'Manage cookie preferences' },
-                aria: { toggleLabel: '{name} cookies', toggleLabelAlwaysOn: '{name} cookies (always active)' }
+                aria: { toggleLabel: '{name} cookies', toggleLabelAlwaysOn: '{name} cookies (always active)' },
+                cookieTable: { name: 'Name', purpose: 'Purpose', duration: 'Duration', provider: 'Provider' }
             }
         }
     };
@@ -803,6 +812,99 @@
     }
 
     /* ═══════════════════════════════════════════════
+       COOKIE DECLARATIONS
+       Detect known services and build declaration tables.
+       ═══════════════════════════════════════════════ */
+
+    function detectKnownServices() {
+        var knownServices = globalConfig.knownCookies || [];
+        var result = [];
+        var scripts = document.getElementsByTagName('script');
+
+        for (var i = 0; i < knownServices.length; i++) {
+            var svc = knownServices[i];
+            var detected = false;
+
+            // Check 1: window global exists
+            if (svc.scriptGlobal && typeof window[svc.scriptGlobal] !== 'undefined') {
+                detected = true;
+            }
+
+            // Check 2: script src pattern match (works in opt-in before execution)
+            if (!detected && svc.scriptSrc) {
+                for (var j = 0; j < scripts.length; j++) {
+                    var src = scripts[j].src || '';
+                    if (src.indexOf(svc.scriptSrc) !== -1) {
+                        detected = true;
+                        break;
+                    }
+                }
+            }
+
+            if (detected) {
+                for (var k = 0; k < svc.cookies.length; k++) {
+                    result.push(svc.cookies[k]);
+                }
+            }
+        }
+
+        detectedCookies = result;
+    }
+
+    function getCookiesForCategory(categoryKey) {
+        var result = [];
+
+        // Layer 1: AUTO_NECESSARY_COOKIES (only for 'necessary')
+        if (categoryKey === 'necessary') {
+            for (var i = 0; i < AUTO_NECESSARY_COOKIES.length; i++) {
+                result.push(AUTO_NECESSARY_COOKIES[i]);
+            }
+        }
+
+        // Layer 2: detected cookies from knownCookies
+        for (var j = 0; j < detectedCookies.length; j++) {
+            if (detectedCookies[j].category === categoryKey) {
+                result.push(detectedCookies[j]);
+            }
+        }
+
+        // Layer 3: custom cookies from GTM template field
+        for (var k = 0; k < customCookies.length; k++) {
+            if ((customCookies[k].category || '').toLowerCase() === categoryKey) {
+                result.push(customCookies[k]);
+            }
+        }
+
+        return result;
+    }
+
+    function buildCookieTableHTML(cookies) {
+        if (!cookies || cookies.length === 0) return '';
+
+        var html = '<div class="como-cookie-table-wrap">' +
+            '<table class="como-cookie-table">' +
+            '<thead><tr>' +
+            '<th>' + getText('cookieTable.name') + '</th>' +
+            '<th>' + getText('cookieTable.purpose') + '</th>' +
+            '<th>' + getText('cookieTable.duration') + '</th>' +
+            '<th>' + getText('cookieTable.provider') + '</th>' +
+            '</tr></thead><tbody>';
+
+        for (var i = 0; i < cookies.length; i++) {
+            var c = cookies[i];
+            html += '<tr>' +
+                '<td>' + (c.name || '') + '</td>' +
+                '<td>' + (c.purpose || '') + '</td>' +
+                '<td>' + (c.duration || '') + '</td>' +
+                '<td>' + (c.provider || '') + '</td>' +
+                '</tr>';
+        }
+
+        html += '</tbody></table></div>';
+        return html;
+    }
+
+    /* ═══════════════════════════════════════════════
        BUILD BANNER HTML
        Text and categories driven by globalConfig.
        Language resolved via resolveLanguage() with
@@ -1189,6 +1291,44 @@
                 'margin: 0;' +
             '}' +
 
+            '.como-cookie-table-wrap {' +
+                'overflow-x: auto;' +
+                'margin-top: 12px;' +
+                '-webkit-overflow-scrolling: touch;' +
+            '}' +
+            '.como-cookie-table {' +
+                'width: 100%;' +
+                'border-collapse: collapse;' +
+                'font-size: 12px;' +
+                'font-family: var(--como-font);' +
+                'color: var(--como-text-dim);' +
+                'line-height: 1.5;' +
+            '}' +
+            '.como-cookie-table th {' +
+                'text-align: left;' +
+                'font-weight: 600;' +
+                'font-size: 11px;' +
+                'text-transform: uppercase;' +
+                'letter-spacing: 0.3px;' +
+                'color: var(--como-text);' +
+                'padding: 8px 10px;' +
+                'border-bottom: 2px solid var(--como-border);' +
+                'white-space: nowrap;' +
+            '}' +
+            '.como-cookie-table td {' +
+                'padding: 6px 10px;' +
+                'border-bottom: 1px solid var(--como-border);' +
+                'vertical-align: top;' +
+            '}' +
+            '.como-cookie-table tr:last-child td {' +
+                'border-bottom: none;' +
+            '}' +
+            '.como-cookie-table td:first-child {' +
+                'font-family: monospace, var(--como-font);' +
+                'font-size: 11px;' +
+                'white-space: nowrap;' +
+            '}' +
+
             '.como-actions {' +
                 'padding: 20px 28px 28px;' +
                 'display: flex;' +
@@ -1414,6 +1554,7 @@
                     '</button>' +
                     '<div class="como-category-content">' +
                         '<p>' + catDesc + '</p>' +
+                        buildCookieTableHTML(getCookiesForCategory(cat.key)) +
                     '</div>' +
                 '</div>';
         }
@@ -1577,6 +1718,9 @@
                 sendConsentEvents('auto-grant', allGranted);
                 return;
             }
+
+            /* Detect known services for cookie declaration tables */
+            detectKnownServices();
 
             var container = document.createElement('div');
             container.id = cfg.containerId;

@@ -51,5 +51,11 @@
   "aria": {
     "toggleLabel": "{name} 쿠키",
     "toggleLabelAlwaysOn": "{name} 쿠키 (항상 활성)"
+  },
+  "cookieTable": {
+    "name": "이름",
+    "purpose": "목적",
+    "duration": "기간",
+    "provider": "제공자"
   }
 }

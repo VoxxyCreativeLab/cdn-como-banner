@@ -51,5 +51,11 @@
   "aria": {
     "toggleLabel": "{name}-Cookies",
     "toggleLabelAlwaysOn": "{name}-Cookies (immer aktiv)"
+  },
+  "cookieTable": {
+    "name": "Name",
+    "purpose": "Zweck",
+    "duration": "Dauer",
+    "provider": "Anbieter"
   }
 }

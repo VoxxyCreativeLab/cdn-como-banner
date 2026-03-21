@@ -51,5 +51,11 @@
   "aria": {
     "toggleLabel": "Kolačići {name}",
     "toggleLabelAlwaysOn": "Kolačići {name} (uvijek aktivni)"
+  },
+  "cookieTable": {
+    "name": "Naziv",
+    "purpose": "Svrha",
+    "duration": "Trajanje",
+    "provider": "Pružatelj"
   }
 }

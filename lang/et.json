@@ -51,5 +51,11 @@
   "aria": {
     "toggleLabel": "{name} küpsised",
     "toggleLabelAlwaysOn": "{name} küpsised (alati aktiivsed)"
+  },
+  "cookieTable": {
+    "name": "Nimi",
+    "purpose": "Eesmärk",
+    "duration": "Kestvus",
+    "provider": "Teenusepakkuja"
   }
 }

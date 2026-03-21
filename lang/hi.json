@@ -51,5 +51,11 @@
   "aria": {
     "toggleLabel": "{name} कुकीज़",
     "toggleLabelAlwaysOn": "{name} कुकीज़ (हमेशा सक्रिय)"
+  },
+  "cookieTable": {
+    "name": "नाम",
+    "purpose": "उद्देश्य",
+    "duration": "अवधि",
+    "provider": "प्रदाता"
   }
 }

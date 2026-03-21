@@ -51,5 +51,11 @@
   "aria": {
     "toggleLabel": "Cookies {name}",
     "toggleLabelAlwaysOn": "Cookies {name} (πάντα ενεργά)"
+  },
+  "cookieTable": {
+    "name": "Όνομα",
+    "purpose": "Σκοπός",
+    "duration": "Διάρκεια",
+    "provider": "Πάροχος"
   }
 }

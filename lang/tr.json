@@ -51,5 +51,11 @@
   "aria": {
     "toggleLabel": "{name} çerezleri",
     "toggleLabelAlwaysOn": "{name} çerezleri (her zaman etkin)"
+  },
+  "cookieTable": {
+    "name": "Ad",
+    "purpose": "Amaç",
+    "duration": "Süre",
+    "provider": "Sağlayıcı"
   }
 }

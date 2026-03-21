@@ -51,5 +51,11 @@
   "aria": {
     "toggleLabel": "Cookie-uri {name}",
     "toggleLabelAlwaysOn": "Cookie-uri {name} (mereu active)"
+  },
+  "cookieTable": {
+    "name": "Nume",
+    "purpose": "Scop",
+    "duration": "Durată",
+    "provider": "Furnizor"
   }
 }

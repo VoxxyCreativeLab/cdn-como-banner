@@ -51,5 +51,11 @@
   "aria": {
     "toggleLabel": "{name} Cookie",
     "toggleLabelAlwaysOn": "{name} Cookie（常に有効）"
+  },
+  "cookieTable": {
+    "name": "名前",
+    "purpose": "目的",
+    "duration": "有効期間",
+    "provider": "提供元"
   }
 }

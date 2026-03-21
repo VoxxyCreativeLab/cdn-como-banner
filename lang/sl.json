@@ -51,5 +51,11 @@
   "aria": {
     "toggleLabel": "Piškotki {name}",
     "toggleLabelAlwaysOn": "Piškotki {name} (vedno aktivni)"
+  },
+  "cookieTable": {
+    "name": "Ime",
+    "purpose": "Namen",
+    "duration": "Trajanje",
+    "provider": "Ponudnik"
   }
 }

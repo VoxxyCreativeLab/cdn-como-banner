@@ -51,5 +51,11 @@
   "aria": {
     "toggleLabel": "{name}-informasjonskapsler",
     "toggleLabelAlwaysOn": "{name}-informasjonskapsler (alltid aktive)"
+  },
+  "cookieTable": {
+    "name": "Navn",
+    "purpose": "Formål",
+    "duration": "Varighet",
+    "provider": "Leverandør"
   }
 }

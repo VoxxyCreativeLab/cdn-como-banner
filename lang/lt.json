@@ -51,5 +51,11 @@
   "aria": {
     "toggleLabel": "{name} slapukai",
     "toggleLabelAlwaysOn": "{name} slapukai (visada aktyvūs)"
+  },
+  "cookieTable": {
+    "name": "Pavadinimas",
+    "purpose": "Tikslas",
+    "duration": "Trukmė",
+    "provider": "Tiekėjas"
   }
 }

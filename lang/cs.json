@@ -51,5 +51,11 @@
   "aria": {
     "toggleLabel": "Cookies {name}",
     "toggleLabelAlwaysOn": "Cookies {name} (vždy aktivní)"
+  },
+  "cookieTable": {
+    "name": "Název",
+    "purpose": "Účel",
+    "duration": "Doba trvání",
+    "provider": "Poskytovatel"
   }
 }

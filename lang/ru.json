@@ -51,5 +51,11 @@
   "aria": {
     "toggleLabel": "Файлы cookie категории «{name}»",
     "toggleLabelAlwaysOn": "Файлы cookie категории «{name}» (всегда активны)"
+  },
+  "cookieTable": {
+    "name": "Название",
+    "purpose": "Назначение",
+    "duration": "Срок действия",
+    "provider": "Поставщик"
   }
 }
