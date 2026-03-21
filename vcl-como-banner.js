@@ -1165,6 +1165,7 @@
                 'min-height: 0;' +
                 'max-height: 380px;' +
                 'overflow-y: auto;' +
+                'overscroll-behavior: contain;' +
                 'flex: 1;' +
             '}' +
             '.como-content::-webkit-scrollbar { width: 4px; }' +
