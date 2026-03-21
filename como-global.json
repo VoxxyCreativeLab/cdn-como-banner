@@ -486,6 +486,282 @@
         { "name": "__cf_bm", "category": "necessary", "provider": "Cloudflare", "duration": "30 minutes", "purpose": "Bot management for Calendly" },
         { "name": "calendly.*", "category": "necessary", "provider": "Calendly", "duration": "Session", "purpose": "Stores scheduling session state" }
       ]
+    },
+    {
+      "service": "Google reCAPTCHA",
+      "scriptGlobal": "grecaptcha",
+      "scriptSrc": "google.com/recaptcha",
+      "cookies": [
+        { "name": "_GRECAPTCHA", "category": "necessary", "provider": "Google", "duration": "6 months", "purpose": "Provides risk analysis to distinguish humans from bots" }
+      ]
+    },
+    {
+      "service": "Pinterest Tag",
+      "scriptGlobal": "pintrk",
+      "scriptSrc": "s.pinimg.com",
+      "cookies": [
+        { "name": "_pin_unauth", "category": "marketing", "provider": "Pinterest", "duration": "1 year", "purpose": "Groups actions for unidentified users for ad attribution" },
+        { "name": "_pinterest_ct_ua", "category": "marketing", "provider": "Pinterest", "duration": "1 year", "purpose": "Groups actions for unidentified users for ad targeting" },
+        { "name": "_pinterest_ct_rt", "category": "marketing", "provider": "Pinterest", "duration": "1 year", "purpose": "Stores user ID and timestamp when visiting a tagged site" },
+        { "name": "_epik", "category": "marketing", "provider": "Pinterest", "duration": "1 year", "purpose": "Identifies promoted traffic for conversion attribution" },
+        { "name": "_derived_epik", "category": "marketing", "provider": "Pinterest", "duration": "1 year", "purpose": "Enhanced match attribution when cookies are not present" }
+      ]
+    },
+    {
+      "service": "Snapchat Pixel",
+      "scriptGlobal": "snaptr",
+      "scriptSrc": "sc-static.net",
+      "cookies": [
+        { "name": "_scid", "category": "marketing", "provider": "Snapchat", "duration": "1 year", "purpose": "Assigns a unique visitor ID for ad targeting and conversion attribution" },
+        { "name": "_scid_r", "category": "marketing", "provider": "Snapchat", "duration": "13 months", "purpose": "Unique visitor ID for third-party ad targeting" },
+        { "name": "_schn", "category": "marketing", "provider": "Snapchat", "duration": "1 day", "purpose": "Used by the retargeting pixel to attribute traffic" },
+        { "name": "sc_at", "category": "marketing", "provider": "Snapchat", "duration": "1 year", "purpose": "Identifies visitors across domains for cross-site ad targeting" }
+      ]
+    },
+    {
+      "service": "Criteo",
+      "scriptGlobal": "criteo_q",
+      "scriptSrc": "static.criteo.net",
+      "cookies": [
+        { "name": "cto_bundle", "category": "marketing", "provider": "Criteo", "duration": "13 months", "purpose": "Tracks user activity and ad engagement for targeted advertising" },
+        { "name": "cto_idcpy", "category": "marketing", "provider": "Criteo", "duration": "13 months", "purpose": "Stores a unique user ID for cross-site visitor identification" },
+        { "name": "cto_idfs", "category": "marketing", "provider": "Criteo", "duration": "13 months", "purpose": "Records the first visit timestamp for tracking management" },
+        { "name": "cto_tld_test", "category": "marketing", "provider": "Criteo", "duration": "Session", "purpose": "Determines the top-level domain for setting other Criteo cookies" }
+      ]
+    },
+    {
+      "service": "Bing UET",
+      "scriptGlobal": "uetq",
+      "scriptSrc": "bat.bing.com",
+      "cookies": [
+        { "name": "_uetsid", "category": "marketing", "provider": "Microsoft", "duration": "30 minutes", "purpose": "Stores the current session ID for relevant ad delivery" },
+        { "name": "_uetvid", "category": "marketing", "provider": "Microsoft", "duration": "16 days", "purpose": "Stores a unique visitor ID for ad personalization across sessions" },
+        { "name": "_uetmsclkid", "category": "marketing", "provider": "Microsoft", "duration": "90 days", "purpose": "Captures the Microsoft Click ID for conversion attribution" }
+      ]
+    },
+    {
+      "service": "Mixpanel",
+      "scriptGlobal": "mixpanel",
+      "scriptSrc": "cdn.mxpnl.com",
+      "cookies": [
+        { "name": "mp_*_mixpanel", "category": "analytics", "provider": "Mixpanel", "duration": "1 year", "purpose": "Stores unique user ID and properties for behavioral analytics" }
+      ]
+    },
+    {
+      "service": "Amplitude",
+      "scriptGlobal": "amplitude",
+      "scriptSrc": "cdn.amplitude.com",
+      "cookies": [
+        { "name": "AMP_*", "category": "analytics", "provider": "Amplitude", "duration": "1 year", "purpose": "Stores device ID, user ID, and session data for behavioral analytics" },
+        { "name": "AMP_MKTG_*", "category": "analytics", "provider": "Amplitude", "duration": "1 year", "purpose": "Captures marketing attribution data including UTM parameters" }
+      ]
+    },
+    {
+      "service": "LiveChat",
+      "scriptGlobal": "LiveChatWidget",
+      "scriptSrc": "cdn.livechatinc.com",
+      "cookies": [
+        { "name": "__lc_cid", "category": "necessary", "provider": "LiveChat", "duration": "400 days", "purpose": "Stores unique customer ID for live chat sessions" },
+        { "name": "__lc_cst", "category": "necessary", "provider": "LiveChat", "duration": "400 days", "purpose": "Stores secure token to authenticate chat sessions" }
+      ]
+    },
+    {
+      "service": "Drift",
+      "scriptGlobal": "drift",
+      "scriptSrc": "js.driftt.com",
+      "cookies": [
+        { "name": "driftt_aid", "category": "preferences", "provider": "Drift", "duration": "2 years", "purpose": "Identifies returning visitors across chat sessions" },
+        { "name": "driftt_sid", "category": "preferences", "provider": "Drift", "duration": "30 minutes", "purpose": "Tracks current browsing session for chat targeting" }
+      ]
+    },
+    {
+      "service": "Reddit Pixel",
+      "scriptGlobal": "rdt",
+      "scriptSrc": "redditstatic.com/ads/pixel.js",
+      "cookies": [
+        { "name": "_rdt_uuid", "category": "marketing", "provider": "Reddit", "duration": "90 days", "purpose": "Identifies visitors for ad attribution and campaign optimization" },
+        { "name": "_rdt_em", "category": "marketing", "provider": "Reddit", "duration": "90 days", "purpose": "Stores hashed email for conversion matching across devices" }
+      ]
+    },
+    {
+      "service": "FullStory",
+      "scriptGlobal": "FS",
+      "scriptSrc": "edge.fullstory.com",
+      "cookies": [
+        { "name": "fs_uid", "category": "analytics", "provider": "FullStory", "duration": "1 year", "purpose": "Links sessions and page views for session replay analytics" },
+        { "name": "fs_lua", "category": "analytics", "provider": "FullStory", "duration": "1 hour", "purpose": "Records timestamp of last user action for session lifecycle" }
+      ]
+    },
+    {
+      "service": "Tawk.to",
+      "scriptGlobal": "Tawk_API",
+      "scriptSrc": "embed.tawk.to",
+      "cookies": [
+        { "name": "TawkConnectionTime", "category": "necessary", "provider": "tawk.to", "duration": "Session", "purpose": "Manages widget connections across multiple browser tabs" },
+        { "name": "tawk_uuid_*", "category": "necessary", "provider": "tawk.to", "duration": "6 months", "purpose": "Identifies returning visitors for chat continuity" },
+        { "name": "twk_idm_key", "category": "necessary", "provider": "tawk.to", "duration": "Session", "purpose": "Prevents duplicate connection requests across pages" }
+      ]
+    },
+    {
+      "service": "Klaviyo",
+      "scriptGlobal": "klaviyo",
+      "scriptSrc": "static.klaviyo.com",
+      "cookies": [
+        { "name": "__kla_id", "category": "marketing", "provider": "Klaviyo", "duration": "2 years", "purpose": "Tracks and identifies visitors for email marketing automation" }
+      ]
+    },
+    {
+      "service": "Optimizely",
+      "scriptGlobal": "optimizely",
+      "scriptSrc": "cdn.optimizely.com",
+      "cookies": [
+        { "name": "optimizelyEndUserId", "category": "analytics", "provider": "Optimizely", "duration": "6 months", "purpose": "Stores unique visitor ID for A/B testing experiments" },
+        { "name": "optimizelyBuckets", "category": "analytics", "provider": "Optimizely", "duration": "6 months", "purpose": "Stores assigned experiment variations for consistent experience" },
+        { "name": "optimizelySegments", "category": "analytics", "provider": "Optimizely", "duration": "6 months", "purpose": "Records audience segment data for experiment targeting" }
+      ]
+    },
+    {
+      "service": "Taboola",
+      "scriptGlobal": "_tfa",
+      "scriptSrc": "cdn.taboola.com",
+      "cookies": [
+        { "name": "t_gid", "category": "marketing", "provider": "Taboola", "duration": "1 year", "purpose": "Assigns a unique user ID for attribution and reporting" },
+        { "name": "t_pt_gid", "category": "marketing", "provider": "Taboola", "duration": "1 year", "purpose": "Partitioned user ID for attribution and recommendations" },
+        { "name": "trc_cookie_storage", "category": "marketing", "provider": "Taboola", "duration": "1 year", "purpose": "Stores a unique user ID for attribution and reporting" },
+        { "name": "taboola_session_id", "category": "marketing", "provider": "Taboola", "duration": "Session", "purpose": "Creates a temporary session ID to avoid duplicate recommendations" },
+        { "name": "taboola_fp_td_user_id", "category": "analytics", "provider": "Taboola", "duration": "1 year", "purpose": "Tracks clicks on recommendations for reporting" }
+      ]
+    },
+    {
+      "service": "Outbrain",
+      "scriptGlobal": "obApi",
+      "scriptSrc": "amplify.outbrain.com",
+      "cookies": [
+        { "name": "obuid", "category": "marketing", "provider": "Outbrain", "duration": "90 days", "purpose": "Stores Outbrain UUID for tracking actions and ad personalization" },
+        { "name": "dicbo_id", "category": "marketing", "provider": "Outbrain", "duration": "7 days", "purpose": "Stores click identifier for conversion attribution" }
+      ]
+    },
+    {
+      "service": "Mouseflow",
+      "scriptGlobal": "_mfq",
+      "scriptSrc": "cdn.mouseflow.com",
+      "cookies": [
+        { "name": "mf_user", "category": "analytics", "provider": "Mouseflow", "duration": "90 days", "purpose": "Determines if the visitor is new or returning" },
+        { "name": "mf_*", "category": "analytics", "provider": "Mouseflow", "duration": "Session", "purpose": "Identifies the current session for analytics and session replay" }
+      ]
+    },
+    {
+      "service": "Crazy Egg",
+      "scriptGlobal": "CE2",
+      "scriptSrc": "script.crazyegg.com",
+      "cookies": [
+        { "name": "_ceir", "category": "analytics", "provider": "Crazy Egg", "duration": "1 year", "purpose": "Tracks whether a visitor has visited the site before" },
+        { "name": "_CEFT", "category": "analytics", "provider": "Crazy Egg", "duration": "1 year", "purpose": "Stores A/B test variant assignments" },
+        { "name": "_ce.s", "category": "analytics", "provider": "Crazy Egg", "duration": "1 year", "purpose": "Tracks a visitor session unique ID for session replay" },
+        { "name": "_ce.clock_data", "category": "analytics", "provider": "Crazy Egg", "duration": "1 day", "purpose": "Stores server and browser time difference" }
+      ]
+    },
+    {
+      "service": "AdRoll",
+      "scriptGlobal": "__adroll_loaded",
+      "scriptSrc": "s.adroll.com",
+      "cookies": [
+        { "name": "__adroll_fpc", "category": "marketing", "provider": "NextRoll", "duration": "13 months", "purpose": "Tracks user interactions with ads on the site" },
+        { "name": "__adroll", "category": "marketing", "provider": "NextRoll", "duration": "13 months", "purpose": "Identifies and tracks users for targeted advertising" },
+        { "name": "__adroll_shared", "category": "marketing", "provider": "NextRoll", "duration": "13 months", "purpose": "Enables cross-device tracking for ad targeting" },
+        { "name": "__ar_v4", "category": "marketing", "provider": "NextRoll", "duration": "1 year", "purpose": "Stores ad attribution and campaign effectiveness data" }
+      ]
+    },
+    {
+      "service": "Freshchat",
+      "scriptGlobal": "fcWidget",
+      "scriptSrc": "freshchat.com",
+      "cookies": [
+        { "name": "_fw_crm_v", "category": "necessary", "provider": "Freshworks", "duration": "1 year", "purpose": "Identifies the visitor for chat widget session continuity" }
+      ]
+    },
+    {
+      "service": "ActiveCampaign",
+      "scriptGlobal": "vgo",
+      "scriptSrc": "trackcmp.net",
+      "cookies": [
+        { "name": "prism_*", "category": "analytics", "provider": "ActiveCampaign", "duration": "1 year", "purpose": "Tracks website visits and associates them with contact records" },
+        { "name": "ac_enable_tracking", "category": "necessary", "provider": "ActiveCampaign", "duration": "30 days", "purpose": "Records whether the visitor has opted into site tracking" }
+      ]
+    },
+    {
+      "service": "Shopify Analytics",
+      "scriptGlobal": "ShopifyAnalytics",
+      "scriptSrc": "cdn.shopify.com/s/trekkie",
+      "cookies": [
+        { "name": "_shopify_y", "category": "analytics", "provider": "Shopify", "duration": "1 year", "purpose": "Stores a unique visitor identifier for analytics" },
+        { "name": "_shopify_s", "category": "analytics", "provider": "Shopify", "duration": "30 minutes", "purpose": "Identifies a session for analytics" },
+        { "name": "_shopify_sa_t", "category": "analytics", "provider": "Shopify", "duration": "30 minutes", "purpose": "Tracks referrer source and landing page for analytics" },
+        { "name": "_shopify_sa_p", "category": "analytics", "provider": "Shopify", "duration": "30 minutes", "purpose": "Stores page-level analytics data for the current session" }
+      ]
+    },
+    {
+      "service": "Quora Pixel",
+      "scriptGlobal": "qp",
+      "scriptSrc": "a.quora.com",
+      "cookies": [
+        { "name": "m-b", "category": "marketing", "provider": "Quora", "duration": "2 years", "purpose": "Identifies users across sites for ad targeting and conversion tracking" },
+        { "name": "m-s", "category": "marketing", "provider": "Quora", "duration": "Session", "purpose": "Stores session-level data for ad tracking" }
+      ]
+    },
+    {
+      "service": "Mailchimp",
+      "scriptGlobal": null,
+      "scriptSrc": "chimpstatic.com",
+      "cookies": [
+        { "name": "mailchimp_landing_site", "category": "analytics", "provider": "Mailchimp", "duration": "12 hours", "purpose": "Stores the initial landing page visited by the user" },
+        { "name": "mc_landing_site", "category": "analytics", "provider": "Mailchimp", "duration": "12 hours", "purpose": "Stores which page was visited first for analytics" }
+      ]
+    },
+    {
+      "service": "Salesforce Pardot",
+      "scriptGlobal": "piAId",
+      "scriptSrc": "pi.pardot.com",
+      "cookies": [
+        { "name": "visitor_id*", "category": "marketing", "provider": "Salesforce", "duration": "10 years", "purpose": "Stores a unique visitor ID to track website activity" },
+        { "name": "visitor_id*-hash", "category": "marketing", "provider": "Salesforce", "duration": "10 years", "purpose": "Security hash to prevent visitor ID tampering" },
+        { "name": "lpv*", "category": "marketing", "provider": "Salesforce", "duration": "30 minutes", "purpose": "Stores the most recent landing page view to avoid duplicate tracking" }
+      ]
+    },
+    {
+      "service": "Marketo Munchkin",
+      "scriptGlobal": "Munchkin",
+      "scriptSrc": "munchkin.marketo.net",
+      "cookies": [
+        { "name": "_mkto_trk", "category": "marketing", "provider": "Adobe", "duration": "2 years", "purpose": "Tracks visitor website activity and links it to lead records" }
+      ]
+    },
+    {
+      "service": "Heap Analytics",
+      "scriptGlobal": "heap",
+      "scriptSrc": "cdn.heapanalytics.com",
+      "cookies": [
+        { "name": "_hp2_id.*", "category": "analytics", "provider": "Heap", "duration": "13 months", "purpose": "Stores user ID and identity for analytics tracking" },
+        { "name": "_hp2_ses_props.*", "category": "analytics", "provider": "Heap", "duration": "30 minutes", "purpose": "Stores session properties including timestamp and domain" },
+        { "name": "_hp2_props.*", "category": "analytics", "provider": "Heap", "duration": "13 months", "purpose": "Stores event properties set via the analytics API" }
+      ]
+    },
+    {
+      "service": "PostHog",
+      "scriptGlobal": "posthog",
+      "scriptSrc": "i.posthog.com",
+      "cookies": [
+        { "name": "ph_*_posthog", "category": "analytics", "provider": "PostHog", "duration": "1 year", "purpose": "Stores distinct user ID and session ID for analytics" }
+      ]
+    },
+    {
+      "service": "Google Maps",
+      "scriptGlobal": null,
+      "scriptSrc": "maps.googleapis.com",
+      "cookies": [
+        { "name": "NID", "category": "preferences", "provider": "Google", "duration": "6 months", "purpose": "Stores user preferences and information for Google Maps" },
+        { "name": "CONSENT", "category": "necessary", "provider": "Google", "duration": "2 years", "purpose": "Stores the user's consent state for Google services" }
+      ]
     }
   ]
 }
