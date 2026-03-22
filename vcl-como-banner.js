@@ -650,10 +650,10 @@
                 }
             }
 
-            /* WCAG 2.4.3: move keyboard focus into the first button in the banner */
+            /* WCAG 2.4.3: move keyboard focus to the Consent tab */
             setTimeout(function () {
-                var focusable = banner.querySelectorAll('button:not([disabled])');
-                if (focusable.length) focusable[0].focus();
+                var consentTab = banner.querySelector('.como-tab[data-tab="consent"]');
+                if (consentTab) consentTab.focus({ focusVisible: true });
             }, 50);
 
             /* WCAG 4.1.3: announce banner title to screen readers */
@@ -707,7 +707,7 @@
                 lastFocusedElement.focus();
             } else {
                 var widget = document.getElementById(cfg.widgetId);
-                if (widget) widget.focus();
+                if (widget) widget.focus({ focusVisible: true });
             }
             lastFocusedElement = null;
         }
@@ -956,8 +956,6 @@
         var si = cfg.surfaceIntensity;
         var bgLuma = getLuma(bRgb);
         var darkBg = bgLuma < 0.5;
-        var textLuma = getLuma(tRgb);
-        var badgeFilter = textLuma > 0.5 ? 'filter: brightness(0) invert(1);' : '';
         /* Widget glow: content color on dark widget bg (bright glow), widget bg on light (dark shadow) */
 
 
@@ -1124,6 +1122,17 @@
                 'height: 20px;' +
                 'width: auto;' +
                 'object-fit: contain;' +
+            '}' +
+            '.como-badge-mono {' +
+                'display: inline-block;' +
+                'width: 60px;' +
+                'background-color: var(--como-text);' +
+                '-webkit-mask-size: contain;' +
+                'mask-size: contain;' +
+                '-webkit-mask-repeat: no-repeat;' +
+                'mask-repeat: no-repeat;' +
+                '-webkit-mask-position: center;' +
+                'mask-position: center;' +
             '}' +
 
             '.como-close-btn {' +
@@ -1507,6 +1516,7 @@
                 '.como-title { font-size: 20px; }' +
                 '.como-logo-img { height: 30px; }' +
                 '.como-badge-logo { height: 16px; }' +
+                '.como-badge-mono { width: 48px; }' +
                 '.como-badge-text { font-size: 8px; }' +
                 '#' + cfg.widgetId + ' { bottom: 12px; ' + cfg.widgetPosition + ': 12px; width: 36px; height: 36px; }' +
             '}' +
@@ -1518,6 +1528,7 @@
                 '.como-title { font-size: 16px; margin-bottom: 8px; }' +
                 '.como-logo-img { height: 22px; }' +
                 '.como-badge-logo { height: 14px; }' +
+                '.como-badge-mono { width: 42px; }' +
                 '.como-badge-text { font-size: 7px; }' +
                 '.como-header { padding-top: 10px; padding-bottom: 6px; }' +
                 '.como-tabs { margin-top: 6px; margin-bottom: 4px; }' +
@@ -1550,20 +1561,21 @@
             '}' +
             '.como-dnsmpi-btn:hover { opacity: 1; }' +
 
-            /* WCAG 2.4.7: Visible focus ring for keyboard navigation (never shows on mouse click) */
+            /* Base reset: suppress all browser-default focus rings inside banner */
+            '#' + cfg.bannerId + ' button,' +
+            '#' + cfg.bannerId + ' a,' +
+            '#' + cfg.bannerId + ' [tabindex="0"],' +
+            '#' + cfg.widgetId + ' {' +
+                'outline: none;' +
+            '}' +
+
+            /* WCAG 2.4.7: Visible focus ring for keyboard navigation only */
             '#' + cfg.bannerId + ' button:focus-visible,' +
             '#' + cfg.bannerId + ' .como-badge:focus-visible,' +
             '#' + cfg.bannerId + ' .como-toggle:focus-visible,' +
             '#' + cfg.widgetId + ':focus-visible {' +
-                'outline: 3px solid var(--como-primary);' +
+                'outline: 3px solid ' + cfg.primaryColor + ';' +
                 'outline-offset: 2px;' +
-            '}' +
-            /* Suppress browser default outline on mouse/touch click (keyboard ring preserved above) */
-            '#' + cfg.bannerId + ' button:focus:not(:focus-visible),' +
-            '#' + cfg.bannerId + ' .como-badge:focus:not(:focus-visible),' +
-            '#' + cfg.bannerId + ' .como-toggle:focus:not(:focus-visible),' +
-            '#' + cfg.widgetId + ':focus:not(:focus-visible) {' +
-                'outline: none;' +
             '}' +
 
             /* Visually-hidden helper for aria-live region (WCAG 4.1.3) */
@@ -1624,25 +1636,25 @@
         '</div>';
 
         /* Badge: tier-aware logo selection */
-        var showBadge, badgeLogoUrl, badgeFilterStyle;
+        var showBadge, badgeLogoUrl, badgeMono;
         if (cfg.agencyLogoUrl) {
-            /* Agency with custom logo */
+            /* Agency with custom logo — render in text color via mask */
             showBadge = true;
             badgeLogoUrl = cfg.agencyLogoUrl;
-            badgeFilterStyle = badgeFilter ? ' style="' + badgeFilter + '"' : '';
+            badgeMono = true;
         } else if (isAgency) {
             /* Agency without custom logo — hide badge entirely */
             showBadge = false;
         } else if (cfg.badgeLogoUrl) {
-            /* Free — colored Voxxy logo (set by template), no filter */
+            /* Free — colored Voxxy logo (set by template), show as-is */
             showBadge = true;
             badgeLogoUrl = cfg.badgeLogoUrl;
-            badgeFilterStyle = '';
+            badgeMono = false;
         } else {
-            /* Pro — monochrome Voxxy badge with text-color filter */
+            /* Pro — monochrome Voxxy badge, render in text color via mask */
             showBadge = true;
             badgeLogoUrl = VOXXY_BADGE_LOGO;
-            badgeFilterStyle = badgeFilter ? ' style="' + badgeFilter + '"' : '';
+            badgeMono = true;
         }
 
         /* Overlay */
@@ -1658,7 +1670,9 @@
                     (showBadge
                         ? '<a class="como-badge" href="' + (cfg.agencyUrl || VOXXY_URL) + '" target="_blank" rel="noopener noreferrer" aria-label="Privacy by ' + (cfg.agencyUrl ? cfg.agencyUrl.replace(/^https?:\/\//, '') : 'Voxxy Creative Lab') + '">' +
                               '<span class="como-badge-text">Privacy by</span>' +
-                              '<img class="como-badge-logo" src="' + badgeLogoUrl + '" alt=""' + badgeFilterStyle + ' />' +
+                              (badgeMono
+                                  ? '<span class="como-badge-logo como-badge-mono" aria-hidden="true" style="-webkit-mask-image:url(' + badgeLogoUrl + ');mask-image:url(' + badgeLogoUrl + ');"></span>'
+                                  : '<img class="como-badge-logo" src="' + badgeLogoUrl + '" alt="" />') +
                           '</a>'
                         : '') +
                     (model.showCloseButton ? '<button class="como-close-btn" id="comoCloseBtn" aria-label="' + closeAriaLabel + '" title="' + closeAriaLabel + '"></button>' : '') +
@@ -1930,7 +1944,7 @@
                                 ? (currentIdx + 1) % tabBtnsAK.length
                                 : (currentIdx - 1 + tabBtnsAK.length) % tabBtnsAK.length;
                             e.preventDefault();
-                            tabBtnsAK[nextIdx].focus();
+                            tabBtnsAK[nextIdx].focus({ focusVisible: true });
                             tabBtnsAK[nextIdx].click();
                         }
                     }
@@ -1955,12 +1969,12 @@
                 if (e.shiftKey) {
                     if (document.activeElement === first) {
                         e.preventDefault();
-                        last.focus();
+                        last.focus({ focusVisible: true });
                     }
                 } else {
                     if (document.activeElement === last) {
                         e.preventDefault();
-                        first.focus();
+                        first.focus({ focusVisible: true });
                     }
                 }
             });
