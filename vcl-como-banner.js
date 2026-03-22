@@ -47,6 +47,7 @@
 
     var VOXXY_BADGE_LOGO = 'https://cdn.jsdelivr.net/gh/VoxxyCreativeLab/cdn-como-banner@v1/assets/voxxy-badge-logo.svg';
     var VOXXY_URL = 'https://voxxycreativelab.com';
+    var isAgency = (window.comoAgencyLogoUrl !== undefined);
 
     var cfg = {
         version: '1',
@@ -76,7 +77,8 @@
         widgetBgColor: window.comoWidgetBgColor || '#0b4650',
         widgetContentColor: window.comoWidgetContentColor || '#e6ff2b',
         agencyLogoUrl: window.comoAgencyLogoUrl || '',
-        agencyUrl: window.comoAgencyUrl || ''
+        agencyUrl: window.comoAgencyUrl || '',
+        badgeLogoUrl: window.comoBadgeLogoUrl || ''
     };
 
     /* Auto-included in Necessary: banner's own cookies */
@@ -954,7 +956,8 @@
         var si = cfg.surfaceIntensity;
         var bgLuma = getLuma(bRgb);
         var darkBg = bgLuma < 0.5;
-        var badgeFilter = darkBg ? 'filter: brightness(0) invert(1);' : '';
+        var textLuma = getLuma(tRgb);
+        var badgeFilter = textLuma > 0.5 ? 'filter: brightness(0) invert(1);' : '';
         /* Widget glow: content color on dark widget bg (bright glow), widget bg on light (dark shadow) */
 
 
@@ -1555,6 +1558,13 @@
                 'outline: 3px solid var(--como-primary);' +
                 'outline-offset: 2px;' +
             '}' +
+            /* Suppress browser default outline on mouse/touch click (keyboard ring preserved above) */
+            '#' + cfg.bannerId + ' button:focus:not(:focus-visible),' +
+            '#' + cfg.bannerId + ' .como-badge:focus:not(:focus-visible),' +
+            '#' + cfg.bannerId + ' .como-toggle:focus:not(:focus-visible),' +
+            '#' + cfg.widgetId + ':focus:not(:focus-visible) {' +
+                'outline: none;' +
+            '}' +
 
             /* Visually-hidden helper for aria-live region (WCAG 4.1.3) */
             '.como-sr-only {' +
@@ -1613,6 +1623,28 @@
             widgetIcon +
         '</div>';
 
+        /* Badge: tier-aware logo selection */
+        var showBadge, badgeLogoUrl, badgeFilterStyle;
+        if (cfg.agencyLogoUrl) {
+            /* Agency with custom logo */
+            showBadge = true;
+            badgeLogoUrl = cfg.agencyLogoUrl;
+            badgeFilterStyle = badgeFilter ? ' style="' + badgeFilter + '"' : '';
+        } else if (isAgency) {
+            /* Agency without custom logo — hide badge entirely */
+            showBadge = false;
+        } else if (cfg.badgeLogoUrl) {
+            /* Free — colored Voxxy logo (set by template), no filter */
+            showBadge = true;
+            badgeLogoUrl = cfg.badgeLogoUrl;
+            badgeFilterStyle = '';
+        } else {
+            /* Pro — monochrome Voxxy badge with text-color filter */
+            showBadge = true;
+            badgeLogoUrl = VOXXY_BADGE_LOGO;
+            badgeFilterStyle = badgeFilter ? ' style="' + badgeFilter + '"' : '';
+        }
+
         /* Overlay */
         html += '<div id="' + cfg.overlayId + '"></div>';
 
@@ -1623,10 +1655,12 @@
             '<div class="como-header">' +
                 (cfg.logoUrl ? '<img class="como-logo-img" src="' + cfg.logoUrl + '" alt="Logo" />' : '') +
                 '<div class="como-header-right">' +
-                    '<a class="como-badge" href="' + (cfg.agencyUrl || VOXXY_URL) + '" target="_blank" rel="noopener noreferrer" aria-label="Privacy by ' + (cfg.agencyUrl ? cfg.agencyUrl.replace(/^https?:\/\//, '') : 'Voxxy Creative Lab') + '">' +
-                        '<span class="como-badge-text">Privacy by</span>' +
-                        '<img class="como-badge-logo" src="' + (cfg.agencyLogoUrl || VOXXY_BADGE_LOGO) + '" alt=""' + (badgeFilter ? ' style="' + badgeFilter + '"' : '') + ' />' +
-                    '</a>' +
+                    (showBadge
+                        ? '<a class="como-badge" href="' + (cfg.agencyUrl || VOXXY_URL) + '" target="_blank" rel="noopener noreferrer" aria-label="Privacy by ' + (cfg.agencyUrl ? cfg.agencyUrl.replace(/^https?:\/\//, '') : 'Voxxy Creative Lab') + '">' +
+                              '<span class="como-badge-text">Privacy by</span>' +
+                              '<img class="como-badge-logo" src="' + badgeLogoUrl + '" alt=""' + badgeFilterStyle + ' />' +
+                          '</a>'
+                        : '') +
                     (model.showCloseButton ? '<button class="como-close-btn" id="comoCloseBtn" aria-label="' + closeAriaLabel + '" title="' + closeAriaLabel + '"></button>' : '') +
                 '</div>' +
             '</div>' +
