@@ -32,6 +32,8 @@
        window.comoWidgetLogoUrl   = '';           // override widget logo (URL to image)
        window.comoWidgetBgColor   = '#0b4650';   // widget background color
        window.comoWidgetContentColor = '#e6ff2b'; // widget icon & border color
+       window.comoAgencyLogoUrl   = '';           // agency badge logo (replaces Voxxy badge)
+       window.comoAgencyUrl       = '';           // agency website URL (replaces Voxxy URL)
        ═══════════════════════════════════════════════ */
 
     /* Voxxy Creative Lab — brand palette (used by tiered branding) */
@@ -43,6 +45,9 @@
         white:  '#fefdfc'
     };
 
+    var VOXXY_BADGE_LOGO = 'https://cdn.jsdelivr.net/gh/VoxxyCreativeLab/cdn-como-banner@v1/assets/voxxy-badge-logo.svg';
+    var VOXXY_URL = 'https://voxxycreativelab.com';
+
     var cfg = {
         version: '1',
         cookieName: 'vcl_consent',
@@ -53,7 +58,7 @@
         region: 'unknown',
         privacyPolicyUrl: window.comoPrivacyUrl || '',
         dataController: window.comoDataController || '',
-        logoUrl: window.comoLogoUrl || 'https://voxxycreativelab.com/storage/2025/03/cropped-VCL-Logo-Homepage-2.0.1-450x150-Light-font-change-to-Exo2.png',
+        logoUrl: window.comoLogoUrl || '',
         fontUrl: window.comoFontUrl || '',
         logEndpoint: window.comoLogEndpoint || '',
         primaryColor: window.comoPrimaryColor || '#0b4650',
@@ -69,7 +74,9 @@
         widgetPosition: window.comoWidgetPosition || 'left',
         widgetLogoUrl: window.comoWidgetLogoUrl || '',
         widgetBgColor: window.comoWidgetBgColor || '#0b4650',
-        widgetContentColor: window.comoWidgetContentColor || '#e6ff2b'
+        widgetContentColor: window.comoWidgetContentColor || '#e6ff2b',
+        agencyLogoUrl: window.comoAgencyLogoUrl || '',
+        agencyUrl: window.comoAgencyUrl || ''
     };
 
     /* Auto-included in Necessary: banner's own cookies */
@@ -947,6 +954,7 @@
         var si = cfg.surfaceIntensity;
         var bgLuma = getLuma(bRgb);
         var darkBg = bgLuma < 0.5;
+        var badgeFilter = darkBg ? 'filter: brightness(0) invert(1);' : '';
         /* Widget glow: content color on dark widget bg (bright glow), widget bg on light (dark shadow) */
 
 
@@ -1080,6 +1088,7 @@
                 'padding: 24px 28px 0 28px;' +
                 'display: flex;' +
                 'align-items: center;' +
+                'justify-content: space-between;' +
                 'flex-shrink: 0;' +
             '}' +
             '.como-logo-img {' +
@@ -1087,9 +1096,34 @@
                 'width: auto;' +
                 'object-fit: contain;' +
             '}' +
+            '.como-header-right {' +
+                'display: flex;' +
+                'align-items: center;' +
+                'gap: 12px;' +
+                'margin-left: auto;' +
+            '}' +
+            '.como-badge {' +
+                'display: flex;' +
+                'flex-direction: column;' +
+                'align-items: flex-end;' +
+                'text-decoration: none;' +
+                'gap: 2px;' +
+                'flex-shrink: 0;' +
+            '}' +
+            '.como-badge-text {' +
+                'font-size: 9px;' +
+                'color: var(--como-text);' +
+                'opacity: 0.6;' +
+                'line-height: 1;' +
+                'font-family: var(--como-font);' +
+            '}' +
+            '.como-badge-logo {' +
+                'height: 20px;' +
+                'width: auto;' +
+                'object-fit: contain;' +
+            '}' +
 
             '.como-close-btn {' +
-                'margin-left: auto;' +
                 'width: 32px;' +
                 'height: 32px;' +
                 'border: none;' +
@@ -1469,6 +1503,8 @@
                 '.como-tab { font-size: 12px; padding: 9px 10px; }' +
                 '.como-title { font-size: 20px; }' +
                 '.como-logo-img { height: 30px; }' +
+                '.como-badge-logo { height: 16px; }' +
+                '.como-badge-text { font-size: 8px; }' +
                 '#' + cfg.widgetId + ' { bottom: 12px; ' + cfg.widgetPosition + ': 12px; width: 36px; height: 36px; }' +
             '}' +
 
@@ -1478,6 +1514,8 @@
                 '.como-btn { padding: 8px 16px; font-size: 13px; }' +
                 '.como-title { font-size: 16px; margin-bottom: 8px; }' +
                 '.como-logo-img { height: 22px; }' +
+                '.como-badge-logo { height: 14px; }' +
+                '.como-badge-text { font-size: 7px; }' +
                 '.como-header { padding-top: 10px; padding-bottom: 6px; }' +
                 '.como-tabs { margin-top: 6px; margin-bottom: 4px; }' +
                 '.como-tab { padding: 5px 8px; font-size: 12px; }' +
@@ -1511,6 +1549,7 @@
 
             /* WCAG 2.4.7: Visible focus ring for keyboard navigation (never shows on mouse click) */
             '#' + cfg.bannerId + ' button:focus-visible,' +
+            '#' + cfg.bannerId + ' .como-badge:focus-visible,' +
             '#' + cfg.bannerId + ' .como-toggle:focus-visible,' +
             '#' + cfg.widgetId + ':focus-visible {' +
                 'outline: 3px solid var(--como-primary);' +
@@ -1582,8 +1621,14 @@
 
             /* Header */
             '<div class="como-header">' +
-                '<img class="como-logo-img" src="' + cfg.logoUrl + '" alt="Logo" />' +
-                (model.showCloseButton ? '<button class="como-close-btn" id="comoCloseBtn" aria-label="' + closeAriaLabel + '" title="' + closeAriaLabel + '"></button>' : '') +
+                (cfg.logoUrl ? '<img class="como-logo-img" src="' + cfg.logoUrl + '" alt="Logo" />' : '') +
+                '<div class="como-header-right">' +
+                    '<a class="como-badge" href="' + (cfg.agencyUrl || VOXXY_URL) + '" target="_blank" rel="noopener noreferrer" aria-label="Privacy by ' + (cfg.agencyUrl ? cfg.agencyUrl.replace(/^https?:\/\//, '') : 'Voxxy Creative Lab') + '">' +
+                        '<span class="como-badge-text">Privacy by</span>' +
+                        '<img class="como-badge-logo" src="' + (cfg.agencyLogoUrl || VOXXY_BADGE_LOGO) + '" alt=""' + (badgeFilter ? ' style="' + badgeFilter + '"' : '') + ' />' +
+                    '</a>' +
+                    (model.showCloseButton ? '<button class="como-close-btn" id="comoCloseBtn" aria-label="' + closeAriaLabel + '" title="' + closeAriaLabel + '"></button>' : '') +
+                '</div>' +
             '</div>' +
 
             /* Tabs */
