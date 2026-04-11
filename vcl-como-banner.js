@@ -1204,7 +1204,7 @@
                 'transition: all 0.25s ease;' +
                 'letter-spacing: 0.3px;' +
             '}' +
-            '.como-tab:hover { color: var(--como-text); }' +
+            '.como-tab:hover { color: var(--como-text); background: ' + tRgba(0.08) + '; }' +
             '.como-tab.active {' +
                 'background: var(--como-primary);' +
                 'color: var(--como-btn-text);' +
@@ -1585,7 +1585,11 @@
             '#' + cfg.bannerId + ' button,' +
             '#' + cfg.bannerId + ' a,' +
             '#' + cfg.bannerId + ' [tabindex="0"],' +
-            '#' + cfg.widgetId + ' {' +
+            '#' + cfg.widgetId + ',' +
+            '#' + cfg.bannerId + ' button:focus,' +
+            '#' + cfg.bannerId + ' a:focus,' +
+            '#' + cfg.bannerId + ' [tabindex="0"]:focus,' +
+            '#' + cfg.widgetId + ':focus {' +
                 'outline: none;' +
             '}' +
 
