@@ -1061,8 +1061,27 @@
                 'display: none;' +
             '}' +
 
+            '/* CSS isolation — block host page interference */' +
+            '.como-banner, .como-banner *, .como-banner *::before, .como-banner *::after {' +
+                'all: revert;' +
+                'box-sizing: border-box;' +
+            '}' +
+
             '.como-banner {' +
                 'text-align: left;' +
+                'color: var(--como-text);' +
+                'font-size: 16px;' +
+                'line-height: 1.5;' +
+                'letter-spacing: normal;' +
+                'word-spacing: normal;' +
+                'text-transform: none;' +
+                'text-indent: 0;' +
+                'white-space: normal;' +
+                'font-style: normal;' +
+                'font-weight: 400;' +
+                'text-decoration: none;' +
+                'visibility: visible;' +
+                'direction: ltr;' +
                 'position: fixed;' +
                 'top: 50%; left: 50%;' +
                 'transform: translate(-50%, -50%);' +
