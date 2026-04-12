@@ -1194,17 +1194,17 @@
                 'flex: 1;' +
                 'padding: 10px 14px;' +
                 'border: none;' +
-                'background: transparent;' +
+                'background: var(--como-surface);' +
                 'font-family: var(--como-font);' +
                 'font-size: 13px;' +
                 'font-weight: 500;' +
                 'color: var(--como-text-dim);' +
                 'cursor: pointer;' +
                 'border-radius: var(--como-radius-sm);' +
-                'transition: all 0.25s ease;' +
+                'transition: background 0.2s ease;' +
                 'letter-spacing: 0.3px;' +
             '}' +
-            '.como-tab:hover { color: var(--como-text); background: ' + tRgba(0.08) + '; }' +
+            '.como-tab:hover { background: ' + pRgba(0.12) + '; }' +
             '.como-tab.active {' +
                 'background: var(--como-primary);' +
                 'color: var(--como-btn-text);' +
