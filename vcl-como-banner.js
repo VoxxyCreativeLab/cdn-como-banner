@@ -160,26 +160,6 @@
     var resolvedLang = 'en';
 
     /* ═══════════════════════════════════════════════
-       DOM UTILITIES — defensive style hardening
-       setImportantStyle writes inline style="...!important" via setAttribute,
-       which beats all author-stylesheet !important rules per CSS cascade order.
-       Used to lock un-loseable visual properties on hostile host pages.
-       Pattern mirrors OneTrust's otBannerSdk.js d(el, styles, true) helper.
-       ═══════════════════════════════════════════════ */
-
-    function setImportantStyle(el, decls) {
-        if (!el || !decls) return;
-        var existing = el.getAttribute('style') || '';
-        var parts = existing ? [existing.replace(/;\s*$/, '')] : [];
-        for (var prop in decls) {
-            if (Object.prototype.hasOwnProperty.call(decls, prop)) {
-                parts.push(prop + ': ' + decls[prop] + ' !important');
-            }
-        }
-        el.setAttribute('style', parts.join('; '));
-    }
-
-    /* ═══════════════════════════════════════════════
        CONFIG LOADING
        Priority: window.comoConfig > window.comoConfigUrl > CDN
        ═══════════════════════════════════════════════ */
@@ -1081,8 +1061,7 @@
                 'display: none;' +
             '}' +
 
-            '/* CSS isolation — Stage-2 hardening (matches OneTrust/Cookiebot defensive posture). */' +
-            '/* Reset on root + descendants so host CSS targeting .como-banner itself cannot bleed. */' +
+            '/* CSS isolation — block host page interference */' +
             '.como-banner, .como-banner *, .como-banner *::before, .como-banner *::after {' +
                 'all: revert;' +
                 'box-sizing: border-box;' +
@@ -1101,6 +1080,7 @@
                 'font-style: normal;' +
                 'font-weight: 400;' +
                 'text-decoration: none;' +
+                'visibility: visible;' +
                 'direction: ltr;' +
                 'position: fixed;' +
                 'top: 50%; left: 50%;' +
@@ -1108,6 +1088,7 @@
                 'width: 900px;' +
                 'max-width: calc(100vw - 32px);' +
                 'max-height: calc(100dvh - 32px);' +
+                'background: var(--como-bg);' +
                 'border-radius: var(--como-radius);' +
                 'border: 1px solid var(--como-border);' +
                 'font-family: var(--como-font);' +
@@ -1117,16 +1098,6 @@
                 'flex-direction: column;' +
                 'animation: comoPop 0.5s cubic-bezier(0.16, 1, 0.3, 1);' +
                 'box-shadow: 0 0 0 1px ' + pRgba(0.06) + ', 0 40px 80px ' + pRgba(0.18) + ', 0 0 80px rgba(239,35,60,0.06);' +
-                /* Defensive un-loseable properties — !important beats host * { ... !important } */
-                'background-color: var(--como-bg) !important;' +
-                'background-image: none !important;' +
-                'opacity: 1 !important;' +
-                'filter: none !important;' +
-                'mix-blend-mode: normal !important;' +
-                'visibility: visible !important;' +
-                'pointer-events: auto !important;' +
-                'isolation: isolate !important;' +
-                'contain: layout style !important;' +
             '}' +
 
             '@keyframes comoPop {' +
@@ -1872,23 +1843,7 @@
             var container = document.createElement('div');
             container.id = cfg.containerId;
             container.innerHTML = createBannerHTML();
-            /* Portal to <html> not <body> — escapes ancestor opacity/filter/transform paint-tree effects
-               that trap position:fixed and bleed compositing. Goes one step further than OneTrust/Cookiebot. */
-            (document.documentElement || body).appendChild(container);
-
-            /* Inline-style hardening: setAttribute("style", "...!important") beats all author-stylesheet
-               !important rules per CSS cascade order. OneTrust pattern (otBannerSdk.js d(el, styles, true)). */
-            var bannerEl = document.getElementById(cfg.bannerId);
-            if (bannerEl) {
-                setImportantStyle(bannerEl, {
-                    'background-color': cfg.bgColor,
-                    'background-image': 'none',
-                    'opacity': '1',
-                    'filter': 'none',
-                    'visibility': 'visible',
-                    'pointer-events': 'auto'
-                });
-            }
+            body.appendChild(container);
 
             /* ── Close button ── */
             var closeBtn = document.getElementById('comoCloseBtn');
