@@ -627,7 +627,7 @@
     /* Fallback for browsers without dvh support: use window.innerHeight */
     function fixBannerHeight() {
         var banner = document.getElementById(cfg.bannerId);
-        if (!banner || !banner.hasAttribute('open')) return;
+        if (!banner || banner.style.display === 'none') return;
         var gap = window.innerWidth <= 600 ? 16 : 32;
         banner.style.maxHeight = (window.innerHeight - gap) + 'px';
     }
@@ -647,11 +647,6 @@
         });
     }
 
-    /* Feature detection: <dialog>.showModal() exists since Chrome 37, Firefox 98 (2022),
-       Safari 15.4 (2022). In 2026 this is universal; the legacy fallback below should
-       never trigger but is retained as belt-and-braces insurance. */
-    var supportsDialog = typeof HTMLDialogElement === 'function';
-
     function showBanner() {
         var banner = document.getElementById(cfg.bannerId);
         var overlay = document.getElementById(cfg.overlayId);
@@ -659,41 +654,23 @@
             /* WCAG 2.4.3: save current focus so we can restore it on close */
             lastFocusedElement = document.activeElement;
 
-            if (supportsDialog && typeof banner.showModal === 'function' && !banner.open) {
-                /* Modern path: top-layer escape via <dialog>.showModal().
-                   Top layer escapes ALL ancestor compositing (opacity, filter, transform,
-                   mix-blend-mode, backdrop-filter) — including effects on <html> itself.
-                   Native focus trap, Esc-to-close (handled via 'cancel' event),
-                   and inert-on-rest-of-page come built-in. ::backdrop replaces our overlay. */
-                try {
-                    banner.showModal();
-                } catch (e) {
-                    /* Already-open or detached — fall back to legacy */
-                    banner.setAttribute('open', '');
-                }
-            } else {
-                /* Legacy fallback — pre-2022 browsers without <dialog> support.
-                   Keeps v1.0.40's portal + !important defenses. Should never run in 2026. */
-                banner.setAttribute('open', '');  /* lets .como-banner[open] CSS apply */
-                if (cfg.showOverlay) {
-                    overlay.style.display = 'block';
-                    document.documentElement.classList.add('como-blur');
-                }
-                /* WCAG 1.3.1: mark background inert (built-in with .showModal — manual here) */
-                var bodyChildren = document.body.children;
-                for (var bi = 0; bi < bodyChildren.length; bi++) {
-                    if (bodyChildren[bi].id !== cfg.containerId) {
-                        bodyChildren[bi].setAttribute('inert', '');
-                    }
+            banner.style.display = '';
+            if (!dvhSupported) fixBannerHeight();
+            if (cfg.showOverlay) {
+                overlay.style.display = 'block';
+                document.documentElement.classList.add('como-blur');
+            }
+            hideWidget();
+
+            /* WCAG 1.3.1: mark background inert so screen readers stay inside the dialog */
+            var bodyChildren = document.body.children;
+            for (var bi = 0; bi < bodyChildren.length; bi++) {
+                if (bodyChildren[bi].id !== cfg.containerId) {
+                    bodyChildren[bi].setAttribute('inert', '');
                 }
             }
 
-            if (!dvhSupported) fixBannerHeight();
-            hideWidget();
-
-            /* WCAG 2.4.3: move keyboard focus to the Consent tab.
-               <dialog>.showModal() auto-focuses the first focusable element; we override
-               to land on the consent tab specifically. */
+            /* WCAG 2.4.3: move keyboard focus to the Consent tab */
             setTimeout(function () {
                 var consentTab = banner.querySelector('.como-tab[data-tab="consent"]');
                 if (consentTab) consentTab.focus({ focusVisible: true });
@@ -729,21 +706,16 @@
         var banner = document.getElementById(cfg.bannerId);
         var overlay = document.getElementById(cfg.overlayId);
         if (banner && overlay) {
-            if (supportsDialog && typeof banner.close === 'function' && banner.open) {
-                /* Modern path — also removes the [open] attribute and removes
-                   inert from the rest of the page automatically. */
-                banner.close();
-            } else {
-                /* Legacy fallback */
-                banner.removeAttribute('open');
-                if (cfg.showOverlay) {
-                    overlay.style.display = 'none';
-                    document.documentElement.classList.remove('como-blur');
-                }
-                var bodyChildren = document.body.children;
-                for (var bi = 0; bi < bodyChildren.length; bi++) {
-                    bodyChildren[bi].removeAttribute('inert');
-                }
+            banner.style.display = 'none';
+            if (cfg.showOverlay) {
+                overlay.style.display = 'none';
+                document.documentElement.classList.remove('como-blur');
+            }
+
+            /* WCAG 1.3.1: remove inert from page background */
+            var bodyChildren = document.body.children;
+            for (var bi = 0; bi < bodyChildren.length; bi++) {
+                bodyChildren[bi].removeAttribute('inert');
             }
 
             /* WCAG 4.1.3: clear live region */
@@ -1141,14 +1113,10 @@
                 'font-family: var(--como-font);' +
                 'z-index: 2147483647;' +
                 'overflow: hidden;' +
+                'display: flex;' +
                 'flex-direction: column;' +
                 'animation: comoPop 0.5s cubic-bezier(0.16, 1, 0.3, 1);' +
                 'box-shadow: 0 0 0 1px ' + pRgba(0.06) + ', 0 40px 80px ' + pRgba(0.18) + ', 0 0 80px rgba(239,35,60,0.06);' +
-                /* <dialog> UA-style reset — override the browser's default modal styling.
-                   UA sets margin:auto + inset-inline:0 (centers via margin); we use
-                   top/left/transform centering instead, so margin:0 + don't touch inset. */
-                'padding: 0 !important;' +
-                'margin: 0 !important;' +
                 /* Defensive un-loseable properties — !important beats host * { ... !important } */
                 'background-color: var(--como-bg) !important;' +
                 'background-image: none !important;' +
@@ -1159,19 +1127,6 @@
                 'pointer-events: auto !important;' +
                 'isolation: isolate !important;' +
                 'contain: layout style !important;' +
-            '}' +
-
-            /* display:flex only when dialog is open — preserves UA `dialog:not([open]) { display: none }` */
-            '.como-banner[open] {' +
-                'display: flex;' +
-            '}' +
-
-            /* ::backdrop — replaces the manual #comoOverlay + html.como-blur mechanism for the
-               modern <dialog>.showModal() path. Renders BELOW the dialog in the top layer. */
-            '.como-banner::backdrop {' +
-                'background: ' + pRgba(0.4) + ';' +
-                'backdrop-filter: blur(4px);' +
-                '-webkit-backdrop-filter: blur(4px);' +
             '}' +
 
             '@keyframes comoPop {' +
@@ -1758,9 +1713,8 @@
         /* Overlay */
         html += '<div id="' + cfg.overlayId + '"></div>';
 
-        /* Banner — <dialog> uses the browser top layer (escapes ancestor opacity/filter/transform paint-tree).
-           Native role="dialog", aria-modal, focus trap, Esc-to-close, and ::backdrop come for free. */
-        html += '<dialog id="' + cfg.bannerId + '" class="como-banner" aria-labelledby="comoTitle">' +
+        /* Banner */
+        html += '<div id="' + cfg.bannerId + '" class="como-banner" role="dialog" aria-modal="true" aria-labelledby="comoTitle" style="display:none;">' +
 
             /* Header */
             '<div class="como-header">' +
@@ -1832,7 +1786,7 @@
                 getDnsmpiLinkHtml() +
             '</div>' +
 
-        '</dialog>';
+        '</div>';
 
         return html;
     }
@@ -2040,27 +1994,10 @@
                 });
             }
 
-            /* ── Cancel event: handles Esc-to-close on <dialog> ──
-               Default behavior is "close the dialog with no result". For consent we want:
-               - opt-out regions (showCloseButton=true): Esc accepts all (matches close-button click)
-               - opt-in regions (showCloseButton=false): Esc must NOT close — preventDefault keeps dialog open. */
-            var bannerForCancel = document.getElementById(cfg.bannerId);
-            if (bannerForCancel) {
-                bannerForCancel.addEventListener('cancel', function (e) {
-                    e.preventDefault();
-                    if (getMode().showCloseButton) {
-                        handleConsent('accept-all');
-                    }
-                    /* else: opt-in region — banner stays open, user must make a choice */
-                });
-            }
-
-            /* ── Keyboard accessibility (WCAG 2.1.1, 2.1.2, 2.4.3) ──
-               Tab/Shift+Tab focus trap is built-in with <dialog>.showModal() — no manual code needed.
-               We still handle ArrowLeft/Right for ARIA tablist navigation between consent tabs. */
+            /* ── Keyboard accessibility (WCAG 2.1.1, 2.1.2, 2.4.3) ── */
             document.addEventListener('keydown', function (e) {
                 var banner = document.getElementById(cfg.bannerId);
-                if (!banner || !banner.hasAttribute('open')) return;
+                if (!banner || banner.style.display === 'none') return;
 
                 /* Arrow keys: navigate between tabs (ARIA tablist pattern) */
                 if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
@@ -2079,6 +2016,34 @@
                             tabBtnsAK[nextIdx].focus({ focusVisible: true });
                             tabBtnsAK[nextIdx].click();
                         }
+                    }
+                    return;
+                }
+
+                /* Escape: close banner (only when model permits closing without a choice) */
+                if (e.key === 'Escape') {
+                    if (getMode().showCloseButton) {
+                        e.preventDefault();
+                        handleConsent('accept-all');
+                    }
+                    return;
+                }
+
+                /* Tab / Shift+Tab: focus trap — cycle only within banner */
+                if (e.key !== 'Tab') return;
+                var focusable = banner.querySelectorAll('button:not([disabled]), [tabindex="0"]');
+                if (!focusable.length) return;
+                var first = focusable[0];
+                var last = focusable[focusable.length - 1];
+                if (e.shiftKey) {
+                    if (document.activeElement === first) {
+                        e.preventDefault();
+                        last.focus({ focusVisible: true });
+                    }
+                } else {
+                    if (document.activeElement === last) {
+                        e.preventDefault();
+                        first.focus({ focusVisible: true });
                     }
                 }
             });
