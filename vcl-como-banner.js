@@ -49,6 +49,134 @@
     var VOXXY_URL = 'https://voxxycreativelab.com';
     var isAgency = (window.comoAgencyLogoUrl !== undefined);
 
+    /* ═══════════════════════════════════════════════
+       ROOT DOMAIN COMPUTATION (cross-subdomain consent)
+       ═══════════════════════════════════════════════ */
+
+    /* Curated multi-part TLD set (~50 entries) — covers Voxxy client geographies.
+       For unknown TLDs, computeRootDomain falls back to last-2-labels.
+       Operators on edge platforms (*.pages.dev, etc.) use comoRootDomainOverride. */
+    var MULTI_PART_TLDS = {
+        // Tier A — core
+        'co.uk': 1, 'org.uk': 1, 'ac.uk': 1, 'gov.uk': 1, 'me.uk': 1,
+        'com.au': 1, 'net.au': 1, 'org.au': 1, 'edu.au': 1, 'gov.au': 1,
+        'co.nz': 1, 'org.nz': 1, 'net.nz': 1,
+        'co.za': 1, 'org.za': 1, 'net.za': 1, 'ac.za': 1,
+        'com.br': 1, 'org.br': 1, 'net.br': 1,
+        'com.mx': 1, 'org.mx': 1,
+        'co.in': 1, 'net.in': 1, 'org.in': 1,
+        // Tier B — Asia-Pacific commerce + EU/Eastern Europe
+        'co.jp': 1, 'ne.jp': 1, 'or.jp': 1, 'ac.jp': 1,
+        'co.kr': 1, 'or.kr': 1, 'ne.kr': 1,
+        'com.hk': 1, 'org.hk': 1,
+        'com.tw': 1, 'org.tw': 1,
+        'com.cn': 1, 'net.cn': 1, 'org.cn': 1,
+        'com.sg': 1, 'org.sg': 1,
+        'com.my': 1, 'org.my': 1,
+        'com.tr': 1, 'net.tr': 1,
+        'com.ar': 1, 'org.ar': 1,
+        'com.ph': 1, 'org.ph': 1,
+        'com.pl': 1, 'com.ua': 1
+    };
+
+    var DNS_REGEX = /^[a-zA-Z0-9]([a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(\.[a-zA-Z0-9]([a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)+$/;
+    var IPV4_REGEX = /^\d+\.\d+\.\d+\.\d+$/;
+
+    function computeRootDomain(hostname, override) {
+        // Override takes priority. Empty / falsy override falls through to auto-detect.
+        if (override) {
+            var cleaned = override.replace(/^\./, '').toLowerCase();
+            if (DNS_REGEX.test(cleaned)) {
+                return '.' + cleaned;
+            }
+            // Invalid override: fall through to auto-detect.
+        }
+
+        if (!hostname) return null;
+
+        var h = String(hostname).toLowerCase();
+
+        // Strip a single trailing dot (DNS-canonical form).
+        if (h.charAt(h.length - 1) === '.') h = h.slice(0, -1);
+
+        // Guard 1: IPv4 literal.
+        if (IPV4_REGEX.test(h)) return null;
+
+        // Guard 2: IPv6 (brackets or colons).
+        if (h.indexOf(':') !== -1 || h.charAt(0) === '[') return null;
+
+        // Guard 3: localhost / *.localhost
+        // 10 = '.localhost'.length
+        if (h === 'localhost' || h.indexOf('.localhost') === h.length - 10) return null;
+
+        // Guard 4: single-label (no dot).
+        if (h.indexOf('.') === -1) return null;
+
+        var labels = h.split('.');
+
+        // Try last 2 labels as a multi-part TLD key.
+        if (labels.length >= 3) {
+            var lastTwo = labels.slice(-2).join('.');
+            if (MULTI_PART_TLDS[lastTwo]) {
+                return '.' + labels.slice(-3).join('.');
+            }
+        }
+
+        // Default: last 2 labels.
+        return '.' + labels.slice(-2).join('.');
+    }
+
+    var ROOT_DOMAIN = computeRootDomain(location.hostname, window.comoRootDomainOverride || '');
+
+    /* ═══════════════════════════════════════════════
+       COOKIE MIGRATION — host-only → root-scoped
+       Runs once at script init for both vcl_consent and vcl_geo.
+       ═══════════════════════════════════════════════ */
+
+    function logScopeDecision(scope, source) {
+        if (window.comoEnableDebugLogging) {
+            console.log('[CoMo] Cookie scope: ' + scope + ' (' + source + ')');
+        }
+    }
+
+    function logMigration(name) {
+        if (window.comoEnableDebugLogging) {
+            console.log('[CoMo] Migration: rewrote ' + name + ' at root scope, deleted host-only');
+        }
+    }
+
+    /* Log scope decision once on init. */
+    if (ROOT_DOMAIN) {
+        logScopeDecision('root domain ' + ROOT_DOMAIN, window.comoRootDomainOverride ? 'override' : 'auto-detected');
+    } else {
+        logScopeDecision('host-only', 'localhost / IP / single-label / unknown');
+    }
+
+    /* Migrate vcl_consent and vcl_geo from host-only to root-scoped if
+       a legacy cookie exists and ROOT_DOMAIN is now usable.
+       After migration the host-only cookie is gone, but readCookie still
+       returns the root-scoped value, so the if-guards remain true and
+       rewrite on every load. The rewrite is idempotent (same value, same
+       scope); the host-only delete attempt is a browser no-op. Accepted cost. */
+    if (ROOT_DOMAIN) {
+        // vcl_consent — uses 365-day expiry (config-driven expiry isn't
+        // available at script-init time; the next legitimate consent
+        // action overwrites with the proper expiry anyway).
+        var existingConsent = readCookie('vcl_consent');
+        if (existingConsent) {
+            setCookie('vcl_consent', existingConsent, 365);
+            setCookieHostOnly('vcl_consent', '', -1);
+            logMigration('vcl_consent');
+        }
+        // vcl_geo — fixed 30-day expiry per GEO_COOKIE_EXPIRY semantics.
+        var existingGeo = readCookie('vcl_geo');
+        if (existingGeo) {
+            setCookie('vcl_geo', existingGeo, 30);
+            setCookieHostOnly('vcl_geo', '', -1);
+            logMigration('vcl_geo');
+        }
+    }
+
     var cfg = {
         version: '1',
         cookieName: 'vcl_consent',
@@ -464,11 +592,21 @@
             expires = '; expires=' + d.toUTCString();
         }
         var secure = location.protocol === 'https:' ? '; Secure' : '';
-        document.cookie = name + '=' + encodeURIComponent(value) + expires + '; path=/; SameSite=Lax' + secure;
+        var domain = ROOT_DOMAIN ? '; domain=' + ROOT_DOMAIN : '';
+        document.cookie = name + '=' + encodeURIComponent(value) + expires + '; path=/; SameSite=Lax' + secure + domain;
     }
 
-    function deleteCookie(name) {
-        document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+    /* setCookieHostOnly — used only for the migration delete step that
+       clears legacy host-only cookies. Never use in new code paths. */
+    function setCookieHostOnly(name, value, days) {
+        var expires = '';
+        if (days) {
+            var d = new Date();
+            d.setTime(d.getTime() + (days * 86400000));
+            expires = '; expires=' + d.toUTCString();
+        }
+        var secure = location.protocol === 'https:' ? '; Secure' : '';
+        document.cookie = name + '=' + encodeURIComponent(value) + expires + '; path=/; SameSite=Lax' + secure;
     }
 
     /* ═══════════════════════════════════════════════
