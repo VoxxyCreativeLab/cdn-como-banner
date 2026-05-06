@@ -1231,7 +1231,13 @@
                 'border: 1px solid var(--como-border);' +
                 'font-family: var(--como-font);' +
                 'z-index: 2147483647;' +
+                /* overflow:clip + overflow-clip-margin allows focus rings on
+                   edge-adjacent children to render outside the banner without
+                   being clipped. overflow:hidden retained as fallback for
+                   pre-2021 browsers (Chrome <90 / Firefox <102 / Safari <16.4). */
                 'overflow: hidden;' +
+                'overflow: clip;' +
+                'overflow-clip-margin: 8px;' +
                 'display: flex;' +
                 'flex-direction: column;' +
                 'animation: comoPop 0.5s cubic-bezier(0.16, 1, 0.3, 1);' +
@@ -1731,13 +1737,22 @@
                 'outline: none;' +
             '}' +
 
-            /* WCAG 2.4.7: Visible focus ring for keyboard navigation only */
+            /* WCAG 2.4.7: Visible focus ring for keyboard navigation only.
+               Outline projects 5px outside the element (3px outline + 2px
+               offset). The banner's overflow-clip-margin lets these rings
+               escape the banner's clip box. position:relative + z-index pulls
+               the focused element above its adjacent siblings so they don't
+               paint over the outermost ~1px of the ring (visible at tight
+               flex gaps between sibling tabs/buttons). Already-positioned
+               elements (widget is position:fixed) ignore the relative. */
             '#' + cfg.bannerId + ' button:focus-visible,' +
             '#' + cfg.bannerId + ' .como-badge:focus-visible,' +
             '#' + cfg.bannerId + ' .como-toggle:focus-visible,' +
             '#' + cfg.widgetId + ':focus-visible {' +
                 'outline: 3px solid ' + cfg.primaryColor + ';' +
                 'outline-offset: 2px;' +
+                'position: relative;' +
+                'z-index: 1;' +
             '}' +
 
             /* Visually-hidden helper for aria-live region (WCAG 4.1.3) */
