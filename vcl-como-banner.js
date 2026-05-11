@@ -13,6 +13,13 @@
     if (window.comoConsentInitialized) return;
     window.comoConsentInitialized = true;
 
+    /* Banner release version (semver). Bumped every release. Reported in
+       the log payload at the logEndpoint and surfaced to consumers via
+       comoConsentAPI. NOT the cookie schema version: that is cfg.version
+       (frozen at '1'). See CLAUDE.md Rule 10 and src/banner/CONTEXT.md
+       for the do-not-touch rationale. */
+    var BANNER_VERSION = '1.2.0';
+
     /* ═══════════════════════════════════════════════
        CONFIGURATION
        Site owners set these BEFORE this script loads:
@@ -129,6 +136,74 @@
     var ROOT_DOMAIN = computeRootDomain(location.hostname, window.comoRootDomainOverride || '');
 
     /* ═══════════════════════════════════════════════
+       PRIVACY-PAGE DETECTION (BACKLOG #13)
+       Pure function. Byte-identical companion lives in
+       test/unit/isOnPrivacyPage.fixture.js. Keep them in sync.
+       Returns true when the current page URL matches the configured
+       privacyUrl (case-insensitive path, trailing slash stripped,
+       query and fragment ignored). Hostname is compared only when
+       privacyUrl is absolute; relative privacyUrl values are
+       host-agnostic. Unsupported schemes (mailto:, tel:, javascript:)
+       always return false.
+       ═══════════════════════════════════════════════ */
+
+    var PRIVACY_ABSOLUTE_REGEX = /^https?:\/\//i;
+    var PRIVACY_OTHER_SCHEME_REGEX = /^[a-zA-Z][a-zA-Z0-9+.-]*:/;
+
+    function isOnPrivacyPage(currentHref, privacyUrlConfig) {
+        if (!currentHref || !privacyUrlConfig) return false;
+
+        var currentStr = String(currentHref).trim();
+        var privacyStr = String(privacyUrlConfig).trim();
+        if (!currentStr || !privacyStr) return false;
+
+        // Reject unsupported schemes (mailto:, tel:, javascript:, etc.).
+        if (PRIVACY_OTHER_SCHEME_REGEX.test(privacyStr) && !PRIVACY_ABSOLUTE_REGEX.test(privacyStr)) {
+            return false;
+        }
+
+        var current;
+        try {
+            current = new URL(currentStr);
+        } catch (e) {
+            return false;
+        }
+
+        var privacyIsAbsolute = PRIVACY_ABSOLUTE_REGEX.test(privacyStr);
+        var privacy;
+        try {
+            if (privacyIsAbsolute) {
+                privacy = new URL(privacyStr);
+            } else {
+                privacy = new URL(privacyStr, current.origin);
+            }
+        } catch (e) {
+            return false;
+        }
+
+        if (privacyIsAbsolute) {
+            if (privacy.hostname.toLowerCase() !== current.hostname.toLowerCase()) {
+                return false;
+            }
+        }
+
+        return normalizePrivacyPath(current.pathname) === normalizePrivacyPath(privacy.pathname);
+    }
+
+    function normalizePrivacyPath(p) {
+        var s = String(p == null ? '/' : p).toLowerCase();
+        try {
+            s = decodeURIComponent(s);
+        } catch (e) {
+            // Leave as-is on decode failure.
+        }
+        if (s.length > 1 && s.charAt(s.length - 1) === '/') {
+            s = s.slice(0, -1);
+        }
+        return s;
+    }
+
+    /* ═══════════════════════════════════════════════
        COOKIE MIGRATION — host-only → root-scoped
        Runs once at script init for both vcl_consent and vcl_geo.
        ═══════════════════════════════════════════════ */
@@ -178,6 +253,14 @@
     }
 
     var cfg = {
+        /* COOKIE SCHEMA VERSION (load-bearing). NEVER bump for a release.
+           Written into every consent cookie at line ~562 and checked on
+           read at line ~948 (parsed.version !== cfg.version causes the
+           cookie to be treated as invalid and the user re-prompted).
+           Bumping this to '2' invalidates every existing consent cookie
+           across every live client install and forces a global re-consent
+           event. Use BANNER_VERSION at the top of this file for release
+           identifiers. See CLAUDE.md Rule 10. */
         version: '1',
         cookieName: 'vcl_consent',
         bannerId: 'comoBanner',
@@ -186,6 +269,12 @@
         containerId: 'comoContainer',
         region: 'unknown',
         privacyPolicyUrl: window.comoPrivacyUrl || '',
+        /* BACKLOG #13: privacy-page suppression (Pro+ only).
+           Explicit === true gating so Free tier (no var injected) reads
+           undefined and resolves to false (feature off). The template's
+           defaultValue:true in Pro+ drives default-on behavior; Free's
+           missing var drives default-off. */
+        suppressOnPrivacyPage: window.comoSuppressOnPrivacyPage === true,
         dataController: window.comoDataController || '',
         logoUrl: window.comoLogoUrl || '',
         fontUrl: window.comoFontUrl || '',
@@ -676,7 +765,7 @@
                 timestamp: new Date().toISOString(),
                 action: type,
                 permissions: permissions,
-                bannerVersion: cfg.version,
+                bannerVersion: BANNER_VERSION,
                 gpcEnabled: isGpcEnabled(),
                 region: cfg.region,
                 pageUrl: location.href
@@ -937,16 +1026,44 @@
        CHECK EXISTING CONSENT
        ═══════════════════════════════════════════════ */
 
+    /* autoShowOrSuppress: internal helper. Called from
+       checkExistingConsent() at every site where the banner would
+       normally auto-show (no cookie, stale schema, parse error).
+       If suppressOnPrivacyPage is enabled and the current page matches
+       privacyUrl, show only the floating widget so the visitor can read
+       the privacy policy without being blocked. Otherwise show the
+       popup. Public API entry points (comoConsentAPI.showBanner,
+       resetConsent) bypass this and call showBanner() directly because
+       the user explicitly requested the popup. */
+    function autoShowOrSuppress() {
+        if (cfg.suppressOnPrivacyPage && cfg.privacyPolicyUrl &&
+            isOnPrivacyPage(window.location.href, cfg.privacyPolicyUrl)) {
+            if (window.comoEnableDebugLogging) {
+                console.log('[CoMo] suppressed on privacy page (' + cfg.privacyPolicyUrl + ')');
+            }
+            showWidget();
+            return;
+        }
+        showBanner();
+    }
+
     function checkExistingConsent() {
         var existing = readCookie(cfg.cookieName);
         if (!existing) {
-            showBanner();
+            autoShowOrSuppress();
             return;
         }
         try {
             var parsed = JSON.parse(existing);
+            /* COOKIE SCHEMA CHECK. cfg.version is the cookie schema
+               version, not the release version. A mismatch means the
+               cookie was written by a version of the banner that used
+               a different schema. Today schema is at '1' and has been
+               since launch. Do not bump cfg.version casually: every
+               existing user re-consents on mismatch. See CLAUDE.md
+               Rule 10 and src/banner/CONTEXT.md. */
             if (parsed.version !== cfg.version) {
-                showBanner();
+                autoShowOrSuppress();
             } else {
                 consentState = parsed;
                 window.comoConsent = consentState;
@@ -954,7 +1071,7 @@
                 sendConsentEvents('existing', parsed.permissions);
             }
         } catch (e) {
-            showBanner();
+            autoShowOrSuppress();
         }
     }
 
