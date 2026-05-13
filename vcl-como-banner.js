@@ -18,7 +18,7 @@
        comoConsentAPI. NOT the cookie schema version: that is cfg.version
        (frozen at '1'). See CLAUDE.md Rule 10 and src/banner/CONTEXT.md
        for the do-not-touch rationale. */
-    var BANNER_VERSION = '1.2.0';
+    var BANNER_VERSION = '1.2.1';
 
     /* ═══════════════════════════════════════════════
        CONFIGURATION
@@ -203,6 +203,20 @@
         return s;
     }
 
+    /* sanitizeFamily | CSS-injection-safe font-family name sanitizer.
+       Restricts to [A-Za-z0-9 \-\.]; on any invalid input or character,
+       returns '' so the caller can apply its own default. Byte-identical
+       to test/unit/sanitizeFamily.fixture.js. */
+    var FAMILY_REGEX = /^[A-Za-z0-9 \-\.]+$/;
+
+    function sanitizeFamily(value) {
+        if (typeof value !== 'string') return '';
+        var trimmed = value.replace(/^\s+|\s+$/g, '');
+        if (!trimmed) return '';
+        if (!FAMILY_REGEX.test(trimmed)) return '';
+        return trimmed;
+    }
+
     /* ═══════════════════════════════════════════════
        COOKIE MIGRATION — host-only → root-scoped
        Runs once at script init for both vcl_consent and vcl_geo.
@@ -278,6 +292,7 @@
         dataController: window.comoDataController || '',
         logoUrl: window.comoLogoUrl || '',
         fontUrl: window.comoFontUrl || '',
+        fontFamily: window.comoFontFamily || '',
         logEndpoint: window.comoLogEndpoint || '',
         primaryColor: window.comoPrimaryColor || '#0b4650',
         // accentColor removed — button text is auto-computed from primary luminance
@@ -1269,10 +1284,15 @@
 
         /* Font: self-host or use system stack.
            To use Plus Jakarta Sans, set window.comoFontUrl to your self-hosted CSS.
-           Do NOT use Google Fonts directly — it sends user IP to Google before consent. */
+           To use a different family (e.g. Inter), set BOTH window.comoFontUrl
+           AND window.comoFontFamily to the exact CSS family name. Empty
+           comoFontFamily defaults to "Plus Jakarta Sans" for backwards
+           compatibility. Do NOT use Google Fonts directly | sends user IP
+           to Google before consent. */
         var fontCSS = cfg.fontUrl ? '@import url("' + cfg.fontUrl + '");' : '';
+        var requestedFamily = sanitizeFamily(cfg.fontFamily) || 'Plus Jakarta Sans';
         var fontFamily = cfg.fontUrl
-            ? '"Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif'
+            ? '"' + requestedFamily + '", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif'
             : '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif';
 
         /* Corner radius presets: [banner, buttons/tabs, tab pills] */
