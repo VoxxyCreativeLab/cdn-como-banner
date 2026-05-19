@@ -18,7 +18,7 @@
        comoConsentAPI. NOT the cookie schema version: that is cfg.version
        (frozen at '1'). See CLAUDE.md Rule 10 and src/banner/CONTEXT.md
        for the do-not-touch rationale. */
-    var BANNER_VERSION = '1.2.1';
+    var BANNER_VERSION = '1.3.0';
 
     /* ═══════════════════════════════════════════════
        CONFIGURATION
@@ -312,6 +312,77 @@
         agencyUrl: window.comoAgencyUrl || '',
         badgeLogoUrl: window.comoBadgeLogoUrl || ''
     };
+
+    /* ═══════════════════════════════════════════════
+       BANNER DENSITY (BACKLOG #14, v1.3.0)
+       Three presets. 19 tokens scale together (banner width
+       plus 18 spacing/font/dimension tokens). Undefined or
+       unknown density falls through to spacious (D10 contract,
+       preserves existing Pro+ visuals on upgrade). Free tier
+       strips the GTM field via brandingGroup removal, so its
+       data.bannerDensity is undefined -> spacious.
+       Mobile @media block (max-width: 600px) overrides these
+       so density is desktop-only by design.
+       Px values are final per the 2026-05-11/15 design pass;
+       see docs/superpowers/specs/2026-05-11-banner-density.md.
+       ═══════════════════════════════════════════════ */
+    var bannerDensity = window.comoBannerDensity;
+
+    var densityTokens = {
+        compact: {
+            'banner-width': '800px',
+            'pad-y': '17px', 'pad-x': '26px', 'pad-y-sm': '11px', 'pad-x-sm': '15px',
+            'title-size': '18px', 'title-mb': '9px',
+            'body-size': '13px', 'body-lh': '1.52',
+            'tab-margin-y': '13px', 'tab-margin-x': '26px', 'tab-pad': '4px', 'tab-gap': '4px',
+            'tab-btn-pad-y': '7px', 'tab-btn-pad-x': '11px',
+            'cat-mb': '7px',
+            'action-pad-t': '13px', 'action-pad-b': '18px', 'action-gap': '7px',
+            'btn-pad-y': '10px', 'btn-pad-x': '19px', 'btn-size': '13px',
+            'logo-h': '28px', 'badge-h': '17px', 'content-mh': '325px'
+        },
+        standard: {
+            'banner-width': '850px',
+            'pad-y': '21px', 'pad-x': '27px', 'pad-y-sm': '14px', 'pad-x-sm': '17px',
+            'title-size': '20px', 'title-mb': '11px',
+            'body-size': '14px', 'body-lh': '1.61',
+            'tab-margin-y': '17px', 'tab-margin-x': '27px', 'tab-pad': '4px', 'tab-gap': '4px',
+            'tab-btn-pad-y': '9px', 'tab-btn-pad-x': '13px',
+            'cat-mb': '9px',
+            'action-pad-t': '17px', 'action-pad-b': '23px', 'action-gap': '9px',
+            'btn-pad-y': '12px', 'btn-pad-x': '21px', 'btn-size': '14px',
+            'logo-h': '32px', 'badge-h': '19px', 'content-mh': '353px'
+        },
+        spacious: {
+            'banner-width': '900px',
+            'pad-y': '24px', 'pad-x': '28px', 'pad-y-sm': '16px', 'pad-x-sm': '18px',
+            'title-size': '22px', 'title-mb': '12px',
+            'body-size': '14px', 'body-lh': '1.7',
+            'tab-margin-y': '20px', 'tab-margin-x': '28px', 'tab-pad': '4px', 'tab-gap': '4px',
+            'tab-btn-pad-y': '10px', 'tab-btn-pad-x': '14px',
+            'cat-mb': '10px',
+            'action-pad-t': '20px', 'action-pad-b': '28px', 'action-gap': '10px',
+            'btn-pad-y': '14px', 'btn-pad-x': '22px', 'btn-size': '14px',
+            'logo-h': '36px', 'badge-h': '20px', 'content-mh': '380px'
+        }
+    };
+
+    /* Apply selected density preset's tokens to the banner container.
+       Called once after the container is appended to the DOM. Iterates
+       the matching tokens object and calls setProperty for each
+       --como-d-* custom property; descendants inherit via cascade.
+       Undefined / unknown density falls through to spacious. */
+    function applyDensity(el, density) {
+        var tokens = densityTokens[density] || densityTokens.spacious;
+        for (var key in tokens) {
+            if (Object.prototype.hasOwnProperty.call(tokens, key)) {
+                el.style.setProperty('--como-d-' + key, tokens[key]);
+            }
+        }
+        if (window.comoEnableDebugLogging) {
+            console.log('[CoMo] Banner density: ' + (density || 'undefined -> spacious'));
+        }
+    }
 
     /* Auto-included in Necessary: banner's own cookies */
     var AUTO_NECESSARY_COOKIES = [
@@ -1320,6 +1391,36 @@
                 '--como-font: ' + fontFamily + ';' +
                 '--como-widget-bg: ' + cfg.widgetBgColor + ';' +
                 '--como-widget-content: ' + cfg.widgetContentColor + ';' +
+                /* Banner density tokens (BACKLOG #14, v1.3.0). Defaults =
+                   spacious so pre-v1.3.0 visuals are preserved. JS applies
+                   compact / standard overrides via setProperty after the
+                   shell mounts. Mobile (@media max-width: 600px) is NOT
+                   affected -- mobile layout remains content-driven. */
+                '--como-d-banner-width: 900px;' +
+                '--como-d-pad-y: 24px;' +
+                '--como-d-pad-x: 28px;' +
+                '--como-d-pad-y-sm: 16px;' +
+                '--como-d-pad-x-sm: 18px;' +
+                '--como-d-title-size: 22px;' +
+                '--como-d-title-mb: 12px;' +
+                '--como-d-body-size: 14px;' +
+                '--como-d-body-lh: 1.7;' +
+                '--como-d-tab-margin-y: 20px;' +
+                '--como-d-tab-margin-x: 28px;' +
+                '--como-d-tab-pad: 4px;' +
+                '--como-d-tab-gap: 4px;' +
+                '--como-d-tab-btn-pad-y: 10px;' +
+                '--como-d-tab-btn-pad-x: 14px;' +
+                '--como-d-cat-mb: 10px;' +
+                '--como-d-action-pad-t: 20px;' +
+                '--como-d-action-pad-b: 28px;' +
+                '--como-d-action-gap: 10px;' +
+                '--como-d-btn-pad-y: 14px;' +
+                '--como-d-btn-pad-x: 22px;' +
+                '--como-d-btn-size: 14px;' +
+                '--como-d-logo-h: 36px;' +
+                '--como-d-badge-h: 20px;' +
+                '--como-d-content-mh: 380px;' +
             '}' +
 
             'html.como-blur > body > *:not(#' + cfg.containerId + ') {' +
@@ -1360,7 +1461,7 @@
                 'position: fixed;' +
                 'top: 50%; left: 50%;' +
                 'transform: translate(-50%, -50%);' +
-                'width: 900px;' +
+                'width: var(--como-d-banner-width);' +
                 'max-width: calc(100vw - 32px);' +
                 'max-height: calc(100dvh - 32px);' +
                 'background: var(--como-bg);' +
@@ -1387,14 +1488,14 @@
             '}' +
 
             '.como-header {' +
-                'padding: 24px 28px 0 28px;' +
+                'padding: var(--como-d-pad-y) var(--como-d-pad-x) 0 var(--como-d-pad-x);' +
                 'display: flex;' +
                 'align-items: center;' +
                 'justify-content: space-between;' +
                 'flex-shrink: 0;' +
             '}' +
             '.como-logo-img {' +
-                'height: 36px;' +
+                'height: var(--como-d-logo-h);' +
                 'width: auto;' +
                 'object-fit: contain;' +
             '}' +
@@ -1420,7 +1521,7 @@
                 'font-family: var(--como-font);' +
             '}' +
             '.como-badge-logo {' +
-                'height: 20px;' +
+                'height: var(--como-d-badge-h);' +
                 'width: auto;' +
                 'object-fit: contain;' +
             '}' +
@@ -1464,16 +1565,16 @@
             '.como-tabs {' +
                 'display: flex;' +
                 'flex-shrink: 0;' +
-                'margin: 20px 28px 0;' +
+                'margin: var(--como-d-tab-margin-y) var(--como-d-tab-margin-x) 0;' +
                 'background: var(--como-surface);' +
                 'border-radius: var(--como-radius-inner);' +
-                'padding: 4px;' +
-                'gap: 4px;' +
+                'padding: var(--como-d-tab-pad);' +
+                'gap: var(--como-d-tab-gap);' +
                 'border: 1px solid var(--como-border);' +
             '}' +
             '.como-tab {' +
                 'flex: 1;' +
-                'padding: 10px 14px;' +
+                'padding: var(--como-d-tab-btn-pad-y) var(--como-d-tab-btn-pad-x);' +
                 'border: none;' +
                 'background: var(--como-surface);' +
                 'font-family: var(--como-font);' +
@@ -1508,9 +1609,9 @@
             ) +
 
             '.como-content {' +
-                'padding: 24px 28px;' +
+                'padding: var(--como-d-pad-y) var(--como-d-pad-x);' +
                 'min-height: 0;' +
-                'max-height: 380px;' +
+                'max-height: var(--como-d-content-mh);' +
                 'overflow-y: auto;' +
                 'overscroll-behavior: contain;' +
                 'flex: 1;' +
@@ -1521,22 +1622,22 @@
 
             '.como-title {' +
                 'font-family: var(--como-font);' +
-                'font-size: 22px;' +
+                'font-size: var(--como-d-title-size);' +
                 'font-weight: 700;' +
                 'color: var(--como-text);' +
-                'margin-bottom: 12px;' +
+                'margin-bottom: var(--como-d-title-mb);' +
                 'letter-spacing: -0.3px;' +
                 'line-height: 1.2;' +
             '}' +
             '.como-text {' +
-                'font-size: 14px;' +
-                'line-height: 1.7;' +
+                'font-size: var(--como-d-body-size);' +
+                'line-height: var(--como-d-body-lh);' +
                 'color: var(--como-text-dim);' +
                 'margin-bottom: 0;' +
             '}' +
 
             '.como-category {' +
-                'margin-bottom: 10px;' +
+                'margin-bottom: var(--como-d-cat-mb);' +
                 'border: 1px solid var(--como-border);' +
                 'border-radius: var(--como-radius-inner);' +
                 'overflow: hidden;' +
@@ -1547,7 +1648,7 @@
                 'display: flex;' +
                 'align-items: center;' +
                 'justify-content: space-between;' +
-                'padding: 16px 18px;' +
+                'padding: var(--como-d-pad-y-sm) var(--como-d-pad-x-sm);' +
                 'background: var(--como-surface);' +
                 'cursor: pointer;' +
                 'border: none;' +
@@ -1626,7 +1727,7 @@
             '.como-category.expanded .como-expand-icon { transform: rotate(135deg); }' +
 
             '.como-category-content {' +
-                'padding: 16px 18px;' +
+                'padding: var(--como-d-pad-y-sm) var(--como-d-pad-x-sm);' +
                 'background: var(--como-bg);' +
                 'border-top: 1px solid var(--como-border);' +
                 'display: none;' +
@@ -1678,20 +1779,20 @@
             '}' +
 
             '.como-actions {' +
-                'padding: 20px 28px 28px;' +
+                'padding: var(--como-d-action-pad-t) var(--como-d-pad-x) var(--como-d-action-pad-b);' +
                 'display: flex;' +
                 'flex-direction: row-reverse;' +
-                'gap: 10px;' +
+                'gap: var(--como-d-action-gap);' +
                 'flex-shrink: 0;' +
             '}' +
             /* Button base — shared by all styles */
             '.como-btn {' +
                 'flex: 1;' +
-                'padding: 14px 22px;' +
+                'padding: var(--como-d-btn-pad-y) var(--como-d-btn-pad-x);' +
                 'border-radius: var(--como-radius-inner);' +
                 'font-family: var(--como-font);' +
                 'font-weight: 600;' +
-                'font-size: 14px;' +
+                'font-size: var(--como-d-btn-size);' +
                 'cursor: pointer;' +
                 'transition: all 0.25s ease;' +
                 'letter-spacing: 0.3px;' +
@@ -2134,6 +2235,11 @@
             container.id = cfg.containerId;
             container.innerHTML = createBannerHTML();
             body.appendChild(container);
+
+            /* Apply density preset tokens on the container element. Custom
+               properties cascade to all .como-* descendants and override
+               the spacious defaults declared at :root in the CSS. */
+            applyDensity(container, bannerDensity);
 
             /* ── Close button ── */
             var closeBtn = document.getElementById('comoCloseBtn');
