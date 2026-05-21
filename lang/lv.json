@@ -22,7 +22,8 @@
     "description": "Sīkdatnes ir nelieli teksta faili, ko vietnes var izmantot, lai padarītu lietotāja pieredzi efektīvāku. Likums nosaka, ka mēs varam saglabāt sīkdatnes jūsu ierīcē, ja tās ir noteikti nepieciešamas šīs vietnes darbībai. Visiem pārējiem sīkdatņu veidiem mums ir nepieciešama jūsu piekrišana.",
     "privacyLink": "Plašāku informāciju skatiet mūsu {link}.",
     "privacyLinkText": "Privātuma politikā",
-    "controllerText": "Šo vietni pārvalda {controller}. Kā datu pārzinis mēs esam atbildīgi par jūsu personas datu apstrādi."
+    "controllerText": "Šo vietni pārvalda {controller}. Kā datu pārzinis mēs esam atbildīgi par jūsu personas datu apstrādi.",
+    "featuresLinkText": "Juridiskā informācija →"
   },
   "categories": {
     "necessary": {
@@ -56,6 +57,11 @@
     "name": "Nosaukums",
     "purpose": "Mērķis",
     "duration": "Ilgums",
-    "provider": "Pakalpojumu sniedzējs"
+    "provider": "Pakalpojumu sniedzējs",
+    "value": "Vērtība"
+  },
+  "unknownCookies": {
+    "title": "Nezināmas sīkdatnes",
+    "intro": "Šīs sīkdatnes tika atklātas lapā, taču to mērķis nav klasificēts. Ja vēlaties uzzināt vairāk, sazinieties ar vietnes īpašnieku."
   }
 }

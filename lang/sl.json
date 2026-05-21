@@ -22,7 +22,8 @@
     "description": "Piškotki so majhne besedilne datoteke, ki jih spletne strani lahko uporabijo za učinkovitejšo uporabniško izkušnjo. Zakon določa, da lahko na vaši napravi shranjujemo piškotke, če so nujno potrebni za delovanje te spletne strani. Za vse druge vrste piškotkov potrebujemo vaše soglasje.",
     "privacyLink": "Več informacij najdete v naši {link}.",
     "privacyLinkText": "Politiki zasebnosti",
-    "controllerText": "To spletno stran upravlja {controller}. Kot upravljavec podatkov smo odgovorni za obdelavo vaših osebnih podatkov."
+    "controllerText": "To spletno stran upravlja {controller}. Kot upravljavec podatkov smo odgovorni za obdelavo vaših osebnih podatkov.",
+    "featuresLinkText": "Pravne podrobnosti →"
   },
   "categories": {
     "necessary": {
@@ -56,6 +57,11 @@
     "name": "Ime",
     "purpose": "Namen",
     "duration": "Trajanje",
-    "provider": "Ponudnik"
+    "provider": "Ponudnik",
+    "value": "Vrednost"
+  },
+  "unknownCookies": {
+    "title": "Neznani piškotki",
+    "intro": "Ti piškotki so bili na strani zaznani, vendar njihov namen ni razvrščen. Za podrobnosti se obrnite na lastnika spletnega mesta."
   }
 }

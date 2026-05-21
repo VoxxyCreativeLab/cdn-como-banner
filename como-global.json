@@ -1,10 +1,11 @@
 {
   "_license": "Copyright (c) 2025–2026 Voxxy Creative Lab Limited. All rights reserved. Proprietary and confidential. Unauthorized copying, modification, or use is strictly prohibited.",
   "configVersion": "2.0.0",
-  "lastUpdated": "2026-03-08",
+  "lastUpdated": "2026-03-22",
   "consentMode": {
     "waitForUpdate": 500
   },
+  "featuresLinkUrl": "https://voxxycreativelab.com/",
   "regions": {
     "AT": "opt-in",
     "BE": "opt-in",
@@ -269,7 +270,8 @@
         "description": "Cookies are small text files that can be used by websites to make a user experience more efficient. The law states that we can store cookies on your device if they are strictly necessary for the operation of this site. For all other types of cookies we need your permission.",
         "privacyLink": "For more information, see our {link}.",
         "privacyLinkText": "Privacy Policy",
-        "controllerText": "This website is operated by {controller}. As the data controller, we are responsible for the processing of your personal data."
+        "controllerText": "This website is operated by {controller}. As the data controller, we are responsible for the processing of your personal data.",
+        "featuresLinkText": "Legal details →"
       },
       "categories": {
         "necessary": {
@@ -303,7 +305,12 @@
         "name": "Name",
         "purpose": "Purpose",
         "duration": "Duration",
-        "provider": "Provider"
+        "provider": "Provider",
+        "value": "Value"
+      },
+      "unknownCookies": {
+        "title": "Unknown cookies",
+        "intro": "These cookies were detected on the page but their purpose has not been classified. Contact the site owner if you want details."
       }
     }
   },

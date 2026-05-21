@@ -18,7 +18,14 @@
        comoConsentAPI. NOT the cookie schema version: that is cfg.version
        (frozen at '1'). See CLAUDE.md Rule 10 and src/banner/CONTEXT.md
        for the do-not-touch rationale. */
-    var BANNER_VERSION = '1.3.0';
+    var BANNER_VERSION = '1.4.0';
+
+    /* Banner-owned cookie name. Single source of truth so the
+       migration block, cfg, AUTO_NECESSARY_COOKIES, and the
+       unknown-cookies filter (BACKLOG #21) all reference the
+       same literal. GEO_COOKIE_NAME stays declared near the
+       geo-fetch helpers (see ~L473). */
+    var CONSENT_COOKIE_NAME = 'vcl_consent';
 
     /* ═══════════════════════════════════════════════
        CONFIGURATION
@@ -251,11 +258,11 @@
         // vcl_consent — uses 365-day expiry (config-driven expiry isn't
         // available at script-init time; the next legitimate consent
         // action overwrites with the proper expiry anyway).
-        var existingConsent = readCookie('vcl_consent');
+        var existingConsent = readCookie(CONSENT_COOKIE_NAME);
         if (existingConsent) {
-            setCookie('vcl_consent', existingConsent, 365);
-            setCookieHostOnly('vcl_consent', '', -1);
-            logMigration('vcl_consent');
+            setCookie(CONSENT_COOKIE_NAME, existingConsent, 365);
+            setCookieHostOnly(CONSENT_COOKIE_NAME, '', -1);
+            logMigration(CONSENT_COOKIE_NAME);
         }
         // vcl_geo — fixed 30-day expiry per GEO_COOKIE_EXPIRY semantics.
         var existingGeo = readCookie('vcl_geo');
@@ -276,7 +283,7 @@
            event. Use BANNER_VERSION at the top of this file for release
            identifiers. See CLAUDE.md Rule 10. */
         version: '1',
-        cookieName: 'vcl_consent',
+        cookieName: CONSENT_COOKIE_NAME,
         bannerId: 'comoBanner',
         overlayId: 'comoOverlay',
         widgetId: 'comoWidget',
@@ -339,7 +346,7 @@
             'cat-mb': '7px',
             'action-pad-t': '13px', 'action-pad-b': '18px', 'action-gap': '7px',
             'btn-pad-y': '10px', 'btn-pad-x': '19px', 'btn-size': '13px',
-            'logo-h': '28px', 'badge-h': '17px', 'content-mh': '325px'
+            'logo-h': '28px', 'badge-h': '17px', 'content-mh': '385px'
         },
         standard: {
             'banner-width': '850px',
@@ -351,7 +358,7 @@
             'cat-mb': '9px',
             'action-pad-t': '17px', 'action-pad-b': '23px', 'action-gap': '9px',
             'btn-pad-y': '12px', 'btn-pad-x': '21px', 'btn-size': '14px',
-            'logo-h': '32px', 'badge-h': '19px', 'content-mh': '353px'
+            'logo-h': '32px', 'badge-h': '19px', 'content-mh': '415px'
         },
         spacious: {
             'banner-width': '900px',
@@ -363,7 +370,7 @@
             'cat-mb': '10px',
             'action-pad-t': '20px', 'action-pad-b': '28px', 'action-gap': '10px',
             'btn-pad-y': '14px', 'btn-pad-x': '22px', 'btn-size': '14px',
-            'logo-h': '36px', 'badge-h': '20px', 'content-mh': '380px'
+            'logo-h': '36px', 'badge-h': '20px', 'content-mh': '445px'
         }
     };
 
@@ -391,6 +398,10 @@
     ];
     var customCookies = window.comoCustomCookies || [];
     var detectedCookies = [];
+    /* Cookies present on the page that are not in knownCookies,
+       customCookies, or the banner's own. Populated once on
+       init after detectKnownServices() runs. See BACKLOG #21. */
+    var unknownCookies = [];
 
     /* ═══════════════════════════════════════════════
        FALLBACK CONFIG
@@ -963,10 +974,17 @@
                 }
             }
 
-            /* WCAG 2.4.3: move keyboard focus to the Consent tab */
+            /* WCAG 2.4.3 + BACKLOG #20: initial focus lands on the banner
+               shell itself (not the Consent tab). The shell carries
+               tabindex="-1" and the .como-shell-focused class paints an
+               outer ring around the whole dialog. The ring persists through
+               mouse interaction with inner controls. The keydown listener
+               below removes the class on the user's first navigation key
+               and transfers focus to the Consent tab so the inner
+               :focus-visible ring takes over for keyboard users. */
             setTimeout(function () {
-                var consentTab = banner.querySelector('.como-tab[data-tab="consent"]');
-                if (consentTab) consentTab.focus({ focusVisible: true });
+                banner.classList.add('como-shell-focused');
+                banner.focus({ preventScroll: true });
             }, 50);
 
             /* WCAG 4.1.3: announce banner title to screen readers */
@@ -1014,6 +1032,11 @@
             /* WCAG 4.1.3: clear live region */
             var liveRegion = document.getElementById('comoLiveRegion');
             if (liveRegion) liveRegion.textContent = '';
+
+            /* BACKLOG #20: clean up shell-focused class on close so the next
+               banner open starts with a fresh shell-focused state. */
+            var bannerOnClose = document.getElementById(cfg.bannerId);
+            if (bannerOnClose) bannerOnClose.classList.remove('como-shell-focused');
 
             /* WCAG 2.4.3: restore focus to element that was active before banner opened */
             if (lastFocusedElement && lastFocusedElement.focus) {
@@ -1255,6 +1278,147 @@
     }
 
     /* ═══════════════════════════════════════════════
+       UNKNOWN COOKIES (BACKLOG #21, v1.4.0)
+       Surfaces cookies actually present in document.cookie
+       that are NOT in globalConfig.knownCookies, NOT in the
+       Pro+ customCookies GTM table, and NOT the banner's own
+       (vcl_consent, vcl_geo). Renders at the bottom of the
+       Details tab so end users see proprietary / partner
+       cookies the database does not yet classify.
+
+       Limitation: runs once on banner init. Cookies set AFTER
+       consent is granted by post-consent third-party scripts
+       are NOT captured. document.cookie also only exposes
+       first-party cookies (current registrable domain), so
+       third-party cookies set by ad/analytics platforms with
+       their own domain are NEVER visible here by design.
+       ═══════════════════════════════════════════════ */
+
+    function flattenKnownCookieNames(gc) {
+        var patterns = [];
+        var services = (gc && gc.knownCookies) || [];
+        for (var i = 0; i < services.length; i++) {
+            var cookies = services[i].cookies || [];
+            for (var j = 0; j < cookies.length; j++) {
+                var raw = cookies[j].name || '';
+                if (!raw) continue;
+                /* Escape regex specials EXCEPT '*' so '*' wildcards
+                   in knownCookies (e.g. '_ga_*', 'intercom-id-*')
+                   convert to '.*' after the escape pass. */
+                var escaped = raw.replace(/[.+?^${}()|[\]\\]/g, '\\$&').replace(/\*/g, '.*');
+                patterns.push(new RegExp('^' + escaped + '$'));
+            }
+        }
+        return patterns;
+    }
+
+    function parseActualCookies() {
+        var raw = document.cookie || '';
+        if (!raw) return [];
+        var parts = raw.split(';');
+        var out = [];
+        var seen = {};
+        for (var i = 0; i < parts.length; i++) {
+            var eq = parts[i].indexOf('=');
+            var name = (eq > -1 ? parts[i].slice(0, eq) : parts[i]).trim();
+            var rawVal = eq > -1 ? parts[i].slice(eq + 1).trim() : '';
+            if (!name || seen[name]) continue;
+            seen[name] = 1;
+            /* Decode percent-encoded values. Some servers set values with
+               literal '%' that aren't valid URI escape sequences (e.g.
+               '%PROMO%' from legacy tracking); decodeURIComponent throws
+               on those. Fall back to the raw string so the cookie still
+               surfaces in the banner. */
+            var val;
+            try { val = decodeURIComponent(rawVal); } catch (e) { val = rawVal; }
+            out.push({ name: name, value: val });
+        }
+        return out;
+    }
+
+    /* HTML escape for untrusted cookie name + value strings. Cookie names
+       per RFC 6265 cannot contain HTML metacharacters; values CAN. Escape
+       both before innerHTML insertion. NOT retrofitted into the known-
+       cookie buildCookieTableHTML render path: those values come from
+       trusted globalConfig + customCookies (site-owner controlled). */
+    function escHTML(s) {
+        return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
+            return ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c];
+        });
+    }
+
+    function getUnknownCookies(actualCookies, knownPatterns, customList) {
+        var ownNames = { };
+        ownNames[CONSENT_COOKIE_NAME] = 1;
+        ownNames[GEO_COOKIE_NAME] = 1;
+        var customNames = {};
+        for (var i = 0; i < (customList || []).length; i++) {
+            var n = (customList[i].name || '').toLowerCase();
+            if (n) customNames[n] = 1;
+        }
+        var unknown = [];
+        outer: for (var k = 0; k < actualCookies.length; k++) {
+            var c = actualCookies[k];
+            if (ownNames[c.name]) continue;
+            if (customNames[c.name.toLowerCase()]) continue;
+            for (var p = 0; p < knownPatterns.length; p++) {
+                if (knownPatterns[p].test(c.name)) continue outer;
+            }
+            unknown.push({ name: c.name, value: c.value });
+        }
+        return unknown;
+    }
+
+    function buildUnknownCookiesHTML(unknownList) {
+        if (!unknownList || unknownList.length === 0) return '';
+        var title = getText('unknownCookies.title');
+        var intro = getText('unknownCookies.intro');
+        var nameHdr = getText('cookieTable.name');
+        var valueHdr = getText('cookieTable.value');
+        var rows = '';
+        for (var i = 0; i < unknownList.length; i++) {
+            var nm = escHTML(unknownList[i].name);
+            var fullVal = unknownList[i].value || '';
+            /* Truncate to 40 chars to keep the table tidy; full value
+               surfaces in the cell's title attribute on hover. Both
+               cell text and title are HTML-escaped (cookie values are
+               attacker-controllable input). */
+            var shortVal = fullVal.length > 40 ? fullVal.slice(0, 40) + '...' : fullVal;
+            var valCell = escHTML(shortVal);
+            var valTitle = escHTML(fullVal);
+            rows += '<tr><td>' + nm + '</td><td title="' + valTitle + '">' + valCell + '</td></tr>';
+        }
+        /* Renders as a 5th dropdown that visually matches the 4 category
+           cards. Reuses como-category / como-category-header / como-category-
+           content classes so border, hover, expand chevron, and content
+           padding stay consistent. No como-category-controls block because
+           unknown cookies have no consent toggle (they are observed, not
+           controlled). The header click handler at the "Category headers"
+           wiring section was extended to expand-on-any-click for headers
+           that lack a toggle (no-toggle path), so the entire header acts
+           as the expand/collapse trigger. */
+        return (
+            '<div class="como-category como-category--unknown">' +
+                '<button class="como-category-header">' +
+                    '<div class="como-category-info">' +
+                        '<div class="como-expand-icon"></div>' +
+                        '<span class="como-category-name">' + escHTML(title) + ' (' + unknownList.length + ')</span>' +
+                    '</div>' +
+                '</button>' +
+                '<div class="como-category-content">' +
+                    '<p>' + escHTML(intro) + '</p>' +
+                    '<div class="como-cookie-table-wrap">' +
+                        '<table class="como-cookie-table">' +
+                            '<thead><tr><th>' + escHTML(nameHdr) + '</th><th>' + escHTML(valueHdr) + '</th></tr></thead>' +
+                            '<tbody>' + rows + '</tbody>' +
+                        '</table>' +
+                    '</div>' +
+                '</div>' +
+            '</div>'
+        );
+    }
+
+    /* ═══════════════════════════════════════════════
        BUILD BANNER HTML
        Text and categories driven by globalConfig.
        Language resolved via resolveLanguage() with
@@ -1335,6 +1499,13 @@
         var controllerText = cfg.dataController
             ? '<p class="como-text" style="margin-top:12px;">' + getText('about.controllerText').replace('{controller}', '<strong>' + cfg.dataController + '</strong>') + privacyLink + '</p>'
             : (privacyLink ? '<p class="como-text" style="margin-top:12px;">' + privacyLink.substring(1) + '</p>' : '');
+
+        /* Features link (BACKLOG #4). Small inline link in the About panel,
+           below the title and above the description. Hidden gracefully when
+           globalConfig.featuresLinkUrl is empty (e.g. config not yet updated). */
+        var featuresLinkHtml = globalConfig.featuresLinkUrl
+            ? '<a class="como-features-link" href="' + globalConfig.featuresLinkUrl + '" target="_blank" rel="noopener noreferrer">' + getText('about.featuresLinkText') + '</a>'
+            : '';
 
         /* Button config: determines which buttons appear on Consent and About panels */
         var btnConfig = getButtonConfig();
@@ -1420,7 +1591,7 @@
                 '--como-d-btn-size: 14px;' +
                 '--como-d-logo-h: 36px;' +
                 '--como-d-badge-h: 20px;' +
-                '--como-d-content-mh: 380px;' +
+                '--como-d-content-mh: 445px;' +
             '}' +
 
             'html.como-blur > body > *:not(#' + cfg.containerId + ') {' +
@@ -1634,6 +1805,34 @@
                 'line-height: var(--como-d-body-lh);' +
                 'color: var(--como-text-dim);' +
                 'margin-bottom: 0;' +
+            '}' +
+
+            /* Features link (BACKLOG #4). Small inline link in About panel
+               below the title, above the description. Picks up client
+               primary color so branding flows automatically. */
+            '.como-features-link {' +
+                'display: block;' +
+                'line-height: 1;' +
+                'margin: 0 0 8px;' +
+                'font-family: var(--como-font);' +
+                'font-size: 12px;' +
+                'color: var(--como-primary);' +
+                'text-decoration: none;' +
+                'font-weight: 600;' +
+                'letter-spacing: 0.2px;' +
+            '}' +
+            /* Scope: when title is inside #aboutPanel, override the
+               density-aware bottom margin to a small fixed 4px so the
+               Legal details link sits tight under it. Consent/Details
+               panel titles are unaffected (they have no link below). */
+            '#aboutPanel .como-title { margin-bottom: 4px; }' +
+            '.como-features-link:hover {' +
+                'text-decoration: underline;' +
+            '}' +
+            '.como-features-link:focus-visible {' +
+                'outline: 2px solid var(--como-primary);' +
+                'outline-offset: 2px;' +
+                'border-radius: 2px;' +
             '}' +
 
             '.como-category {' +
@@ -1963,7 +2162,12 @@
             '}' +
             '.como-dnsmpi-btn:hover { opacity: 1; }' +
 
-            /* Base reset: suppress all browser-default focus rings inside banner */
+            /* Base reset: suppress all browser-default focus rings inside banner.
+               Banner shell itself is included (it carries tabindex="-1" so it
+               can receive programmatic focus on open; without this reset the
+               browser would paint its default outline). */
+            '#' + cfg.bannerId + ',' +
+            '#' + cfg.bannerId + ':focus,' +
             '#' + cfg.bannerId + ' button,' +
             '#' + cfg.bannerId + ' a,' +
             '#' + cfg.bannerId + ' [tabindex="0"],' +
@@ -1991,6 +2195,23 @@
                 'outline-offset: 2px;' +
                 'position: relative;' +
                 'z-index: 1;' +
+            '}' +
+
+            /* Shell-level focus ring (BACKLOG #20, v1.4.0). Painted on the
+               banner shell whenever .como-shell-focused is present. Driven by
+               JS, not by :focus-visible | persists through mouse clicks on
+               inner controls, only removed when the user first presses a
+               navigation key (Tab / Shift+Tab / arrow). At that point JS
+               removes the class and transfers focus to the Consent tab so the
+               inner :focus-visible ring takes over. Offset is 0 so the ring
+               sits flush against the banner's 1px border, reading as a
+               continuous outer edge rather than a floating halo. WCAG 2.4.7
+               only requires visibility; 2.4.13 (AAA) requires >= 2 CSS px
+               thickness + 3:1 contrast | this 3px solid primaryColor clears
+               both regardless of offset. */
+            '#' + cfg.bannerId + '.como-shell-focused {' +
+                'outline: 3px solid ' + cfg.primaryColor + ';' +
+                'outline-offset: 0;' +
             '}' +
 
             /* Visually-hidden helper for aria-live region (WCAG 4.1.3) */
@@ -2036,6 +2257,12 @@
                 '</div>';
         }
 
+        /* Unknown cookies section (BACKLOG #21). Appended to the
+           Details panel body after the 4 category sections.
+           Returns empty string when residual is zero, so the
+           section is omitted entirely with no empty-state stub. */
+        categoriesHTML += buildUnknownCookiesHTML(unknownCookies);
+
         /* Close button aria-label */
         var closeAriaLabel = getText('closeButton.ariaLabel');
 
@@ -2076,7 +2303,7 @@
         html += '<div id="' + cfg.overlayId + '"></div>';
 
         /* Banner */
-        html += '<div id="' + cfg.bannerId + '" class="como-banner" role="dialog" aria-modal="true" aria-labelledby="comoTitle" style="display:none;">' +
+        html += '<div id="' + cfg.bannerId + '" class="como-banner" role="dialog" aria-modal="true" aria-labelledby="comoTitle" tabindex="-1" style="display:none;">' +
 
             /* Header */
             '<div class="como-header">' +
@@ -2137,6 +2364,7 @@
             '<div id="aboutPanel" class="como-panel" role="tabpanel">' +
                 '<div class="como-content">' +
                     '<h5 class="como-title">' + getText('about.title') + '</h5>' +
+                    featuresLinkHtml +
                     '<p class="como-text">' +
                         getText('about.description') +
                     '</p>' +
@@ -2231,6 +2459,35 @@
             /* Detect known services for cookie declaration tables */
             detectKnownServices();
 
+            /* Compute unknown-cookies residual once (BACKLOG #21). Runs
+               after detectKnownServices so the same scan timing covers
+               both detection paths. See helper rationale at the
+               UNKNOWN COOKIES block near buildUnknownCookiesHTML. */
+            var knownPatterns = flattenKnownCookieNames(globalConfig);
+            var actualCookies = parseActualCookies();
+            unknownCookies = getUnknownCookies(actualCookies, knownPatterns, customCookies);
+
+            /* Owner-facing diagnostic: when enableDebugLogging is on,
+               tell the site owner exactly which GTM template fields
+               they need to populate to classify these cookies. Skipped
+               on zero residual or when debug is off, so production
+               sites stay silent for normal visitors. BACKLOG #21. */
+            if (window.comoEnableDebugLogging && unknownCookies.length > 0) {
+                console.groupCollapsed('[CoMo Banner] ' + unknownCookies.length + ' unknown cookie(s) detected');
+                console.log('These cookies are not classified in the auto-detection database.');
+                console.log('Declare them in: GTM Template > Cookie Declarations > Additional cookies');
+                console.log('Per row, fill 5 fields:');
+                console.log('  Cookie name    (matches one of the names below)');
+                console.log('  Category       (one of: necessary, preferences, analytics, marketing)');
+                console.log('  Purpose        (free text)');
+                console.log("  Duration       (free text, e.g. '1 year' or 'Session')");
+                console.log("  Provider       (free text, e.g. 'Acme Inc')");
+                console.table(unknownCookies.map(function (c) {
+                    return { name: c.name, value: (c.value || '').slice(0, 60) };
+                }));
+                console.groupEnd();
+            }
+
             var container = document.createElement('div');
             container.id = cfg.containerId;
             container.innerHTML = createBannerHTML();
@@ -2278,20 +2535,26 @@
                 customBtns[c].addEventListener('click', function () { switchTab('details'); });
             }
 
-            /* ── Category headers (expand/collapse) ── */
+            /* ── Category headers (expand/collapse) ──
+               For headers WITH a toggle: left-of-name click expands;
+               right-of-name click flips the toggle. For headers WITHOUT a
+               toggle (unknown-cookies dropdown, BACKLOG #21), any click
+               anywhere on the header expands/collapses. */
             var headers = container.querySelectorAll('.como-category-header');
             for (var h = 0; h < headers.length; h++) {
                 headers[h].addEventListener('click', function (e) {
                     if (e.target.classList.contains('como-toggle')) return;
+                    var toggle = this.querySelector('.como-toggle');
+                    if (!toggle) {
+                        toggleCategory(this);
+                        return;
+                    }
                     var nameSpan = this.querySelector('.como-category-name');
                     var nameRect = nameSpan.getBoundingClientRect();
                     if (e.clientX <= nameRect.right) {
                         toggleCategory(this);
-                    } else {
-                        var toggle = this.querySelector('.como-toggle');
-                        if (toggle && !toggle.classList.contains('disabled')) {
-                            toggleSwitch(toggle);
-                        }
+                    } else if (!toggle.classList.contains('disabled')) {
+                        toggleSwitch(toggle);
                     }
                 });
             }
@@ -2349,6 +2612,28 @@
             document.addEventListener('keydown', function (e) {
                 var banner = document.getElementById(cfg.bannerId);
                 if (!banner || banner.style.display === 'none') return;
+
+                /* BACKLOG #20: first keyboard interaction transfers focus from
+                   the banner shell to the first focusable inner control.
+                   Triggered by Tab / Shift+Tab / arrows / Enter / Space. The
+                   shell-focused class is removed so the inner :focus-visible
+                   ring takes over. Escape is intentionally excluded (it closes
+                   the banner via the existing handler, no transfer needed). */
+                if (banner.classList.contains('como-shell-focused')) {
+                    var isNavKey = e.key === 'Tab' || e.key === 'ArrowLeft' ||
+                                   e.key === 'ArrowRight' || e.key === 'ArrowUp' ||
+                                   e.key === 'ArrowDown' || e.key === 'Enter' ||
+                                   e.key === ' ';
+                    if (isNavKey) {
+                        banner.classList.remove('como-shell-focused');
+                        var consentTab = banner.querySelector('.como-tab[data-tab="consent"]');
+                        if (consentTab) {
+                            e.preventDefault();
+                            consentTab.focus({ focusVisible: true });
+                            return;
+                        }
+                    }
+                }
 
                 /* Arrow keys: navigate between tabs (ARIA tablist pattern) */
                 if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {

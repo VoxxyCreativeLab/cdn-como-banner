@@ -22,7 +22,8 @@
     "description": "Cookie là các tệp văn bản nhỏ mà trang web có thể sử dụng để nâng cao trải nghiệm người dùng. Pháp luật quy định rằng chúng tôi chỉ được lưu trữ cookie trên thiết bị của bạn nếu chúng thực sự cần thiết cho hoạt động của trang web này. Đối với tất cả các loại cookie khác, chúng tôi cần có sự cho phép của bạn.",
     "privacyLink": "Để biết thêm thông tin, vui lòng xem {link} của chúng tôi.",
     "privacyLinkText": "Chính sách Bảo mật",
-    "controllerText": "Trang web này được quản lý bởi {controller}. Với tư cách là đơn vị kiểm soát dữ liệu, chúng tôi chịu trách nhiệm xử lý dữ liệu cá nhân của bạn."
+    "controllerText": "Trang web này được quản lý bởi {controller}. Với tư cách là đơn vị kiểm soát dữ liệu, chúng tôi chịu trách nhiệm xử lý dữ liệu cá nhân của bạn.",
+    "featuresLinkText": "Chi tiết pháp lý →"
   },
   "categories": {
     "necessary": {
@@ -56,6 +57,11 @@
     "name": "Tên",
     "purpose": "Mục đích",
     "duration": "Thời hạn",
-    "provider": "Nhà cung cấp"
+    "provider": "Nhà cung cấp",
+    "value": "Giá trị"
+  },
+  "unknownCookies": {
+    "title": "Cookie không xác định",
+    "intro": "Các cookie này đã được phát hiện trên trang nhưng mục đích của chúng chưa được phân loại. Liên hệ với chủ sở hữu trang web nếu bạn muốn biết chi tiết."
   }
 }

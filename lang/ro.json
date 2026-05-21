@@ -22,7 +22,8 @@
     "description": "Cookie-urile sunt fișiere text mici pe care site-urile le pot folosi pentru a face experiența utilizatorului mai eficientă. Legea prevede că putem stoca cookie-uri pe dispozitivul dvs. dacă sunt strict necesare pentru funcționarea acestui site. Pentru toate celelalte tipuri de cookie-uri avem nevoie de consimțământul dvs.",
     "privacyLink": "Pentru mai multe informații, consultați {link} noastră.",
     "privacyLinkText": "Politica de confidențialitate",
-    "controllerText": "Acest site web este operat de {controller}. În calitate de operator de date, suntem responsabili pentru prelucrarea datelor dvs. personale."
+    "controllerText": "Acest site web este operat de {controller}. În calitate de operator de date, suntem responsabili pentru prelucrarea datelor dvs. personale.",
+    "featuresLinkText": "Detalii legale →"
   },
   "categories": {
     "necessary": {
@@ -56,6 +57,11 @@
     "name": "Nume",
     "purpose": "Scop",
     "duration": "Durată",
-    "provider": "Furnizor"
+    "provider": "Furnizor",
+    "value": "Valoare"
+  },
+  "unknownCookies": {
+    "title": "Module cookie necunoscute",
+    "intro": "Aceste module cookie au fost detectate pe pagină, dar scopul lor nu a fost clasificat. Contactați proprietarul site-ului dacă doriți detalii."
   }
 }

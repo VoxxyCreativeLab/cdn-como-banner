@@ -22,7 +22,8 @@
     "description": "A sütik kis szöveges fájlok, amelyeket a weboldalak a felhasználói élmény hatékonyabbá tételére használhatnak. A törvény szerint sütiket tárolhatunk az Ön eszközén, ha azok feltétlenül szükségesek az oldal működéséhez. Minden más típusú sütihez az Ön hozzájárulása szükséges.",
     "privacyLink": "További információkért tekintse meg {link}.",
     "privacyLinkText": "Adatvédelmi szabályzatunkat",
-    "controllerText": "Ezt a weboldalt a(z) {controller} üzemelteti. Adatkezelőként felelősek vagyunk az Ön személyes adatainak kezeléséért."
+    "controllerText": "Ezt a weboldalt a(z) {controller} üzemelteti. Adatkezelőként felelősek vagyunk az Ön személyes adatainak kezeléséért.",
+    "featuresLinkText": "Jogi részletek →"
   },
   "categories": {
     "necessary": {
@@ -56,6 +57,11 @@
     "name": "Név",
     "purpose": "Cél",
     "duration": "Időtartam",
-    "provider": "Szolgáltató"
+    "provider": "Szolgáltató",
+    "value": "Érték"
+  },
+  "unknownCookies": {
+    "title": "Ismeretlen cookie-k",
+    "intro": "Ezeket a cookie-kat észleltük az oldalon, de a céljuk nincs besorolva. Részletekért forduljon az oldal tulajdonosához."
   }
 }

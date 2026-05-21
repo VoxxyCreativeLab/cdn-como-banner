@@ -22,7 +22,8 @@
     "description": "Informasjonskapsler er små tekstfiler som nettsteder kan bruke for å gjøre brukeropplevelsen mer effektiv. Loven sier at vi kan lagre informasjonskapsler på enheten din dersom de er strengt nødvendige for driften av dette nettstedet. For alle andre typer informasjonskapsler trenger vi ditt samtykke.",
     "privacyLink": "Se vår {link} for mer informasjon.",
     "privacyLinkText": "Personvernerklæring",
-    "controllerText": "Dette nettstedet drives av {controller}. Som behandlingsansvarlig er vi ansvarlige for behandlingen av dine personopplysninger."
+    "controllerText": "Dette nettstedet drives av {controller}. Som behandlingsansvarlig er vi ansvarlige for behandlingen av dine personopplysninger.",
+    "featuresLinkText": "Juridiske detaljer →"
   },
   "categories": {
     "necessary": {
@@ -56,6 +57,11 @@
     "name": "Navn",
     "purpose": "Formål",
     "duration": "Varighet",
-    "provider": "Leverandør"
+    "provider": "Leverandør",
+    "value": "Verdi"
+  },
+  "unknownCookies": {
+    "title": "Ukjente informasjonskapsler",
+    "intro": "Disse informasjonskapslene ble oppdaget på siden, men formålet er ikke klassifisert. Kontakt eieren av nettstedet hvis du ønsker detaljer."
   }
 }

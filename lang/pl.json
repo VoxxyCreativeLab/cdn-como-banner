@@ -22,7 +22,8 @@
     "description": "Pliki cookie to małe pliki tekstowe, które mogą być wykorzystywane przez strony internetowe w celu zwiększenia efektywności korzystania z witryny. Prawo stanowi, że możemy przechowywać pliki cookie na Twoim urządzeniu, jeśli są one niezbędne do działania tej strony. W przypadku wszystkich innych rodzajów plików cookie potrzebujemy Twojej zgody.",
     "privacyLink": "Więcej informacji znajdziesz w naszej {link}.",
     "privacyLinkText": "Polityce prywatności",
-    "controllerText": "Ta strona internetowa jest prowadzona przez {controller}. Jako administrator danych jesteśmy odpowiedzialni za przetwarzanie Twoich danych osobowych."
+    "controllerText": "Ta strona internetowa jest prowadzona przez {controller}. Jako administrator danych jesteśmy odpowiedzialni za przetwarzanie Twoich danych osobowych.",
+    "featuresLinkText": "Szczegóły prawne →"
   },
   "categories": {
     "necessary": {
@@ -56,6 +57,11 @@
     "name": "Nazwa",
     "purpose": "Cel",
     "duration": "Czas trwania",
-    "provider": "Dostawca"
+    "provider": "Dostawca",
+    "value": "Wartość"
+  },
+  "unknownCookies": {
+    "title": "Nieznane pliki cookie",
+    "intro": "Te pliki cookie zostały wykryte na stronie, ale ich cel nie został sklasyfikowany. Skontaktuj się z właścicielem witryny, jeśli chcesz uzyskać szczegóły."
   }
 }

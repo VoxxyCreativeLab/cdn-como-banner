@@ -22,7 +22,8 @@
     "description": "Cookies jsou malé textové soubory, které mohou webové stránky používat ke zlepšení uživatelského zážitku. Zákon stanoví, že můžeme ukládat cookies na vašem zařízení, pokud jsou nezbytně nutné pro provoz těchto stránek. Pro všechny ostatní typy cookies potřebujeme váš souhlas.",
     "privacyLink": "Další informace naleznete v našich {link}.",
     "privacyLinkText": "Zásadách ochrany osobních údajů",
-    "controllerText": "Tyto webové stránky provozuje {controller}. Jako správce údajů odpovídáme za zpracování vašich osobních údajů."
+    "controllerText": "Tyto webové stránky provozuje {controller}. Jako správce údajů odpovídáme za zpracování vašich osobních údajů.",
+    "featuresLinkText": "Právní podrobnosti →"
   },
   "categories": {
     "necessary": {
@@ -56,6 +57,11 @@
     "name": "Název",
     "purpose": "Účel",
     "duration": "Doba trvání",
-    "provider": "Poskytovatel"
+    "provider": "Poskytovatel",
+    "value": "Hodnota"
+  },
+  "unknownCookies": {
+    "title": "Neznámé soubory cookie",
+    "intro": "Tyto soubory cookie byly na stránce zjištěny, ale jejich účel nebyl klasifikován. Pokud chcete podrobnosti, kontaktujte vlastníka webu."
   }
 }

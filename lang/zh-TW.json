@@ -22,7 +22,8 @@
     "description": "Cookie 是網站用來提升使用者體驗的小型文字檔案。根據法律規定，若 Cookie 對本網站的正常運作不可或缺，我們可以將其儲存在您的裝置上。對於所有其他類型的 Cookie，我們需要取得您的同意。",
     "privacyLink": "如需瞭解更多資訊，請參閱我們的{link}。",
     "privacyLinkText": "隱私權政策",
-    "controllerText": "本網站由 {controller} 管理。身為資料控制者，我們負責處理您的個人資料。"
+    "controllerText": "本網站由 {controller} 管理。身為資料控制者，我們負責處理您的個人資料。",
+    "featuresLinkText": "法律詳情 →"
   },
   "categories": {
     "necessary": {
@@ -56,6 +57,11 @@
     "name": "名稱",
     "purpose": "用途",
     "duration": "有效期",
-    "provider": "提供者"
+    "provider": "提供者",
+    "value": "值"
+  },
+  "unknownCookies": {
+    "title": "未知 Cookie",
+    "intro": "已在頁面上偵測到這些 Cookie，但其用途尚未分類。如需詳細資訊，請聯絡網站擁有者。"
   }
 }

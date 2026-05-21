@@ -22,7 +22,8 @@
     "description": "I cookie sono piccoli file di testo che possono essere utilizzati dai siti web per rendere più efficiente l’esperienza dell’utente. La legge stabilisce che possiamo memorizzare i cookie sul suo dispositivo se sono strettamente necessari per il funzionamento di questo sito. Per tutti gli altri tipi di cookie abbiamo bisogno del suo permesso.",
     "privacyLink": "Per maggiori informazioni, consulti la nostra {link}.",
     "privacyLinkText": "Informativa sulla Privacy",
-    "controllerText": "Questo sito web è gestito da {controller}. In qualità di titolare del trattamento, siamo responsabili del trattamento dei suoi dati personali."
+    "controllerText": "Questo sito web è gestito da {controller}. In qualità di titolare del trattamento, siamo responsabili del trattamento dei suoi dati personali.",
+    "featuresLinkText": "Dettagli legali →"
   },
   "categories": {
     "necessary": {
@@ -56,6 +57,11 @@
     "name": "Nome",
     "purpose": "Finalità",
     "duration": "Durata",
-    "provider": "Fornitore"
+    "provider": "Fornitore",
+    "value": "Valore"
+  },
+  "unknownCookies": {
+    "title": "Cookie sconosciuti",
+    "intro": "Questi cookie sono stati rilevati nella pagina ma la loro finalità non è stata classificata. Contatta il proprietario del sito se desideri ulteriori dettagli."
   }
 }

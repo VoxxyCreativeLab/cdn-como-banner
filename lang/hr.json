@@ -22,7 +22,8 @@
     "description": "Kolačići su male tekstualne datoteke koje web-stranice mogu koristiti kako bi korisničko iskustvo učinile učinkovitijim. Zakon nalaže da kolačiće možemo pohraniti na vaš uređaj ako su nužno potrebni za rad ove stranice. Za sve ostale vrste kolačića potrebna nam je vaša dozvola.",
     "privacyLink": "Za više informacija pogledajte našu {link}.",
     "privacyLinkText": "Politiku privatnosti",
-    "controllerText": "Ovu web-stranicu vodi {controller}. Kao voditelj obrade podataka odgovorni smo za obradu vaših osobnih podataka."
+    "controllerText": "Ovu web-stranicu vodi {controller}. Kao voditelj obrade podataka odgovorni smo za obradu vaših osobnih podataka.",
+    "featuresLinkText": "Pravni detalji →"
   },
   "categories": {
     "necessary": {
@@ -56,6 +57,11 @@
     "name": "Naziv",
     "purpose": "Svrha",
     "duration": "Trajanje",
-    "provider": "Pružatelj"
+    "provider": "Pružatelj",
+    "value": "Vrijednost"
+  },
+  "unknownCookies": {
+    "title": "Nepoznati kolačići",
+    "intro": "Ovi kolačići otkriveni su na stranici, ali njihova svrha nije klasificirana. Obratite se vlasniku stranice ako želite više pojedinosti."
   }
 }

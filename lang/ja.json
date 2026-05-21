@@ -22,7 +22,8 @@
     "description": "Cookieは、ウェブサイトがユーザー体験を向上させるために使用する小さなテキストファイルです。法律により、当サイトの運営に不可欠なCookieについてはお客様のデバイスに保存することが認められています。その他すべてのCookieについては、お客様の同意が必要です。",
     "privacyLink": "詳しくは{link}をご覧ください。",
     "privacyLinkText": "プライバシーポリシー",
-    "controllerText": "本ウェブサイトは {controller} が管理しています。データ管理者として、お客様の個人データの処理に責任を負っています。"
+    "controllerText": "本ウェブサイトは {controller} が管理しています。データ管理者として、お客様の個人データの処理に責任を負っています。",
+    "featuresLinkText": "法的詳細 →"
   },
   "categories": {
     "necessary": {
@@ -56,6 +57,11 @@
     "name": "名前",
     "purpose": "目的",
     "duration": "有効期間",
-    "provider": "提供元"
+    "provider": "提供元",
+    "value": "値"
+  },
+  "unknownCookies": {
+    "title": "未分類のクッキー",
+    "intro": "これらのクッキーはページ上で検出されましたが、その目的は分類されていません。詳細が必要な場合は、サイト所有者にお問い合わせください。"
   }
 }

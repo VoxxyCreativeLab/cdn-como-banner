@@ -22,7 +22,8 @@
     "description": "Küpsised on väikesed tekstifailid, mida veebisaidid saavad kasutada kasutajakogemuse tõhusamaks muutmiseks. Seadus ütleb, et võime teie seadmesse salvestada küpsiseid, mis on selle saidi toimimiseks hädavajalikud. Kõigi teiste küpsisetüüpide jaoks vajame teie nõusolekut.",
     "privacyLink": "Lisateabe saamiseks tutvuge meie {link}.",
     "privacyLinkText": "Privaatsuspoliitikaga",
-    "controllerText": "Seda veebisaiti haldab {controller}. Vastutava töötlejana vastutame teie isikuandmete töötlemise eest."
+    "controllerText": "Seda veebisaiti haldab {controller}. Vastutava töötlejana vastutame teie isikuandmete töötlemise eest.",
+    "featuresLinkText": "Õiguslikud üksikasjad →"
   },
   "categories": {
     "necessary": {
@@ -56,6 +57,11 @@
     "name": "Nimi",
     "purpose": "Eesmärk",
     "duration": "Kestvus",
-    "provider": "Teenusepakkuja"
+    "provider": "Teenusepakkuja",
+    "value": "Väärtus"
+  },
+  "unknownCookies": {
+    "title": "Tundmatud küpsised",
+    "intro": "Need küpsised tuvastati lehel, kuid nende eesmärki pole klassifitseeritud. Üksikasjadeks võtke ühendust saidi omanikuga."
   }
 }

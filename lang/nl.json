@@ -22,7 +22,8 @@
     "description": "Cookies zijn kleine tekstbestanden die door websites kunnen worden gebruikt om de gebruikerservaring efficiënter te maken. Volgens de wet mogen wij cookies op uw apparaat opslaan als ze strikt noodzakelijk zijn voor het gebruik van de site. Voor alle andere soorten cookies hebben wij uw toestemming nodig.",
     "privacyLink": "Raadpleeg ons {link} voor meer informatie.",
     "privacyLinkText": "Privacybeleid",
-    "controllerText": "Deze website wordt beheerd door {controller}. Als verwerkingsverantwoordelijke zijn wij verantwoordelijk voor de verwerking van uw persoonsgegevens."
+    "controllerText": "Deze website wordt beheerd door {controller}. Als verwerkingsverantwoordelijke zijn wij verantwoordelijk voor de verwerking van uw persoonsgegevens.",
+    "featuresLinkText": "Juridische details →"
   },
   "categories": {
     "necessary": {
@@ -56,6 +57,11 @@
     "name": "Naam",
     "purpose": "Doel",
     "duration": "Looptijd",
-    "provider": "Aanbieder"
+    "provider": "Aanbieder",
+    "value": "Waarde"
+  },
+  "unknownCookies": {
+    "title": "Onbekende cookies",
+    "intro": "Deze cookies zijn op de pagina aangetroffen, maar het doel ervan is niet geclassificeerd. Neem contact op met de eigenaar van de site als u meer informatie wilt."
   }
 }

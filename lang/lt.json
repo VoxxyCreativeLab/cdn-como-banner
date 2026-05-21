@@ -22,7 +22,8 @@
     "description": "Slapukai yra maži tekstiniai failai, kuriuos svetainės gali naudoti naudotojo patirčiai efektyvinti. Įstatymai nurodo, kad galime saugoti slapukus jūsų įrenginyje, jei jie yra griežtai būtini šios svetainės veikimui. Visiems kitiems slapukų tipams mums reikia jūsų sutikimo.",
     "privacyLink": "Daugiau informacijos rasite mūsų {link}.",
     "privacyLinkText": "Privatumo politikoje",
-    "controllerText": "Šią svetainę valdo {controller}. Kaip duomenų valdytojas, esame atsakingi už jūsų asmens duomenų tvarkymą."
+    "controllerText": "Šią svetainę valdo {controller}. Kaip duomenų valdytojas, esame atsakingi už jūsų asmens duomenų tvarkymą.",
+    "featuresLinkText": "Teisinė informacija →"
   },
   "categories": {
     "necessary": {
@@ -56,6 +57,11 @@
     "name": "Pavadinimas",
     "purpose": "Tikslas",
     "duration": "Trukmė",
-    "provider": "Tiekėjas"
+    "provider": "Tiekėjas",
+    "value": "Reikšmė"
+  },
+  "unknownCookies": {
+    "title": "Nežinomi slapukai",
+    "intro": "Šie slapukai aptikti puslapyje, tačiau jų paskirtis nebuvo klasifikuota. Jei norite išsamesnės informacijos, susisiekite su svetainės savininku."
   }
 }

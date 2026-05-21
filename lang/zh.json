@@ -22,7 +22,8 @@
     "description": "Cookie 是网站用来提升用户体验的小型文本文件。根据法律规定，如果 Cookie 对本网站的正常运行不可或缺，我们可以将其存储在您的设备上。对于所有其他类型的 Cookie，我们需要征得您的同意。",
     "privacyLink": "如需了解更多信息，请参阅我们的{link}。",
     "privacyLinkText": "隐私政策",
-    "controllerText": "本网站由 {controller} 管理。作为数据控制者，我们负责处理您的个人数据。"
+    "controllerText": "本网站由 {controller} 管理。作为数据控制者，我们负责处理您的个人数据。",
+    "featuresLinkText": "法律详情 →"
   },
   "categories": {
     "necessary": {
@@ -56,6 +57,11 @@
     "name": "名称",
     "purpose": "用途",
     "duration": "有效期",
-    "provider": "提供方"
+    "provider": "提供方",
+    "value": "值"
+  },
+  "unknownCookies": {
+    "title": "未知 Cookie",
+    "intro": "已在页面上检测到这些 Cookie，但其用途尚未分类。如需了解详情，请联系网站所有者。"
   }
 }

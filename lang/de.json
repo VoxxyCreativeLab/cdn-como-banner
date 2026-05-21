@@ -22,7 +22,8 @@
     "description": "Cookies sind kleine Textdateien, die von Websites verwendet werden können, um die Benutzererfahrung effizienter zu gestalten. Laut Gesetz dürfen wir Cookies auf Ihrem Gerät speichern, wenn diese für den Betrieb dieser Website unbedingt erforderlich sind. Für alle anderen Cookie-Typen benötigen wir Ihre Einwilligung.",
     "privacyLink": "Weitere Informationen finden Sie in unserer {link}.",
     "privacyLinkText": "Datenschutzerklärung",
-    "controllerText": "Diese Website wird betrieben von {controller}. Als Verantwortlicher sind wir für die Verarbeitung Ihrer personenbezogenen Daten zuständig."
+    "controllerText": "Diese Website wird betrieben von {controller}. Als Verantwortlicher sind wir für die Verarbeitung Ihrer personenbezogenen Daten zuständig.",
+    "featuresLinkText": "Rechtliche Details →"
   },
   "categories": {
     "necessary": {
@@ -56,6 +57,11 @@
     "name": "Name",
     "purpose": "Zweck",
     "duration": "Dauer",
-    "provider": "Anbieter"
+    "provider": "Anbieter",
+    "value": "Wert"
+  },
+  "unknownCookies": {
+    "title": "Unbekannte Cookies",
+    "intro": "Diese Cookies wurden auf der Seite erkannt, aber ihr Zweck wurde nicht klassifiziert. Kontaktieren Sie den Website-Betreiber, wenn Sie Details wünschen."
   }
 }

@@ -22,7 +22,8 @@
     "description": "Evästeet ovat pieniä tekstitiedostoja, joiden avulla verkkosivustot voivat tehostaa käyttäjäkokemusta. Lain mukaan voimme tallentaa evästeitä laitteellesi, jos ne ovat välttämättömiä sivuston toiminnalle. Kaikkiin muihin evästetyyppeihin tarvitsemme suostumuksesi.",
     "privacyLink": "Lisätietoja on {link}.",
     "privacyLinkText": "Tietosuojakäytännössämme",
-    "controllerText": "Tätä verkkosivustoa ylläpitää {controller}. Rekisterinpitäjänä vastaamme henkilötietojesi käsittelystä."
+    "controllerText": "Tätä verkkosivustoa ylläpitää {controller}. Rekisterinpitäjänä vastaamme henkilötietojesi käsittelystä.",
+    "featuresLinkText": "Oikeudelliset tiedot →"
   },
   "categories": {
     "necessary": {
@@ -56,6 +57,11 @@
     "name": "Nimi",
     "purpose": "Tarkoitus",
     "duration": "Kesto",
-    "provider": "Tarjoaja"
+    "provider": "Tarjoaja",
+    "value": "Arvo"
+  },
+  "unknownCookies": {
+    "title": "Tuntemattomat evästeet",
+    "intro": "Nämä evästeet havaittiin sivulla, mutta niiden tarkoitusta ei ole luokiteltu. Ota yhteyttä sivuston omistajaan, jos haluat lisätietoja."
   }
 }

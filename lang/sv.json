@@ -22,7 +22,8 @@
     "description": "Cookies är små textfiler som webbplatser kan använda för att göra användarupplevelsen mer effektiv. Lagen säger att vi får lagra cookies på din enhet om de är absolut nödvändiga för att driva denna webbplats. För alla andra typer av cookies behöver vi ditt samtycke.",
     "privacyLink": "Se vår {link} för mer information.",
     "privacyLinkText": "Integritetspolicy",
-    "controllerText": "Denna webbplats drivs av {controller}. Som personuppgiftsansvarig ansvarar vi för behandlingen av dina personuppgifter."
+    "controllerText": "Denna webbplats drivs av {controller}. Som personuppgiftsansvarig ansvarar vi för behandlingen av dina personuppgifter.",
+    "featuresLinkText": "Juridiska detaljer →"
   },
   "categories": {
     "necessary": {
@@ -56,6 +57,11 @@
     "name": "Namn",
     "purpose": "Syfte",
     "duration": "Varaktighet",
-    "provider": "Leverantör"
+    "provider": "Leverantör",
+    "value": "Värde"
+  },
+  "unknownCookies": {
+    "title": "Okända kakor",
+    "intro": "Dessa kakor upptäcktes på sidan men deras syfte har inte klassificerats. Kontakta webbplatsens ägare om du vill ha detaljer."
   }
 }

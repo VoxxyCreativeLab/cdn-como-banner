@@ -22,7 +22,8 @@
     "description": "Çerezler, web sitelerinin kullanıcı deneyimini daha verimli hale getirmek için kullanabildiği küçük metin dosyalarıdır. Yasa, yalnızca bu sitenin çalışması için kesinlikle gerekli olan çerezleri cihazınızda saklamamıza izin vermektedir. Diğer tüm çerez türleri için izninize ihtiyacımız vardır.",
     "privacyLink": "Daha fazla bilgi için {link} sayfamızı inceleyin.",
     "privacyLinkText": "Gizlilik Politikası",
-    "controllerText": "Bu web sitesi {controller} tarafından yönetilmektedir. Veri sorumlusu olarak kişisel verilerinizin işlenmesinden biz sorumluyuz."
+    "controllerText": "Bu web sitesi {controller} tarafından yönetilmektedir. Veri sorumlusu olarak kişisel verilerinizin işlenmesinden biz sorumluyuz.",
+    "featuresLinkText": "Yasal ayrıntılar →"
   },
   "categories": {
     "necessary": {
@@ -56,6 +57,11 @@
     "name": "Ad",
     "purpose": "Amaç",
     "duration": "Süre",
-    "provider": "Sağlayıcı"
+    "provider": "Sağlayıcı",
+    "value": "Değer"
+  },
+  "unknownCookies": {
+    "title": "Bilinmeyen çerezler",
+    "intro": "Bu çerezler sayfada tespit edildi ancak amaçları sınıflandırılmadı. Ayrıntılar için site sahibiyle iletişime geçin."
   }
 }
