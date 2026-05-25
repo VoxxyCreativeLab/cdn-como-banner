@@ -63,6 +63,15 @@
     var VOXXY_URL = 'https://voxxycreativelab.com';
     var isAgency = (window.comoAgencyLogoUrl !== undefined);
 
+    /* Cookie database tier (BACKLOG #2, v1.4.0). Pro+ field. Basic strips
+       cookieDeclarationsGroup so window.comoCookieDatabaseTier is undefined
+       on Basic → falls through to 'small'. Defensive normalize to one of the
+       three valid values. */
+    var cookieDatabaseTier = window.comoCookieDatabaseTier || 'small';
+    if (['small', 'medium', 'large'].indexOf(cookieDatabaseTier) === -1) {
+        cookieDatabaseTier = 'small';
+    }
+
     /* ═══════════════════════════════════════════════
        ROOT DOMAIN COMPUTATION (cross-subdomain consent)
        ═══════════════════════════════════════════════ */
@@ -397,7 +406,19 @@
         { name: 'vcl_geo', category: 'necessary', provider: 'CoMo Banner', duration: '30 days', purpose: 'Caches your detected geographic region' }
     ];
     var customCookies = window.comoCustomCookies || [];
-    var detectedCookies = [];
+    /* Two-layer detection model (BACKLOG #2 v1.4.0):
+       - actualMatchedCookies: cookies present in document.cookie that match
+         an entry in the loaded knownCookies database. Full-coverage path —
+         every cookie on the page gets metadata if its name matches any
+         service in the active tier database (Small / Medium / Large).
+       - predictedCookies: cookies surfaced because their parent service's
+         script-presence signal (scriptGlobal / scriptSrc) matched. Provides
+         pre-consent transparency for the 44 curated services that carry
+         detection signals; new OCD-only services in Medium / Large land
+         here only when their cookie names actually appear.
+       getCookiesForCategory() merges both layers with de-dupe by name. */
+    var actualMatchedCookies = [];
+    var predictedCookies = [];
     /* Cookies present on the page that are not in knownCookies,
        customCookies, or the banner's own. Populated once on
        init after detectKnownServices() runs. See BACKLOG #21. */
@@ -480,6 +501,7 @@
 
     var CONFIG_CDN_URL = 'https://cdn.jsdelivr.net/gh/VoxxyCreativeLab/cdn-como-banner@v1/como-global.json';
     var LANG_CDN_BASE = 'https://cdn.jsdelivr.net/gh/VoxxyCreativeLab/cdn-como-banner@v1/lang/';
+    var COOKIES_TIER_CDN_BASE = 'https://cdn.jsdelivr.net/gh/VoxxyCreativeLab/cdn-como-banner@v1/cookies-';
     var GEO_ENDPOINT_URL = 'https://como-geo.voxxycreativelab.workers.dev';
     var GEO_COOKIE_NAME = 'vcl_geo';
     var GEO_COOKIE_EXPIRY = 30; // days (before consent; synced to consent expiry after)
@@ -530,6 +552,45 @@
             .catch(function (err) {
                 console.warn('[CoMo Banner] Language load failed (' + lang + '):', err.message, '— using English');
                 resolvedLang = 'en';
+                callback();
+            });
+    }
+
+    /* ═══════════════════════════════════════════════
+       COOKIE DATABASE TIER LOADING (BACKLOG #2, v1.4.0)
+       Fetches the OCD-derived tier file (Small / Medium / Large)
+       and injects into globalConfig.knownCookies. Parallel sibling
+       to loadConfig + resolveRegion + loadLanguage.
+       R2 guard: skipped when globalConfig.knownCookies is already
+       populated (inline-config users via window.comoConfig).
+       Fetch failure → empty array; consent still works; "Unknown"
+       residual will catch any cookies actually on the page.
+       ═══════════════════════════════════════════════ */
+
+    function loadCookieDatabase(tier, callback) {
+        /* Base URL override hook for self-hosting and local testing.
+           Mirrors window.comoConfigUrl for como-global.json. Use trailing
+           hyphen pattern: e.g. 'http://localhost:5500/src/config/cookie-tiers/cookies-'
+           will resolve to 'cookies-small.json' / 'cookies-medium.json' etc. */
+        var base = window.comoCookiesTierBase || COOKIES_TIER_CDN_BASE;
+        var url = base + tier + '.json';
+
+        fetch(url)
+            .then(function (response) {
+                if (!response.ok) throw new Error('HTTP ' + response.status);
+                return response.json();
+            })
+            .then(function (data) {
+                /* Only overwrite if knownCookies is empty/absent. Belt-and-braces
+                   for the R2 guard at the call site (inline-config path may have
+                   populated knownCookies between scheduling and fetch resolution). */
+                if (!globalConfig.knownCookies || globalConfig.knownCookies.length === 0) {
+                    globalConfig.knownCookies = data;
+                }
+                callback();
+            })
+            .catch(function (err) {
+                console.warn('[CoMo Banner] cookies-' + tier + '.json load failed:', err.message, '— cookie metadata coverage will be reduced');
                 callback();
             });
     }
@@ -795,6 +856,20 @@
         document.cookie = name + '=' + encodeURIComponent(value) + expires + '; path=/; SameSite=Lax' + secure;
     }
 
+    /* isConsentExpired(payload, expiryDays, graceDays)
+       Returns true if the consent payload's timestamp is older than
+       (expiryDays - graceDays). Defensive: missing or unparseable
+       timestamp counts as expired so the banner re-prompts rather
+       than honoring an unverifiable record. See BACKLOG #8. */
+    function isConsentExpired(payload, expiryDays, graceDays) {
+        if (!payload || !payload.timestamp) return true;
+        var written = Date.parse(payload.timestamp);
+        if (isNaN(written)) return true;
+        var ageMs = Date.now() - written;
+        var ttlMs = (expiryDays - graceDays) * 86400000;
+        return ageMs >= ttlMs;
+    }
+
     /* ═══════════════════════════════════════════════
        COLOR HELPERS
        ═══════════════════════════════════════════════ */
@@ -823,6 +898,7 @@
         var allGranted = permissions.analytics && permissions.marketing && permissions.preferences;
         var consentOutcome;
         if (type === 'existing') { consentOutcome = 'existing'; }
+        else if (type === 'expired') { consentOutcome = 'expired'; }
         else if (type === 'auto-grant') { consentOutcome = 'auto_grant'; }
         else if (type === 'accept-all') { consentOutcome = 'granted_all'; }
         else if (type === 'deny-all') { consentOutcome = 'denied_all'; }
@@ -1173,6 +1249,23 @@
                Rule 10 and src/banner/CONTEXT.md. */
             if (parsed.version !== cfg.version) {
                 autoShowOrSuppress();
+            } else if (isConsentExpired(parsed, getConsentExpiry(), 1)) {
+                /* Consent has aged past the region's expiryDays
+                   (minus 1-day grace for clock skew). Fire a
+                   revocation event so GTM tags can differentiate
+                   expiry-driven re-prompt from a first visit, then
+                   re-prompt as if no cookie existed. The OLD cookie
+                   is NOT deleted here: handleConsent() overwrites
+                   it with a fresh timestamp on the user's next
+                   choice. See BACKLOG #8, CLAUDE.md Rule 2. */
+                sendConsentEvents('expired', {
+                    necessary: true,
+                    preferences: false,
+                    analytics: false,
+                    marketing: false
+                });
+                logConsent('expired', parsed.permissions);
+                autoShowOrSuppress();
             } else {
                 consentState = parsed;
                 window.comoConsent = consentState;
@@ -1191,19 +1284,25 @@
 
     function detectKnownServices() {
         var knownServices = globalConfig.knownCookies || [];
-        var result = [];
-        var scripts = document.getElementsByTagName('script');
 
+        /* ─── LAYER 2 (RETAINED): script-presence detection ───
+           For each service in the database, check if its script is loaded
+           on the page (window global OR script-tag src). If so, surface
+           ALL its cookies — even ones not yet set in document.cookie —
+           for pre-consent transparency ("these are the cookies this site
+           will set if you accept"). Only the 44 curated services carry
+           non-null scriptGlobal / scriptSrc, so this layer is mostly
+           a no-op for OCD-only services in Medium / Large tiers.
+           ─────────────────────────────────────────────────── */
+        var predicted = [];
+        var scripts = document.getElementsByTagName('script');
         for (var i = 0; i < knownServices.length; i++) {
             var svc = knownServices[i];
             var detected = false;
 
-            // Check 1: window global exists
             if (svc.scriptGlobal && typeof window[svc.scriptGlobal] !== 'undefined') {
                 detected = true;
             }
-
-            // Check 2: script src pattern match (works in opt-in before execution)
             if (!detected && svc.scriptSrc) {
                 for (var j = 0; j < scripts.length; j++) {
                     var src = scripts[j].src || '';
@@ -1216,35 +1315,89 @@
 
             if (detected) {
                 for (var k = 0; k < svc.cookies.length; k++) {
-                    result.push(svc.cookies[k]);
+                    predicted.push(svc.cookies[k]);
                 }
             }
         }
+        predictedCookies = predicted;
 
-        detectedCookies = result;
+        /* ─── LAYER 0 (NEW): document.cookie → database lookup ───
+           Scan cookies actually present on the page; for each, regex-match
+           against every database entry's cookie name pattern (handling
+           wildcard '*' the same way flattenKnownCookieNames does). On match,
+           surface that database entry's metadata. This is the full-coverage
+           path — works for any service in the loaded tier, no per-service
+           detection signal required. Empty when no matching cookies are
+           set yet (typical pre-consent state); populates as third-party
+           scripts set their cookies after consent.
+           ───────────────────────────────────────────────────────── */
+        var actual = [];
+        var actualCookies = parseActualCookies();
+        if (actualCookies.length > 0) {
+            for (var ai = 0; ai < knownServices.length; ai++) {
+                var ksvc = knownServices[ai];
+                var kcookies = ksvc.cookies || [];
+                for (var ki = 0; ki < kcookies.length; ki++) {
+                    var kc = kcookies[ki];
+                    var rawName = kc.name || '';
+                    if (!rawName) continue;
+                    var escaped = rawName.replace(/[.+?^${}()|[\]\\]/g, '\\$&').replace(/\*/g, '.*');
+                    var pattern = new RegExp('^' + escaped + '$');
+                    for (var ac = 0; ac < actualCookies.length; ac++) {
+                        if (pattern.test(actualCookies[ac].name)) {
+                            actual.push(kc);
+                            break; /* one match per database entry is enough */
+                        }
+                    }
+                }
+            }
+        }
+        actualMatchedCookies = actual;
     }
 
     function getCookiesForCategory(categoryKey) {
+        /* Four-layer merge with de-dup by cookie name (BACKLOG #2 v1.4.0):
+           - Layer 1: AUTO_NECESSARY_COOKIES (banner's own; 'necessary' only)
+           - Layer 0: actualMatchedCookies (document.cookie → database, full coverage)
+           - Layer 2: predictedCookies (script-presence, pre-consent transparency)
+           - Layer 3: customCookies (Pro+ GTM template SIMPLE_TABLE field)
+           Earlier layers win on collision (same metadata source anyway since
+           Layers 0 + 2 read from the same knownCookies database). */
         var result = [];
+        var seen = {};
+
+        function add(c) {
+            var key = (c.name || '').toLowerCase();
+            if (!key || seen[key]) return;
+            seen[key] = 1;
+            result.push(c);
+        }
 
         // Layer 1: AUTO_NECESSARY_COOKIES (only for 'necessary')
         if (categoryKey === 'necessary') {
             for (var i = 0; i < AUTO_NECESSARY_COOKIES.length; i++) {
-                result.push(AUTO_NECESSARY_COOKIES[i]);
+                add(AUTO_NECESSARY_COOKIES[i]);
             }
         }
 
-        // Layer 2: detected cookies from knownCookies
-        for (var j = 0; j < detectedCookies.length; j++) {
-            if (detectedCookies[j].category === categoryKey) {
-                result.push(detectedCookies[j]);
+        // Layer 0: actual cookies on page matched to database (full-coverage path)
+        for (var a = 0; a < actualMatchedCookies.length; a++) {
+            if (actualMatchedCookies[a].category === categoryKey) {
+                add(actualMatchedCookies[a]);
+            }
+        }
+
+        // Layer 2: predicted cookies from detected scripts (pre-consent transparency)
+        for (var j = 0; j < predictedCookies.length; j++) {
+            if (predictedCookies[j].category === categoryKey) {
+                add(predictedCookies[j]);
             }
         }
 
         // Layer 3: custom cookies from GTM template field
         for (var k = 0; k < customCookies.length; k++) {
             if ((customCookies[k].category || '').toLowerCase() === categoryKey) {
-                result.push(customCookies[k]);
+                add(customCookies[k]);
             }
         }
 
@@ -2691,12 +2844,21 @@
             checkExistingConsent();
         } /* end onReady */
 
-        /* Config loads first, then triggers language loading if needed */
+        /* Config loads first, then triggers language + cookie-DB loading as siblings.
+           Both are parallel-callbacks via the needed-counter ready gate (NOT Promise.all
+           per plan v2 R3 — preserves existing battle-tested orchestration).
+           R2 guard: skip tier fetch when inline-config (window.comoConfig) has already
+           populated knownCookies — those clients hand-rolled their config and we don't
+           want to overwrite it from CDN. */
         function onConfigLoaded() {
             resolvedLang = resolveLanguage();
             if (resolvedLang !== 'en') {
-                needed = 3; // need a third ready signal for language file
+                needed++; // extra ready signal for language file
                 loadLanguage(resolvedLang, onReady);
+            }
+            if (!globalConfig.knownCookies || globalConfig.knownCookies.length === 0) {
+                needed++; // extra ready signal for cookie database tier file
+                loadCookieDatabase(cookieDatabaseTier, onReady);
             }
             onReady(); // signal config done
         }
