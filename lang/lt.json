@@ -1,5 +1,5 @@
 {
-  "_license": "Copyright (c) 2025–2026 Voxxy Creative Lab Limited. All rights reserved. Proprietary and confidential. Unauthorized copying, modification, or use is strictly prohibited.",
+  "_license": "Copyright (c) 2025-2026 Voxxy Creative Lab Limited. All rights reserved. Proprietary and confidential. Unauthorized copying, modification, or use is strictly prohibited.",
   "banner": {
     "title": "Naudojame slapukus kūrybiškumui skatinti ⚡",
     "description": "Naudojame slapukus turiniui ir reklamai personalizuoti, socialinių tinklų funkcijoms teikti ir srautui analizuoti. Taip pat dalinamės informacija apie jūsų naudojimąsi mūsų svetaine su socialinių tinklų, reklamos ir analitikos partneriais, kurie gali ją sujungti su kita informacija, kurią jiems pateikėte arba kurią jie surinko naudojantis jų paslaugomis."
@@ -40,7 +40,7 @@
     },
     "marketing": {
       "name": "Rinkodaros",
-      "description": "Rinkodaros slapukai naudojami lankytojams sekti įvairiose svetainėse. Tikslas – rodyti reklamas, kurios yra aktualios ir patrauklios atskiram naudotojui ir todėl vertingesnės leidėjams bei trečiųjų šalių reklamuotojams."
+      "description": "Rinkodaros slapukai naudojami lankytojams sekti įvairiose svetainėse. Tikslas - rodyti reklamas, kurios yra aktualios ir patrauklios atskiram naudotojui ir todėl vertingesnės leidėjams bei trečiųjų šalių reklamuotojams."
     }
   },
   "closeButton": {

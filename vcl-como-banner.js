@@ -1,6 +1,6 @@
 /*!
- * CoMo Banner v1.x — Cookie Consent Management
- * Copyright (c) 2025–2026 Voxxy Creative Lab Limited. All rights reserved.
+ * CoMo Banner v1.x, Cookie Consent Management
+ * Copyright (c) 2025-2026 Voxxy Creative Lab Limited. All rights reserved.
  *
  * This software is proprietary and confidential. Unauthorized copying,
  * modification, distribution, or use of this file, via any medium, is
@@ -18,7 +18,7 @@
        comoConsentAPI. NOT the cookie schema version: that is cfg.version
        (frozen at '1'). See CLAUDE.md Rule 10 and src/banner/CONTEXT.md
        for the do-not-touch rationale. */
-    var BANNER_VERSION = '1.4.0';
+    var BANNER_VERSION = '1.4.1';
 
     /* Banner-owned cookie name. Single source of truth so the
        migration block, cfg, AUTO_NECESSARY_COOKIES, and the
@@ -50,7 +50,7 @@
        window.comoAgencyUrl       = '';           // agency website URL (replaces Voxxy URL)
        ═══════════════════════════════════════════════ */
 
-    /* Voxxy Creative Lab — brand palette (used by tiered branding) */
+    /* Voxxy Creative Lab, brand palette (used by tiered branding) */
     var VOXXY = {
         cream:  '#f9f7f2',
         red:    '#ef233c',
@@ -76,11 +76,11 @@
        ROOT DOMAIN COMPUTATION (cross-subdomain consent)
        ═══════════════════════════════════════════════ */
 
-    /* Curated multi-part TLD set (~50 entries) — covers Voxxy client geographies.
+    /* Curated multi-part TLD set (~50 entries), covers Voxxy client geographies.
        For unknown TLDs, computeRootDomain falls back to last-2-labels.
        Operators on edge platforms (*.pages.dev, etc.) use comoRootDomainOverride. */
     var MULTI_PART_TLDS = {
-        // Tier A — core
+        // Tier A, core
         'co.uk': 1, 'org.uk': 1, 'ac.uk': 1, 'gov.uk': 1, 'me.uk': 1,
         'com.au': 1, 'net.au': 1, 'org.au': 1, 'edu.au': 1, 'gov.au': 1,
         'co.nz': 1, 'org.nz': 1, 'net.nz': 1,
@@ -88,7 +88,7 @@
         'com.br': 1, 'org.br': 1, 'net.br': 1,
         'com.mx': 1, 'org.mx': 1,
         'co.in': 1, 'net.in': 1, 'org.in': 1,
-        // Tier B — Asia-Pacific commerce + EU/Eastern Europe
+        // Tier B, Asia-Pacific commerce + EU/Eastern Europe
         'co.jp': 1, 'ne.jp': 1, 'or.jp': 1, 'ac.jp': 1,
         'co.kr': 1, 'or.kr': 1, 'ne.kr': 1,
         'com.hk': 1, 'org.hk': 1,
@@ -234,7 +234,7 @@
     }
 
     /* ═══════════════════════════════════════════════
-       COOKIE MIGRATION — host-only → root-scoped
+       COOKIE MIGRATION, host-only → root-scoped
        Runs once at script init for both vcl_consent and vcl_geo.
        ═══════════════════════════════════════════════ */
 
@@ -264,7 +264,7 @@
        rewrite on every load. The rewrite is idempotent (same value, same
        scope); the host-only delete attempt is a browser no-op. Accepted cost. */
     if (ROOT_DOMAIN) {
-        // vcl_consent — uses 365-day expiry (config-driven expiry isn't
+        // vcl_consent, uses 365-day expiry (config-driven expiry isn't
         // available at script-init time; the next legitimate consent
         // action overwrites with the proper expiry anyway).
         var existingConsent = readCookie(CONSENT_COOKIE_NAME);
@@ -273,7 +273,7 @@
             setCookieHostOnly(CONSENT_COOKIE_NAME, '', -1);
             logMigration(CONSENT_COOKIE_NAME);
         }
-        // vcl_geo — fixed 30-day expiry per GEO_COOKIE_EXPIRY semantics.
+        // vcl_geo, fixed 30-day expiry per GEO_COOKIE_EXPIRY semantics.
         var existingGeo = readCookie('vcl_geo');
         if (existingGeo) {
             setCookie('vcl_geo', existingGeo, 30);
@@ -311,7 +311,7 @@
         fontFamily: window.comoFontFamily || '',
         logEndpoint: window.comoLogEndpoint || '',
         primaryColor: window.comoPrimaryColor || '#0b4650',
-        // accentColor removed — button text is auto-computed from primary luminance
+        // accentColor removed, button text is auto-computed from primary luminance
         bgColor: window.comoBgColor || '#f9f7f2',
         textColor: window.comoTextColor || '#0b4650',
         showOverlay: !window.comoDisableOverlay,
@@ -408,7 +408,7 @@
     var customCookies = window.comoCustomCookies || [];
     /* Two-layer detection model (BACKLOG #2 v1.4.0):
        - actualMatchedCookies: cookies present in document.cookie that match
-         an entry in the loaded knownCookies database. Full-coverage path —
+         an entry in the loaded knownCookies database. Full-coverage path -
          every cookie on the page gets metadata if its name matches any
          service in the active tier database (Small / Medium / Large).
        - predictedCookies: cookies surfaced because their parent service's
@@ -525,7 +525,7 @@
                 callback(null);
             })
             .catch(function (err) {
-                console.warn('[CoMo Banner] Config load failed (' + url + '):', err.message, '— using fallback config');
+                console.warn('[CoMo Banner] Config load failed (' + url + '):', err.message, ', using fallback config');
                 globalConfig = FALLBACK_CONFIG;
                 callback(err);
             });
@@ -550,7 +550,7 @@
                 callback();
             })
             .catch(function (err) {
-                console.warn('[CoMo Banner] Language load failed (' + lang + '):', err.message, '— using English');
+                console.warn('[CoMo Banner] Language load failed (' + lang + '):', err.message, ', using English');
                 resolvedLang = 'en';
                 callback();
             });
@@ -590,7 +590,7 @@
                 callback();
             })
             .catch(function (err) {
-                console.warn('[CoMo Banner] cookies-' + tier + '.json load failed:', err.message, '— cookie metadata coverage will be reduced');
+                console.warn('[CoMo Banner] cookie-database tier "' + tier + '" (' + url + ') load failed:', err.message, '. Cookie metadata coverage will be reduced for this page load (banner remains functional).');
                 callback();
             });
     }
@@ -631,7 +631,7 @@
                 callback();
             })
             .catch(function (err) {
-                console.warn('[CoMo Banner] Geo detection failed:', err.message, '— defaulting to opt-in');
+                console.warn('[CoMo Banner] Geo detection failed:', err.message, ', defaulting to opt-in');
                 cfg.region = 'unknown';
                 callback();
             });
@@ -843,7 +843,7 @@
         document.cookie = name + '=' + encodeURIComponent(value) + expires + '; path=/; SameSite=Lax' + secure + domain;
     }
 
-    /* setCookieHostOnly — used only for the migration delete step that
+    /* setCookieHostOnly, used only for the migration delete step that
        clears legacy host-only cookies. Never use in new code paths. */
     function setCookieHostOnly(name, value, days) {
         var expires = '';
@@ -1257,14 +1257,39 @@
                    re-prompt as if no cookie existed. The OLD cookie
                    is NOT deleted here: handleConsent() overwrites
                    it with a fresh timestamp on the user's next
-                   choice. See BACKLOG #8, CLAUDE.md Rule 2. */
-                sendConsentEvents('expired', {
-                    necessary: true,
-                    preferences: false,
-                    analytics: false,
-                    marketing: false
-                });
-                logConsent('expired', parsed.permissions);
+                   choice. See BACKLOG #8, CLAUDE.md Rule 2.
+
+                   SESSION-SCOPED FIRE-ONCE GUARD (BACKLOG #32). The
+                   cookie stays expired until the user makes a choice,
+                   so without a guard the 'expired' event would fire
+                   on every page load of every un-chosen session. We
+                   set a sessionStorage marker so GTM tags listening
+                   on consent_outcome === 'expired' fire once per
+                   browser session. Re-prompt still happens regardless.
+                   try/catch covers incognito / disabled-storage
+                   contexts (Safari Private, Firefox strict). */
+                var expiredEventAlreadyFired = false;
+                try {
+                    expiredEventAlreadyFired = window.sessionStorage.getItem('comoExpiredEventFired') === '1';
+                } catch (storageErr) {
+                    /* sessionStorage unavailable, fall through to fire */
+                }
+                if (!expiredEventAlreadyFired) {
+                    sendConsentEvents('expired', {
+                        necessary: true,
+                        preferences: false,
+                        analytics: false,
+                        marketing: false
+                    });
+                    logConsent('expired', parsed.permissions);
+                    try {
+                        window.sessionStorage.setItem('comoExpiredEventFired', '1');
+                    } catch (storageErr) {
+                        /* sessionStorage write failed; event already fired so
+                           next page load may re-fire but the impact is bounded
+                           to the storage-unavailable case. */
+                    }
+                }
                 autoShowOrSuppress();
             } else {
                 consentState = parsed;
@@ -1288,7 +1313,7 @@
         /* ─── LAYER 2 (RETAINED): script-presence detection ───
            For each service in the database, check if its script is loaded
            on the page (window global OR script-tag src). If so, surface
-           ALL its cookies — even ones not yet set in document.cookie —
+           ALL its cookies, even ones not yet set in document.cookie -
            for pre-consent transparency ("these are the cookies this site
            will set if you accept"). Only the 44 curated services carry
            non-null scriptGlobal / scriptSrc, so this layer is mostly
@@ -1326,7 +1351,7 @@
            against every database entry's cookie name pattern (handling
            wildcard '*' the same way flattenKnownCookieNames does). On match,
            surface that database entry's metadata. This is the full-coverage
-           path — works for any service in the loaded tier, no per-service
+           path, works for any service in the loaded tier, no per-service
            detection signal required. Empty when no matching cookies are
            set yet (typical pre-consent state); populates as third-party
            scripts set their cookies after consent.
@@ -1621,7 +1646,7 @@
         var magnitude;
 
         if (si === 'auto' || !magnitudeMap[si]) {
-            /* auto — luminance-aware magnitude */
+            /* auto, luminance-aware magnitude */
             if (bgLuma > 0.85) { magnitude = 0.10; }
             else if (bgLuma > 0.6) { magnitude = 0.12; }
             else if (bgLuma > 0.3) { magnitude = 0.15; }
@@ -1761,7 +1786,7 @@
                 'display: none;' +
             '}' +
 
-            '/* CSS isolation — block host page interference */' +
+            '/* CSS isolation, block host page interference */' +
             '.como-banner, .como-banner *, .como-banner *::before, .como-banner *::after {' +
                 'all: revert;' +
                 'box-sizing: border-box;' +
@@ -2137,7 +2162,7 @@
                 'gap: var(--como-d-action-gap);' +
                 'flex-shrink: 0;' +
             '}' +
-            /* Button base — shared by all styles */
+            /* Button base, shared by all styles */
             '.como-btn {' +
                 'flex: 1;' +
                 'padding: var(--como-d-btn-pad-y) var(--como-d-btn-pad-x);' +
@@ -2419,7 +2444,7 @@
         /* Close button aria-label */
         var closeAriaLabel = getText('closeButton.ariaLabel');
 
-        /* WCAG 4.1.3: Screen reader announcement region — visually hidden, updated on showBanner() */
+        /* WCAG 4.1.3: Screen reader announcement region, visually hidden, updated on showBanner() */
         html += '<div id="comoLiveRegion" aria-live="polite" aria-atomic="true" class="como-sr-only"></div>';
 
         /* Re-open consent widget (floating Voxxy logo) */
@@ -2433,20 +2458,20 @@
         /* Badge: tier-aware logo selection */
         var showBadge, badgeLogoUrl, badgeMono;
         if (cfg.agencyLogoUrl) {
-            /* Agency with custom logo — render in text color via mask */
+            /* Agency with custom logo, render in text color via mask */
             showBadge = true;
             badgeLogoUrl = cfg.agencyLogoUrl;
             badgeMono = true;
         } else if (isAgency) {
-            /* Agency without custom logo — hide badge entirely */
+            /* Agency without custom logo, hide badge entirely */
             showBadge = false;
         } else if (cfg.badgeLogoUrl) {
-            /* Free — colored Voxxy logo (set by template), show as-is */
+            /* Free, colored Voxxy logo (set by template), show as-is */
             showBadge = true;
             badgeLogoUrl = cfg.badgeLogoUrl;
             badgeMono = false;
         } else {
-            /* Pro — monochrome Voxxy badge, render in text color via mask */
+            /* Pro, monochrome Voxxy badge, render in text color via mask */
             showBadge = true;
             badgeLogoUrl = VOXXY_BADGE_LOGO;
             badgeMono = true;
@@ -2549,10 +2574,10 @@
         function onReady() {
             ready++;
             if (ready < needed) return;
-            /* Config, region, and language (if needed) are all resolved — proceed */
+            /* Config, region, and language (if needed) are all resolved, proceed */
 
             if (!validateConfig(globalConfig)) {
-                console.warn('[CoMo Banner] Invalid config — using fallback');
+                console.warn('[CoMo Banner] Invalid config, using fallback');
                 globalConfig = FALLBACK_CONFIG;
             }
 
@@ -2818,7 +2843,7 @@
                     return;
                 }
 
-                /* Tab / Shift+Tab: focus trap — cycle only within banner */
+                /* Tab / Shift+Tab: focus trap, cycle only within banner */
                 if (e.key !== 'Tab') return;
                 var focusable = banner.querySelectorAll('button:not([disabled]), [tabindex="0"]');
                 if (!focusable.length) return;
@@ -2846,9 +2871,9 @@
 
         /* Config loads first, then triggers language + cookie-DB loading as siblings.
            Both are parallel-callbacks via the needed-counter ready gate (NOT Promise.all
-           per plan v2 R3 — preserves existing battle-tested orchestration).
+           per plan v2 R3, preserves existing battle-tested orchestration).
            R2 guard: skip tier fetch when inline-config (window.comoConfig) has already
-           populated knownCookies — those clients hand-rolled their config and we don't
+           populated knownCookies, those clients hand-rolled their config and we don't
            want to overwrite it from CDN. */
         function onConfigLoaded() {
             resolvedLang = resolveLanguage();

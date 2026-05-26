@@ -4069,14 +4069,14 @@
         "category": "marketing",
         "provider": "Yahoo",
         "duration": "1 year",
-        "purpose": "This cookie is used to collect information on a visitor. This information will become an ID string with information on a specific visitor – ID information strings can be used to target groups with similar preferences, or can be used by third-party domains or ad-exchanges."
+        "purpose": "This cookie is used to collect information on a visitor. This information will become an ID string with information on a specific visitor - ID information strings can be used to target groups with similar preferences, or can be used by third-party domains or ad-exchanges."
       },
       {
         "name": "cmp",
         "category": "marketing",
         "provider": "Yahoo",
         "duration": "1 year",
-        "purpose": "This cookie is used to collect information on a visitor. This information will become an ID string with information on a specific visitor – ID information strings can be used to target groups with similar preferences, or can be used by third-party domains or ad-exchanges."
+        "purpose": "This cookie is used to collect information on a visitor. This information will become an ID string with information on a specific visitor - ID information strings can be used to target groups with similar preferences, or can be used by third-party domains or ad-exchanges."
       },
       {
         "name": "adsrcvw1",
@@ -4097,7 +4097,7 @@
         "category": "marketing",
         "provider": "Yahoo",
         "duration": "1 year",
-        "purpose": "This cookie is used to collect information on a visitor. This information will become an ID string with information on a specific visitor – ID information strings can be used to target groups with similar preferences, or can be used by third-party domains or ad-exchanges."
+        "purpose": "This cookie is used to collect information on a visitor. This information will become an ID string with information on a specific visitor - ID information strings can be used to target groups with similar preferences, or can be used by third-party domains or ad-exchanges."
       },
       {
         "name": "optout",
@@ -4111,56 +4111,56 @@
         "category": "marketing",
         "provider": "Yahoo",
         "duration": "2 years",
-        "purpose": "This cookie is used to collect information on a visitor. This information will become an ID string with information on a specific visitor – ID information strings can be used to target groups with similar preferences, or can be used by third-party domains or ad-exchanges."
+        "purpose": "This cookie is used to collect information on a visitor. This information will become an ID string with information on a specific visitor - ID information strings can be used to target groups with similar preferences, or can be used by third-party domains or ad-exchanges."
       },
       {
         "name": "rxx",
         "category": "marketing",
         "provider": "Yahoo",
         "duration": "1 year",
-        "purpose": "This cookie is used to collect information on a visitor. This information will become an ID string with information on a specific visitor – ID information strings can be used to target groups with similar preferences, or can be used by third-party domains or ad-exchanges."
+        "purpose": "This cookie is used to collect information on a visitor. This information will become an ID string with information on a specific visitor - ID information strings can be used to target groups with similar preferences, or can be used by third-party domains or ad-exchanges."
       },
       {
         "name": "tearsheet",
         "category": "marketing",
         "provider": "Yahoo",
         "duration": "30 minutes",
-        "purpose": "This cookie is used to collect information on a visitor. This information will become an ID string with information on a specific visitor – ID information strings can be used to target groups with similar preferences, or can be used by third-party domains or ad-exchanges."
+        "purpose": "This cookie is used to collect information on a visitor. This information will become an ID string with information on a specific visitor - ID information strings can be used to target groups with similar preferences, or can be used by third-party domains or ad-exchanges."
       },
       {
         "name": "unique_ad_source_impression",
         "category": "marketing",
         "provider": "Yahoo",
         "duration": "30 days",
-        "purpose": "This cookie is used to collect information on a visitor. This information will become an ID string with information on a specific visitor – ID information strings can be used to target groups with similar preferences, or can be used by third-party domains or ad-exchanges."
+        "purpose": "This cookie is used to collect information on a visitor. This information will become an ID string with information on a specific visitor - ID information strings can be used to target groups with similar preferences, or can be used by third-party domains or ad-exchanges."
       },
       {
         "name": "axids",
         "category": "marketing",
         "provider": "Yahoo",
         "duration": "1 year",
-        "purpose": "This cookie is used to collect information on a visitor. This information will become an ID string with information on a specific visitor – ID information strings can be used to target groups with similar preferences, or can be used by third-party domains or ad-exchanges."
+        "purpose": "This cookie is used to collect information on a visitor. This information will become an ID string with information on a specific visitor - ID information strings can be used to target groups with similar preferences, or can be used by third-party domains or ad-exchanges."
       },
       {
         "name": "GUC",
         "category": "marketing",
         "provider": "Yahoo",
         "duration": "1 year",
-        "purpose": "This cookie is used to collect information on a visitor. This information will become an ID string with information on a specific visitor – ID information strings can be used to target groups with similar preferences, or can be used by third-party domains or ad-exchanges."
+        "purpose": "This cookie is used to collect information on a visitor. This information will become an ID string with information on a specific visitor - ID information strings can be used to target groups with similar preferences, or can be used by third-party domains or ad-exchanges."
       },
       {
         "name": "trc_cookie_storage",
         "category": "marketing",
         "provider": "Yahoo",
         "duration": "1 year",
-        "purpose": "This cookie is used to collect information on a visitor. This information will become an ID string with information on a specific visitor – ID information strings can be used to target groups with similar preferences, or can be used by third-party domains or ad-exchanges."
+        "purpose": "This cookie is used to collect information on a visitor. This information will become an ID string with information on a specific visitor - ID information strings can be used to target groups with similar preferences, or can be used by third-party domains or ad-exchanges."
       },
       {
         "name": "tbla_id",
         "category": "marketing",
         "provider": "Yahoo",
         "duration": "1 year",
-        "purpose": "This cookie is used to collect information on a visitor. This information will become an ID string with information on a specific visitor – ID information strings can be used to target groups with similar preferences, or can be used by third-party domains or ad-exchanges."
+        "purpose": "This cookie is used to collect information on a visitor. This information will become an ID string with information on a specific visitor - ID information strings can be used to target groups with similar preferences, or can be used by third-party domains or ad-exchanges."
       }
     ]
   },
@@ -4202,14 +4202,14 @@
         "category": "marketing",
         "provider": "TripleLift",
         "duration": "3 months",
-        "purpose": "This cookie is used to identify the visitor and optimize ad-relevance by collecting visitor data from multiple websites – this exchange of visitor data is normally provided by a third-party data-center or ad-exchange."
+        "purpose": "This cookie is used to identify the visitor and optimize ad-relevance by collecting visitor data from multiple websites - this exchange of visitor data is normally provided by a third-party data-center or ad-exchange."
       },
       {
         "name": "tluidp",
         "category": "marketing",
         "provider": "TripleLift",
         "duration": "3 months",
-        "purpose": "This cookie is used to identify the visitor and optimize ad-relevance by collecting visitor data from multiple websites with – this exchange of visitor data is normally provided by a third-party data-center or ad-exchange."
+        "purpose": "This cookie is used to identify the visitor and optimize ad-relevance by collecting visitor data from multiple websites with - this exchange of visitor data is normally provided by a third-party data-center or ad-exchange."
       },
       {
         "name": "optout",
@@ -5735,7 +5735,7 @@
         "category": "marketing",
         "provider": "Admixer",
         "duration": "2 years",
-        "purpose": "This cookie is used to identify the visitor and optimize ad-relevance by collecting visitor data from multiple websites – this exchange of visitor data is normally provided by a third-party data-center or ad-exchange."
+        "purpose": "This cookie is used to identify the visitor and optimize ad-relevance by collecting visitor data from multiple websites - this exchange of visitor data is normally provided by a third-party data-center or ad-exchange."
       }
     ]
   },
@@ -7779,21 +7779,21 @@
         "category": "preferences",
         "provider": "Convert",
         "duration": "Session",
-        "purpose": "This cookie is used as a referral-cookie that stores the visitor’s profile – the cookie is overwritten when the visitor re-enters the website and new information on the visitor is collected and stored."
+        "purpose": "This cookie is used as a referral-cookie that stores the visitor’s profile - the cookie is overwritten when the visitor re-enters the website and new information on the visitor is collected and stored."
       },
       {
         "name": "_conv_s",
         "category": "preferences",
         "provider": "Convert",
         "duration": "1 day",
-        "purpose": "This cookie contains an ID string on the current session. This contains non-personal information on what subpages the visitor enters – this information is used to optimize the visitor's experience."
+        "purpose": "This cookie contains an ID string on the current session. This contains non-personal information on what subpages the visitor enters - this information is used to optimize the visitor's experience."
       },
       {
         "name": "_conv_v",
         "category": "preferences",
         "provider": "Convert",
         "duration": "6 months",
-        "purpose": "This cookie is used to identify the frequency of visits and how long the visitor is on the website. The cookie is also used to determine how many and which subpages the visitor visits on a website – this information can be used by the website to optimize the domain and its subpages."
+        "purpose": "This cookie is used to identify the frequency of visits and how long the visitor is on the website. The cookie is also used to determine how many and which subpages the visitor visits on a website - this information can be used by the website to optimize the domain and its subpages."
       }
     ]
   },
@@ -11944,7 +11944,7 @@
         "category": "preferences",
         "provider": "PayPal",
         "duration": "session",
-        "purpose": "Cookie for fraud detection. When making a payment via PayPal these cookies are issued – PayPal session/security"
+        "purpose": "Cookie for fraud detection. When making a payment via PayPal these cookies are issued - PayPal session/security"
       },
       {
         "name": "X-PP-SILOVER",
@@ -12378,7 +12378,7 @@
         "category": "analytics",
         "provider": "Piwik",
         "duration": "365 days",
-        "purpose": "Determines if the visitor has already been to your website — they are returning visitors."
+        "purpose": "Determines if the visitor has already been to your website, they are returning visitors."
       },
       {
         "name": "stg_externalReferrer",
@@ -12945,7 +12945,7 @@
         "category": "marketing",
         "provider": "Quantcast",
         "duration": "13 months",
-        "purpose": "Contains data on user navigation, interaction and time spent on the website and its sub-pages – This data is used to optimise the relevance of advertisements and for statistical purposes."
+        "purpose": "Contains data on user navigation, interaction and time spent on the website and its sub-pages - This data is used to optimise the relevance of advertisements and for statistical purposes."
       },
       {
         "name": "mc",
