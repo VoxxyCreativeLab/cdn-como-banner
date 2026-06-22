@@ -5,7 +5,7 @@
   "consentMode": {
     "waitForUpdate": 500
   },
-  "featuresLinkUrl": "https://voxxycreativelab.com/",
+  "featuresLinkUrl": "https://voxxycreativelab.com/beexy-consent-banner/",
   "regions": {
     "AT": "opt-in",
     "BE": "opt-in",
